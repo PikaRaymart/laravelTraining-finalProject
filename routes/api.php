@@ -16,10 +16,13 @@ $v1ApiHelper = [
   "middleware" => "auth:sanctum"
 ];
 
+// Only use when creating tokens for admin and customers
 Route::post('/admin/create', [AdminController::class, "createAdmin"]);
 
+// Groups into using the version 1 of the api
 Route::group($v1ApiHelper, function() {
   Route::middleware(["admin"])->group(function() {
     Route::apiResource("admin/books", AdminController::class);
+    // Route::apiResource("customers")
   });
 });
