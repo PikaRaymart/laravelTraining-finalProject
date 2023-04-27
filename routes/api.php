@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AdminBookController;
 use App\Http\Controllers\Api\V1\AdminController;
-use App\Http\Controllers\Api\V1\BookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,14 +16,14 @@ $v1ApiHelper = [
 ];
 
 // Only use when creating account for admin with tokens
-Route::post('/v1/admin/store', [AdminController::class, "store"]);
+Route::post('/v1/admin', [AdminController::class, "store"]);
 
 // Groups into using the version 1 of the api
 Route::group($v1ApiHelper, function() {
   Route::middleware(["auth:sanctum", "admin"])->group(function() {
-    Route::put("admin/books/{book}", [BookController::class, "update"]);
-    Route::delete("admin/books/bulk", [BookController::class, "bulkDestroy"]);
-    Route::delete("admin/books/{book}", [BookController::class, "destroy"]);
-    Route::apiResource("admin/books", BookController::class);
+    Route::put("admin/books/{book}", [AdminBookController::class, "update"]);
+    Route::delete("admin/books/bulk", [AdminBookController::class, "bulkDestroy"]);
+    Route::delete("admin/books/{book}", [AdminBookController::class, "destroy"]);
+    Route::apiResource("admin/books", AdminBookController::class);
   });
 });

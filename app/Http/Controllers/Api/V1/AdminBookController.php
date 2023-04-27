@@ -7,11 +7,17 @@ use App\Http\Requests\V1\StoreBookRequest;
 use App\Http\Requests\V1\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class BookController extends Controller {
+class AdminBookController extends Controller {
 
+	/**
+	 * Displays all books for admin.
+	 */
 	public function index(){
+		$books = DB::table("books")->orderBy("id")->simplePaginate(15);
 
+		return $books;
 	}
 
 	/**
