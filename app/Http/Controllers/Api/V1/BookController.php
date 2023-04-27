@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreBookRequest;
 use App\Http\Requests\V1\UpdateBookRequest;
 use App\Models\Book;
+use Illuminate\Http\Request;
 
 class BookController extends Controller {
 
@@ -56,10 +57,21 @@ class BookController extends Controller {
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remove the specified book.
 	 */
 	public function destroy(Book $book){
 		$book->delete();
+
+		return response()->json(["message" => "Successfully deleted book."], 200);
+	}
+
+	/**
+	 * Remove multiple books.
+	 */
+	public function bulkDestroy(Request $request){
+		$bookIds = explode(",", $request->ids);
+		
+		Book::destroy($bookIds);
 
 		return response()->json(["message" => "Successfully deleted book."], 200);
 	}

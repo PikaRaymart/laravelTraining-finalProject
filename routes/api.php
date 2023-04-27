@@ -22,6 +22,7 @@ Route::post('/v1/admin/store', [AdminController::class, "store"]);
 Route::group($v1ApiHelper, function() {
   Route::middleware(["auth:sanctum", "admin"])->group(function() {
     Route::put("admin/books/{book}", [BookController::class, "update"]);
+    Route::delete("admin/books/bulk", [BookController::class, "bulkDestroy"]);
     Route::delete("admin/books/{book}", [BookController::class, "destroy"]);
     Route::apiResource("admin/books", BookController::class);
   });
