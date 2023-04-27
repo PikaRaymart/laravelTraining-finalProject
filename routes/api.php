@@ -20,7 +20,11 @@ $v1ApiHelper = [
 // Only use when creating account for admin with tokens
 Route::post('/v1/admin', [AdminController::class, "store"]);
 
-Route::post("/login", [AuthController::class, "login"]);
+// Handles both authentication for customers and admin
+Route::controller(AuthController::class)->group(function() {
+  Route::post("/register", "register");
+  Route::post("/login", "login");
+});
 
 // Groups into using the version 1 of the api
 Route::group($v1ApiHelper, function() {
