@@ -5,7 +5,7 @@ namespace App\Http\Requests\V1;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreBookRequest extends FormRequest{
+class UpdateBookRequest extends FormRequest{
 	/**
 	 * Determine if the user is authorized to make this request.
 	 */
@@ -30,7 +30,7 @@ class StoreBookRequest extends FormRequest{
       "status" => ["required", Rule::in(["Active", "Draft"])]
 		];
 
-		if ($this->request->all()["status"]==="Draft") {
+		if ($this->method()==="PATCH" || $this->request->all()["status"]==="Draft") {
 			$rules["author"] = "sometimes|required|string";
 			$rules["description"] = "sometimes|required|string";
 			$rules["category"] = "sometimes|required|string";

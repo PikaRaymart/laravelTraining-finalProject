@@ -22,6 +22,7 @@ Route::post('/v1/admin/store', [AdminController::class, "store"]);
 // Groups into using the version 1 of the api
 Route::group($v1ApiHelper, function() {
   Route::middleware(["auth:sanctum", "admin"])->group(function() {
+    Route::put("admin/books/{book}", [BookController::class, "update"]);
     Route::apiResource("admin/books", BookController::class);
   });
 });

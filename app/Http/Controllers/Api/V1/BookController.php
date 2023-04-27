@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use function App\Helpers\jsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreBookRequest;
+use App\Http\Requests\V1\UpdateBookRequest;
 use App\Models\Book;
 
 class BookController extends Controller {
@@ -31,18 +33,27 @@ class BookController extends Controller {
 			$book["image"] = $filename;
 		}
 
-		// check if the book request is active or draft
+		Book::create($book);
 
-		// Book::create($book);
-
-    return $request->all();
+    return jsonResponse(["message" => "Successfully created book."], 200);
 	}
 
   /**
 	 * Updates a book
 	 */
-	public function update(){
-		return 2;
+	public function update(UpdateBookRequest $request, Book $book){
+		$updateData = $request->all();
+
+		if ($request->hasFile("image")) {
+			$image = $request->file("image");
+			$filename = time()."-".$image->getClientOriginalName();
+			$path = $image->storeAs("public/books", $filename);
+			$updateData["image"] = $filename;
+		}
+
+		$book->update($updateData);
+		return response()->json(["message" => "Successfully updated book."], 200);
+		return jsonResponse(["message" => "Successfully updated book."], 200);
 	}
 
 	/**
