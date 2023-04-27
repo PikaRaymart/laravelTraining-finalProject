@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreBookRequest;
 use App\Http\Requests\V1\UpdateBookRequest;
+use App\Http\Resources\V1\AdminBookCollection;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,8 @@ class AdminBookController extends Controller {
 	public function index(){
 		$books = DB::table("books")->orderBy("id")->simplePaginate(15);
 
-		return $books;
+		// return $books
+		return new AdminBookCollection($books);
 	}
 
 	/**
