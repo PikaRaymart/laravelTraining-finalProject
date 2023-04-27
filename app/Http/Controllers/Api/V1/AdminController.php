@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller {
 
-  function createAdmin(Request $request) {
+  // Creates the admin account plus the tokens that can be used by the api
+  function store(Request $request) {
     $appPassword = $request->appPassword;
     
     if (!$appPassword || env("APP_PASSWORD")!=$appPassword) {
@@ -35,7 +36,7 @@ class AdminController extends Controller {
 
       if (!($user instanceof User)) return response()->json(["message" =>"Server error"]);
 
-      $adminToken = $user->createToken("admin-token", ["all"]);
+      $adminToken = $user->createToken("admin-token", ["admin"]);
       $customerToken = $user->createToken("customer-token", ["customer"]);
 
       return [
@@ -47,39 +48,5 @@ class AdminController extends Controller {
 
 	public function index(){
 
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 */
-	public function store(){
-    return [];
-  }
-
-	/**
-	 * Display the specified resource.
-	 */
-	public function show(){
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 */
-	public function edit(){
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 */
-	public function update(){
-		
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 */
-	public function destroy(){
-		//
 	}
 };

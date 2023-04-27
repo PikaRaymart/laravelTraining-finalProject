@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function App\Helpers\jsonResponse;
+
 class AdminMiddleware{
 	/**
 	 * Handle an incoming request.
@@ -14,11 +16,11 @@ class AdminMiddleware{
 	 */
 	public function handle(Request $request, Closure $next): Response{
     $user = $request->user();
-    
+
     if ($user && $user->tokenCan("admin")) {
       return $next($request);
     }
-
-    return response()->json(["message" => "Unauthorized access."], 401);
+		
+		return jsonResponse(["message" => "Unauthorized access."], 401);
 	}
 }
