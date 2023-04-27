@@ -20,14 +20,14 @@ class AdminController extends Controller {
 
     $credentials = [
       "email" => $request->email,
-      "password" => Hash::make($request->password),
+      "password" => $request->password,
       "name" => $request->name
     ];
 
     $user = new User();
     $user->name = $credentials["name"];
     $user->email = $credentials["email"];
-    $user->password = Hash::make($credentials["password"]);
+    $user->password = bcrypt($credentials["password"]);
 
     $user->save();
 

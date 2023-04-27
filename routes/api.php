@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Api\V1\AdminBookController;
 use App\Http\Controllers\Api\V1\AdminController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -17,6 +19,8 @@ $v1ApiHelper = [
 
 // Only use when creating account for admin with tokens
 Route::post('/v1/admin', [AdminController::class, "store"]);
+
+Route::post("/login", [AuthController::class, "login"]);
 
 // Groups into using the version 1 of the api
 Route::group($v1ApiHelper, function() {
