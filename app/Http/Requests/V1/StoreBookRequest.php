@@ -4,6 +4,7 @@ namespace App\Http\Requests\V1;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBookRequest extends FormRequest{
 	/**
@@ -19,15 +20,26 @@ class StoreBookRequest extends FormRequest{
 	 * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
 	 */
 	public function rules(): array{
-		return [
-			"title" => "required",
-      "author" => "required",
-      "description" => "required",
-      "category" => "required",
+		$rules = [
+			"title" => "required|string",
+      "author" => "required|string",
+      "description" => "required|string",
+      "category" => "required|string",
       "image" => "required",
-      "price" => "required",
-      "stocks" => "required",
-      "status" => "required"
+      "price" => "required|integer|min:0",
+      "stocks" => "required|integer|min:0",
+      "status" => ["required", Rule::in(["Active", "Draft"])]
 		];
+
+		if ($this->request->all()["status"]==="Draft") {
+			$rules["author"] = "sometimes|required|string";
+			$rules["description"] = "sometimes|required|string";
+			$rules["category"] = "sometimes|required|string";
+			$rules["image"] = "sometimes|required";
+			$rules["price"] = "sometimes|required|integer|min:0";
+			$rules["stocks"] = "sometimes|required|integer|min:0";
+		}
+
+		return $rules;
 	}
 }

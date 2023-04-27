@@ -19,11 +19,11 @@ class BookController extends Controller {
 	}
 
 	/**
-	 * Stores a book in the database
+	 * Stores a book
 	 */
 	function store(StoreBookRequest $request) {
 		$book = $request->all();
-		
+	
 		if ($request->hasFile("image")) {
 			$image = $request->file("image");
 			$filename = time()."-".$image->getClientOriginalName();
@@ -31,16 +31,18 @@ class BookController extends Controller {
 			$book["image"] = $filename;
 		}
 
-		Book::create($book);
+		// check if the book request is active or draft
+
+		// Book::create($book);
 
     return $request->all();
 	}
 
   /**
-	 * Update the specified resource in storage.
+	 * Updates a book
 	 */
 	public function update(){
-		
+		return 2;
 	}
 
 	/**
