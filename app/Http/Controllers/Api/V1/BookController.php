@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use function App\Helpers\jsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreBookRequest;
 use App\Http\Requests\V1\UpdateBookRequest;
@@ -35,7 +34,7 @@ class BookController extends Controller {
 
 		Book::create($book);
 
-    return jsonResponse(["message" => "Successfully created book."], 200);
+    return response()->json(["message" => "Successfully created book."], 200);
 	}
 
   /**
@@ -52,14 +51,16 @@ class BookController extends Controller {
 		}
 
 		$book->update($updateData);
+
 		return response()->json(["message" => "Successfully updated book."], 200);
-		return jsonResponse(["message" => "Successfully updated book."], 200);
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(){
-		//
+	public function destroy(Book $book){
+		$book->delete();
+
+		return response()->json(["message" => "Successfully deleted book."], 200);
 	}
 };

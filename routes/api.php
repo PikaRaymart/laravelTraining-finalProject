@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\V1\BookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 	return $request->user();
 });
@@ -23,6 +22,7 @@ Route::post('/v1/admin/store', [AdminController::class, "store"]);
 Route::group($v1ApiHelper, function() {
   Route::middleware(["auth:sanctum", "admin"])->group(function() {
     Route::put("admin/books/{book}", [BookController::class, "update"]);
+    Route::delete("admin/books/{book}", [BookController::class, "destroy"]);
     Route::apiResource("admin/books", BookController::class);
   });
 });
