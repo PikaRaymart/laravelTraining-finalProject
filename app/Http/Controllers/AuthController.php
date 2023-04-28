@@ -44,6 +44,8 @@ class AuthController extends Controller{
         "message" => "Sucessfully logged in.",
         "token" => $adminToken->plainTextToken
       ]);
+    } else {
+      
     }
 
     return response()->json(["message" => "Log in unsucessfully."]);

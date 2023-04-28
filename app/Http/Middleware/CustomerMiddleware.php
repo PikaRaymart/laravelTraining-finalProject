@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
+use App\Models\Customer;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware{
+class CustomerMiddleware{
 	/**
 	 * Handle an incoming request.
 	 *
@@ -16,12 +16,12 @@ class AdminMiddleware{
 	public function handle(Request $request, Closure $next): Response{
     $user = $request->user();
 
-		if (!($user instanceof User)) return response()->json(["message" =>"Server error"]);
+    if (!($user instanceof Customer)) return response()->json(["message" =>"Server error"]);
 
-    if ($user && $user->tokenCan("admin")) {
+    if ($user && $user->tokenCan("customer")) {
       return $next($request);
     }
-		
-		return response()->json(["message" => "Unauthorized access."], 401);
+
+    return response()->json(["message" => "Unauthorized access."], 401);
 	}
 }

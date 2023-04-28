@@ -15,11 +15,34 @@ class AdminBookController extends Controller {
 	/**
 	 * Displays all books for admin.
 	 */
-	public function index(){
+	public function index(Request $request){
 		$books = DB::table("books")->orderBy("id")->simplePaginate(15);
 
+		$query = Book::query();
+    
+    // Filter by category
+    if ($request->filled('category')) {
+			$categories = explode(',', $request->input('category'));
+			foreach ($categories as $category) {
+					$query->orWhere('category', 'LIKE', "%$category%");
+			}
+    }
+
+    // Filter by minimum price
+    if ($request->filled('minPrice')) {
+        $query->where('price', '>=', $request->query('minPrice'));
+    }
+
+    // Filter by maximum price
+    if ($request->filled('maxPrice')) {
+        $query->where('price', '<=', $request->input('maxPrice'));
+    }
+
+    // Execute the query and return the results
+    $books = $query->simplePaginate(15);
+
 		// return $books
-		return new AdminBookCollection($books);
+		return (new AdminBookCollection($books))->appends($request->query());
 	}
 
 	/**

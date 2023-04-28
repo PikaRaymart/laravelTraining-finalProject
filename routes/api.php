@@ -28,10 +28,16 @@ Route::controller(AuthController::class)->group(function() {
 
 // Groups into using the version 1 of the api
 Route::group($v1ApiHelper, function() {
+  // Handles the admin 
   Route::middleware(["auth:sanctum", "admin"])->group(function() {
     Route::put("admin/books/{book}", [AdminBookController::class, "update"]);
     Route::delete("admin/books/bulk", [AdminBookController::class, "bulkDestroy"]);
     Route::delete("admin/books/{book}", [AdminBookController::class, "destroy"]);
     Route::apiResource("admin/books", AdminBookController::class);
+  });
+
+  // Handles the customer
+  Route::middleware(["auth:sanctum", "customer"])->group(function() {
+
   });
 });
