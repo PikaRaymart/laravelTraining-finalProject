@@ -5,13 +5,22 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\AddToCartRequest;
 use App\Models\Book;
+use App\Models\Cart;
 use App\Models\Customer;
 
 class CartController extends Controller{
 	
+  function index() {
+    // returns the populated cart
+    $currentCustomer = auth()->user();
+
+    if (!($currentCustomer instanceof Customer)) return response()->json(["message" => "Server error"]);
+
+    return $currentCustomer->with("carts.books")->get();
+  }
+
   // Adds a book in the cart
   function store(AddToCartRequest $request) {
-    // check first if book is present
     $foundBook = Book::where("status", "=", "active")
       ->find($request->bookId);
 
@@ -22,21 +31,14 @@ class CartController extends Controller{
     $currentCustomer = auth()->user();
 
     if (!($currentCustomer instanceof Customer)) return response()->json(["message" => "Server error"]);
-
-    // add the book to the cart
-    // array_push($currentCustomer->cart, [
-    //   "id" => $request->bookId,
-    //   "quantity" => $request->quantity
-    // ]);
     
-    $currentCustomer->cart = array_merge($currentCustomer->cart, [
-      [
-       "id" => $request->bookId,
-       "quantity" => $request->quantity
-      ]
+    // create a cart document
+    $newCart = Cart::create([
+      "customer_id" => "1",
+      "quantity" => $request->quantity
     ]);
 
-    $currentCustomer->save();
+    $newCart->books()->attach($foundBook->id);
 
     return response()->json(["message" => "Successfully added book to cart."]);
   }

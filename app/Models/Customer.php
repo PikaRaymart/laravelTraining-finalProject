@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -17,7 +18,6 @@ class Customer extends Authenticatable{
 		'name',
 		'email',
 		'password',
-		"cart"
 	];
 
 	protected $hidden = [
@@ -26,11 +26,10 @@ class Customer extends Authenticatable{
 	];
 
 	protected $casts = [
-		'email_verified_at' => 'datetime',
-		"cart" => "array"
+		'email_verified_at' => 'datetime'
 	];
 
-	function cart() {
-		return $this->hasOne(Cart::class);
+	function carts(): HasMany {
+		return $this->hasMany(Cart::class);
 	}
 }

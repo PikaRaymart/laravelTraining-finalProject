@@ -15,8 +15,7 @@ class AuthController extends Controller{
     $customerData = [
       "name" => $request->name,
       "email" => $request->email,
-      "password" => bcrypt($request->password),
-      "cart" => []
+      "password" => bcrypt($request->password)
     ];
     $newUser = Customer::create($customerData);
 
