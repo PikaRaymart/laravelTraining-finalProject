@@ -45,7 +45,18 @@ class AuthController extends Controller{
         "token" => $adminToken->plainTextToken
       ]);
     } else {
-      
+      if (Auth::guard("customer")->attempt($credentials)) {
+        $user = auth("customer")->user();
+
+        if (!($user instanceof Customer)) return response()->json(["message" =>"Server error"]);
+
+        $customerToken = $user->createToken("customer-token", ["customer"]);
+
+        return response()->json([
+          "message" => "Successfully logged in.",
+          "token" => $customerToken->plainTextToken
+        ]);
+      }
     }
 
     return response()->json(["message" => "Log in unsucessfully."]);
