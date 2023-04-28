@@ -12,12 +12,13 @@ class AuthController extends Controller{
   
   // Only for customers since admin will be created via api
   function register(RegisterCustomerRequest $request) {
-    $credentials = [
+    $customerData = [
       "name" => $request->name,
       "email" => $request->email,
-      "password" => bcrypt($request->password)
+      "password" => bcrypt($request->password),
+      "cart" => []
     ];
-    $newUser = Customer::create($credentials);
+    $newUser = Customer::create($customerData);
 
     auth()->login($newUser);
     $user = auth()->user();

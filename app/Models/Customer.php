@@ -17,6 +17,7 @@ class Customer extends Authenticatable{
 		'name',
 		'email',
 		'password',
+		"cart"
 	];
 
 	protected $hidden = [
@@ -26,5 +27,10 @@ class Customer extends Authenticatable{
 
 	protected $casts = [
 		'email_verified_at' => 'datetime',
+		"cart" => "array"
 	];
+
+	function cart() {
+		return $this->hasOne(Cart::class);
+	}
 }
