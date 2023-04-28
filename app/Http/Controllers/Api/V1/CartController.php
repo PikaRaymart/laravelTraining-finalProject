@@ -27,7 +27,7 @@ class CartController extends Controller{
   function store(AddToCartRequest $request) {
     $foundBook = Book::where("status", "=", "active")
       ->find($request->bookId);
-
+    
     if (!$foundBook) return response()->json(["message" => "No active book found with this id."]);
 
     if ($foundBook->stocks < $request->quantity) return response()->json(["message" => "Maximum quantity reached."]);
@@ -36,9 +36,28 @@ class CartController extends Controller{
 
     if (!($currentCustomer instanceof Customer)) return response()->json(["message" => "Server error"]);
     
+    // check if the book is already present in the cart,
+    if (count(array_filter($currentCustomer->carts->toArray(), fn($item) => $item["book_id"]==$foundBook->id))) {
+      $foundCart = Cart::where("customer_id", $currentCustomer->id)
+        ->where("book_id", $foundBook->id)
+        ->first();
+   
+      if (!($foundCart instanceof Cart)) return response()->json(["message" => "Server error"]);
+        
+      // make sure that both prev value and new value will not exceed the books max stocks
+      if (($foundCart["quantity"] + $request->quantity) > $foundBook->stocks) return response()->json(["message" => "Maximum quantity reached."]);
+      
+      // add both value
+      $foundCart->quantity = $foundCart->quantity + $request->quantity;
+
+      $foundCart->save();
+
+      return response()->json(["message" => "Successfully added book to cart."]);
+    };
     // create a cart document
     $newCart = Cart::create([
       "customer_id" => "1",
+      "book_id" => $foundBook->id,
       "quantity" => $request->quantity
     ]);
 

@@ -10,7 +10,8 @@ class Cart extends Model{
 
   protected $fillable = [
     "quantity",
-    "customer_id"
+    "customer_id",
+    "book_id"
   ];
 
   function customer() {
