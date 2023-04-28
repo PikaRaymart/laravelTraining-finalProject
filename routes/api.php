@@ -39,6 +39,7 @@ Route::group($v1ApiHelper, function() {
 
   // Handles the customer
   Route::middleware(["auth:sanctum", "customer"])->group(function() {
+    Route::put("/cart", [CartController::class, "update"]);
     Route::apiResource("cart", CartController::class);
   });
 });
