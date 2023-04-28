@@ -8,37 +8,31 @@ use App\Http\Requests\V1\AddToCartRequest;
 use App\Http\Resources\V1\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
-use App\Models\Customer;
 
 class CartController extends Controller{
 	
   function index() {
     // returns the populated cart
-    $currentCustomer = auth()->user();
+    $customer = authenticatedCustomer();
 
-    if (!($currentCustomer instanceof Customer)) return response()->json(["message" => "Server error"], 500);
-
-    $info = $currentCustomer->with("carts.books")->first();
+    $info = $customer->with("carts.books")->first();
 
     return new CartBookCollection($info["carts"]);
   }
 
   // Adds a book in the cart
   function store(AddToCartRequest $request) {
+    $customer = authenticatedCustomer();
     $foundBook = Book::where("status", "=", "active")
       ->find($request->bookId);
     
     if (!$foundBook) return response()->json(["message" => "No active book found with this id."], 404);
 
     if ($foundBook->stocks < $request->quantity) return response()->json(["message" => "Maximum quantity reached."], 400);
-
-    $currentCustomer = auth()->user();
-
-    if (!($currentCustomer instanceof Customer)) return response()->json(["message" => "Server error"], 500);
     
     // check if the book is already present in the cart,
-    if (count(array_filter($currentCustomer->carts->toArray(), fn($item) => $item["book_id"]==$foundBook->id))) {
-      $foundCart = Cart::where("customer_id", $currentCustomer->id)
+    if (count(array_filter($customer->carts->toArray(), fn($item) => $item["book_id"]==$foundBook->id))) {
+      $foundCart = Cart::where("customer_id", $customer->id)
         ->where("book_id", $foundBook->id)
         ->first();
    
@@ -68,15 +62,11 @@ class CartController extends Controller{
 
   // updates the cart of the customer
   function update(UpdateCartRequest $request) {
-    $currentCustomer = auth()->user();
 
-    if (!($currentCustomer instanceof Customer)) return response()->json(["message" => "Server error"], 500);
-  
     foreach ($request->all()["updates"] as $update) {
       if (isset($update["delete"]) && $update["delete"]==true) {
         Cart::destroy($update["cartId"]);
       } else {
-        // update
         Cart::where("id", $update["cartId"])
           ->update(["quantity" => $update["quantity"]]);
       }

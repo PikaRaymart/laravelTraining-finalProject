@@ -4,8 +4,8 @@ use App\Http\Controllers\Api\V1\AdminBookController;
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\V1\CartController;
+use App\Http\Controllers\Api\V1\CheckoutController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -41,5 +41,10 @@ Route::group($v1ApiHelper, function() {
   Route::middleware(["auth:sanctum", "customer"])->group(function() {
     Route::put("/cart", [CartController::class, "update"]);
     Route::apiResource("cart", CartController::class);
+  });
+
+  Route::middleware(["auth:sanctum", "customer"])->group(function() {
+    Route::post("/checkout/cart", [CheckoutController::class, "cartCheckout"]);
+    Route::apiResource("checkout", CheckoutController::class);
   });
 });

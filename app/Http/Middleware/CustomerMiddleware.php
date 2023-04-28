@@ -2,10 +2,13 @@
 
 namespace App\Http\Middleware;
 
+
+
 use App\Models\Customer;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class CustomerMiddleware{
 	/**
@@ -15,8 +18,6 @@ class CustomerMiddleware{
 	 */
 	public function handle(Request $request, Closure $next): Response{
     $user = $request->user();
-
-    if (!($user instanceof Customer)) return response()->json(["message" =>"Server error"]);
 
     if ($user && $user->tokenCan("customer")) {
       return $next($request);
