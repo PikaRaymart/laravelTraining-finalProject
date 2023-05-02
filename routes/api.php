@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\Api\V1\AdminBookController;
 use App\Http\Controllers\Api\V1\AdminController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\V1\LoginUserController;
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CheckoutController;
+use App\Http\Controllers\Api\V1\RegisterUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +22,14 @@ $v1ApiHelper = [
 // Only use when creating account for admin with tokens
 Route::post('/v1/admin', [AdminController::class, "store"]);
 
-// Handles both authentication for customers and admin
-Route::controller(AuthController::class)->group(function() {
-  Route::post("/register", "register");
-  Route::post("/login", "login");
+// Handles registration for customers
+Route::controller(RegisterUserController::class)->group(function() {
+  Route::post("/v1/register", "store");
+});
+
+// Handles login for customers and admin
+Route::controller(LoginUserController::class)->group(function() {
+  Route::post("/v1/login", "store");
 });
 
 // Groups into using the version 1 of the api

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -10,11 +10,7 @@ class RegisterCustomerRequest extends FormRequest{
 		return true;
 	}
 
-	/**
-	 * Get the validation rules that apply to the request.
-	 *
-	 * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-	 */
+
 	public function rules(): array{
     $rules = [
       "name" => "required|string",

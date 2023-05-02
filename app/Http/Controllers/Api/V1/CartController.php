@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateCartRequest;
+use App\Http\Requests\V1\UpdateCartRequest;
 use App\Http\Requests\V1\AddToCartRequest;
 use App\Http\Resources\V1\CartBookCollection;
 use App\Models\Book;
