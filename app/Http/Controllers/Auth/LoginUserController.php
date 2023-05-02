@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginUserRequest;
-use App\Models\Customer;
-use App\Models\User;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,56 +12,36 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class LoginUserController extends Controller{
+class AuthenticatedSessionController extends Controller{
 
-  function create(): Response{
-    return Inertia::render('Auth/Login', [
-      'canResetPassword' => Route::has('password.request'),
-      'status' => session('status'),
-    ]);
-  }
+	function create(): Response{
+		return Inertia::render('Auth/Login', [
+			'canResetPassword' => Route::has('password.request'),
+			'status' => session('status'),
+		]);
+	}
 
-  function store(LoginUserRequest $request){
-    $request->authenticate();
-    
-    $credentials = $request->all();
-    
-    if ($credentials["email"]==="admin@admin.com" && auth()->attempt($credentials)) {
-      $user = auth()->user();
-      
-      if (!($user instanceof User)) return response()->json(["message" =>"Server error"]);
+		/**
+		 * Handle an incoming authentication request.
+		 */
+	function store(LoginRequest $request): RedirectResponse{
+		$request->authenticate();
 
-      $adminToken = $user->createToken("admin-token", ["admin"]);
+		$request->session()->regenerate();
 
-      return response()->json([
-        "message" => "Sucessfully logged in.",
-        "token" => $adminToken->plainTextToken
-      ]);
-    } else {
-      if (Auth::guard("customer")->attempt($credentials)) {
-        $user = auth("customer")->user();
+		return redirect()->intended(RouteServiceProvider::HOME);
+	}
 
-        if (!($user instanceof Customer)) return response()->json(["message" =>"Server error"]);
+	/**
+	 * Destroy an authenticated session.
+	 */
+	function destroy(Request $request): RedirectResponse{
+		Auth::guard('web')->logout();
 
-        $customerToken = $user->createToken("customer-token", ["customer"]);
+		$request->session()->invalidate();
 
-        return response()->json([
-          "message" => "Successfully logged in.",
-          "token" => $customerToken->plainTextToken
-        ]);
-      }
-    }
+		$request->session()->regenerateToken();
 
-    return response()->json(["message" => "Log in unsucessfully."]);
-  }
-
-  function destroy(Request $request): RedirectResponse{
-    Auth::guard('web')->logout();
-
-    $request->session()->invalidate();
-
-    $request->session()->regenerateToken();
-
-    return redirect('/');
-    }
+		return redirect('/');
+	}
 }
