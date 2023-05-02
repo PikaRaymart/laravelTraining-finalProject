@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\RegisterCustomerRequest;
 use App\Models\Customer;
 
-class RegisterUserController extends Controller{
+class RegisterCustomerController extends Controller{
 
   function index(){}
   
@@ -17,16 +17,14 @@ class RegisterUserController extends Controller{
       "email" => $request->email,
       "password" => bcrypt($request->password)
     ];
-    $newUser = Customer::create($customerData);
+    $newCustomer = Customer::create($customerData);
 
-    auth()->login($newUser);
-    $user = auth()->user();
+    auth("customer")->login($newCustomer);
+    $customer = authenticatedCustomer();
 
-    if (!($user instanceof Customer)) return response()->json(["message" =>"Server error"]);
-    
     return response()->json([
       "message" => "Successfully created account. Logging in.",
-      "token" => $user->createToken("customer-token", ["customer"])->plainTextToken
+      "token" => $customer->createToken("customer-token", ["customer"])->plainTextToken
     ]);
   }
 }

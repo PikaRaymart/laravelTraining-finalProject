@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\LoginUserController;
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CheckoutController;
-use App\Http\Controllers\Api\V1\RegisterUserController;
+use App\Http\Controllers\Api\V1\RegisterCustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +23,7 @@ $v1ApiHelper = [
 Route::post('/v1/admin', [AdminController::class, "store"]);
 
 // Handles registration for customers
-Route::controller(RegisterUserController::class)->group(function() {
+Route::controller(RegisterCustomerController::class)->group(function() {
   Route::post("/v1/register", "store");
 });
 
