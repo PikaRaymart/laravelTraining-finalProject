@@ -18,27 +18,40 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-        "auth" => [
-            "user" => auth()->user()?? auth("customer")->user()
-        ]
-    ]);
+	return Inertia::render('Welcome', [
+		'canLogin' => Route::has('login'),
+		'canRegister' => Route::has('register'),
+		'laravelVersion' => Application::VERSION,
+		'phpVersion' => PHP_VERSION,
+		"auth" => [
+			"user" => auth()->user()?? auth("customer")->user()
+		]
+	]);
+})->name("home");
+
+// Admin routes
+Route::middleware(["auth:sanctum", "admin"])->group(function() {
+  Route::get("/admin", function () {
+    return Inertia::render("Admin");
+  })->name("admin");
 });
 
+// Default
+Route::get("/books", function() {
+	
+	return Inertia::render("Books");
+})->name("books");
+
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+	return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get("/home", fn() => Inertia::render("Home/index"));
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+	Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 

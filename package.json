@@ -25,6 +25,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@inertiajs/inertia": "^0.11.1",
         "react-tracked": "^1.7.11",
         "styled-components": "^5.3.10",
         "use-immer": "^0.9.0"
