@@ -4,7 +4,8 @@ import "styled-components";
 declare module "styled-components" {
   export interface DefaultTheme {
     colors: {
-      navlink: string
+      red: string,
+      navlink: string,
     },
     breakpoints: {
       tablet: number,

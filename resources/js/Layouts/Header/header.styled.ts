@@ -2,47 +2,37 @@ import {
   breakpoint,
   fluid, 
   rem } from "@/Styled/functions";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-
-export const Signout = styled.li`
-  font-size: ${ rem(16) };
-  font-weight: 500;
-
-  a {
-    border-radius: ${ rem(56) };
-    border: 1px solid #FF4747;
-    color: #FF4747;
-    display: block;
-    padding: ${ rem(12) } ${ rem(24) };
-  }
-`
 
 export const NavItem = styled.li`
-  font-size: ${ rem(16) };
   font-weight: 500;
-
-  &:not(:last-of-type) {
-    margin-bottom: ${ rem(16) };
-  }
 
   a {
     border-radius: ${ rem(56) };
-    color: #404548;
+    color: ${ ({ theme }) => theme.colors.navlink };
     display: block;
     padding: ${ rem(12) } ${ rem(24) };
   }
 
   ${ breakpoint("tablet", `
-    &:not(:last-of-type) {
-      margin-bottom: 0;
-    }
+    margin-bottom: 0;
   `) }
+`
+
+export const Signout = styled(NavItem)`
+
+  a {
+    border: 1px solid ${ ({ theme }) => theme.colors.red };
+    color: ${ ({ theme }) => theme.colors.red };
+  }
 `
 
 export const Navlist = styled.ul`
   align-items: center;
   display: flex;
+  font-size: ${ rem(16) };
+  font-weight: 500;
   flex-direction: column;
 
   ${ breakpoint("tablet", `
@@ -50,19 +40,32 @@ export const Navlist = styled.ul`
   `) }
 `
 
-export const NavWrapper = styled.nav`
-  background-color: #FFFFFF;
-  inset: 0 0 auto auto;
-  min-height: 100vh;
-  opacity: 0;
-  padding-top: ${ rem(64) };
-  position: fixed;
+const NavTransition = css`
   transition: 
     opacity .3s ease,
     transform .3s ease,
     visibility .3s ease;
-  transform: translateX(100%);
+`
+
+const NavTransitionAppear = css`
+  opacity: 1;
+  visibility: visible;
+`
+
+const NavTransitionHide = css`
+  opacity: 0;
   visibility: hidden;
+`
+
+export const NavWrapper = styled.nav`
+  ${ NavTransition  };
+  ${ NavTransitionHide };
+  background-color: #FFFFFF;
+  inset: 0 0 auto auto;
+  min-height: 100vh;
+  padding-top: ${ rem(64) };
+  position: fixed;
+  transform: translateX(100%);
   width: ${ rem(180) };
 
   ${ breakpoint("tablet", `
@@ -71,14 +74,11 @@ export const NavWrapper = styled.nav`
 `
 
 export const DropdownOverlay = styled.div`
+  ${ NavTransition  };
+  ${ NavTransitionHide };
   background-color: rgba(0, 0, 0, .8);
   inset: 0;
-  opacity: 0;
   position: fixed;
-  transition:
-    opacity .3s ease,
-    visibility .3s ease;
-  visibility: hidden;
 `
 
 export const Hamburger = styled.button`
@@ -88,15 +88,12 @@ export const Hamburger = styled.button`
   z-index: 10;
 
   img {
-    transition: 
-      visibility .3s ease,
-      opacity .3s ease;
+    ${ NavTransition  };
     
     &:nth-of-type(2) {
+      ${ NavTransitionHide };
       inset: 0;
-      opacity: 0;
       position: absolute;
-      visibility: hidden;
     }
   }
 
@@ -105,25 +102,21 @@ export const Hamburger = styled.button`
     img {
 
       &:first-of-type {
-        opacity: 0;
-        visiblity: hidden;
+        ${ NavTransitionHide };
       }
 
       &:nth-of-type(2) {
-        opacity: 1;
-        visibility: visible;
+        ${ NavTransitionAppear };
       }
     }
 
     ~ ${ DropdownOverlay } {
-      opacity: 1;
-      visibility: visible;
+      ${ NavTransitionAppear };
     }
 
     ~${ NavWrapper } {
-      opacity: 1;
+      ${ NavTransitionAppear };
       transform: translateX(0);
-      visibility: visible;
     }
   }
 
@@ -140,4 +133,3 @@ export const Wrapper = styled.header`
   justify-content: space-between;
   padding: 0 ${ fluid(16, 8, 80) } 0 ${ fluid(16, 8, 80) };
 `
-

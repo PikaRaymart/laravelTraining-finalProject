@@ -1,10 +1,9 @@
 import { AdminHeader } from "@/Layouts/Admin/Header"
 import { PageWithLayout } from "@/app"
-import { usePage } from "@inertiajs/react"
+import { Head } from "@inertiajs/react"
 
 
 const AdminPage: PageWithLayout = () =>{
-  const { auth } = usePage().props
 
   return (
     <main>
@@ -13,6 +12,9 @@ const AdminPage: PageWithLayout = () =>{
 }
 
 AdminPage.layout = page => <>
+  <Head>
+    <title>Admin | Home</title>
+  </Head>
   <AdminHeader />
   { page }
 </>
