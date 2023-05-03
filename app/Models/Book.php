@@ -18,4 +18,8 @@ class Book extends Model{
     "stocks",
     "status"
   ];
+
+  function categories() {
+    return $this->belongsToMany(Category::class);
+  }
 }

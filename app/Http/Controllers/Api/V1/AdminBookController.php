@@ -7,6 +7,7 @@ use App\Http\Requests\V1\StoreBookRequest;
 use App\Http\Requests\V1\UpdateBookRequest;
 use App\Http\Resources\V1\AdminBookCollection;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,12 +47,6 @@ class AdminBookController extends Controller {
 	}
 
 	/**
-	 * Display the specified resource.
-	 */
-	public function show(){
-	}
-
-	/**
 	 * Stores a book
 	 */
 	function store(StoreBookRequest $request) {
@@ -64,7 +59,20 @@ class AdminBookController extends Controller {
 			$book["image"] = $filename;
 		}
 
-		Book::create($book);
+		$categories = array_map("trim", explode(",", $request->category));
+		$newBook = Book::create($book);
+
+		foreach ($categories as $categoryName) {
+			$category = Category::where("name", $categoryName)->first();
+
+			if ($category) {
+				$newBook->categories()->attach($category);
+			} else {
+				$newCategory = Category::create(["name" => $categoryName]);
+
+				$newBook->categories()->attach($newCategory);
+			}
+		}
 
     return response()->json(["message" => "Successfully created book."], 200);
 	}
