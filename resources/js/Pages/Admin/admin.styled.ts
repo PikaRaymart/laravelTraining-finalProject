@@ -4,6 +4,44 @@ import {
 import styled from "styled-components";
 
 
+export const CreateBookLink = styled.div`
+  inset: auto ${ rem(16) } ${ rem(24) } auto;
+  position: static;
+
+  a {
+    background-color: ${ ({ theme }) => theme.colors.dark1 };
+    border-radius: 50%;
+    color: #FFFFFF;
+    display: grid;
+    height: ${ rem(56) };
+    place-content: center;
+    width: ${ rem(56) };
+  }
+
+  span {
+    display: none;
+  }
+
+  ${ breakpoint("tablet", `
+    margin-left: ${ rem(16) };
+
+    a {
+      border-radius: ${ rem(56) };
+      height: auto;
+      padding: ${ rem(12) } ${ rem(24) };
+      width: auto;
+    }
+
+    img {
+      display: none;
+    }
+
+    span {
+      display: block;
+    }
+  `) }
+`
+
 export const RemoveFilterDesktop = styled.div`
 
   ${ breakpoint("desktop",`
@@ -19,6 +57,7 @@ export const TopControls = styled.div`
   padding: ${ rem(20) } ${ rem(16) } 0 ${ rem(16) };
 
   ${ breakpoint("tablet", `
+    grid-template-columns: 1fr max-content max-content;
     padding: ${ rem(16) } ${ rem(24) } 0 ${ rem(24) };
   `) }
 `

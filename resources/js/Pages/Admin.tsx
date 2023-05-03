@@ -1,13 +1,14 @@
 import { useBooksFilters } from "@/Hooks/useBooksFilters"
 import { AdminHeader } from "@/Layouts/Admin/Header"
 import { PageWithLayout } from "@/app"
-import { Head } from "@inertiajs/react"
+import { Head, Link } from "@inertiajs/react"
 import { 
   RemoveFilterDesktop,
   ShowFiltersDesktop, 
   MainGridContainer, 
   MainWrapper, 
-  TopControls} from "./Admin/admin.styled"
+  TopControls,
+  CreateBookLink} from "./Admin/admin.styled"
 import { Searchbar } from "@/Components/searchbar"
 import { Filters } from "@/Components/filters"
 
@@ -26,7 +27,15 @@ const AdminPage: PageWithLayout = () =>{
           <RemoveFilterDesktop>
             <Filters />
           </RemoveFilterDesktop>
-          {/* Create Product button */}
+          <CreateBookLink>
+            <Link href={ route("admin") }>
+              <img 
+                src="/images/icons/create-book.png" 
+                alt=""
+                aria-hidden="true" />
+              <span>Create Product</span>
+            </Link>
+          </CreateBookLink>
         </TopControls>
       </MainGridContainer>
     </MainWrapper>
