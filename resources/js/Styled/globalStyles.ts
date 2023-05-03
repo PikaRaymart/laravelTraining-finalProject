@@ -63,6 +63,7 @@ const globalStyle = createGlobalStyle`
   }
   /* Font Families */
   body {
+    font-family: 'Noto Sans', sans-serif;
     min-height: 100vh;
     max-width: 100rem;
     margin: 0 auto;

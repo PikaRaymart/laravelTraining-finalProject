@@ -7,9 +7,15 @@ export type BooksFilters = {
   categories: string[]
 }
 
+export type Book = {
+
+}
+
 type Draft = {
   reactTracked: boolean,
-  booksFilters: BooksFilters
+  booksFilters: BooksFilters,
+  books: Book[],
+  featuredBooks: Book[]
 }
 
 type Action = |
@@ -36,7 +42,9 @@ const initialState: Draft = {
   reactTracked: true,
   booksFilters: {
     categories: []
-  }
+  },
+  books: [],
+  featuredBooks: []
 }
 
 const useValue = (): [ Draft, Dispatch<Action> ] => {
