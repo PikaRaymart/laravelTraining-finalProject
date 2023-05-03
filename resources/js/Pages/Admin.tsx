@@ -3,11 +3,13 @@ import { AdminHeader } from "@/Layouts/Admin/Header"
 import { PageWithLayout } from "@/app"
 import { Head } from "@inertiajs/react"
 import { 
-  FiltersWrapper, 
+  RemoveFilterDesktop,
+  ShowFiltersDesktop, 
   MainGridContainer, 
   MainWrapper, 
   TopControls} from "./Admin/admin.styled"
 import { Searchbar } from "@/Components/searchbar"
+import { Filters } from "@/Components/filters"
 
 
 const AdminPage: PageWithLayout = () =>{
@@ -15,13 +17,15 @@ const AdminPage: PageWithLayout = () =>{
 
   return (
     <MainWrapper>
-      <FiltersWrapper>
-
-      </FiltersWrapper>
+      <ShowFiltersDesktop>
+        <Filters />
+      </ShowFiltersDesktop>
       <MainGridContainer>
         <TopControls>
           <Searchbar />
-          {/* Filters */}
+          <RemoveFilterDesktop>
+            <Filters />
+          </RemoveFilterDesktop>
           {/* Create Product button */}
         </TopControls>
       </MainGridContainer>

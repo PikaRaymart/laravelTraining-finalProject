@@ -6,6 +6,14 @@ declare module "styled-components" {
     colors: {
       red: string,
       navlink: string,
+      dark1: string,
+      dark2: string,
+      dark3: string,
+      dark4: string,
+      blue: string,
+      grey1: string,
+      grey2: string,
+      grey3: string
     },
     breakpoints: {
       tablet: number,

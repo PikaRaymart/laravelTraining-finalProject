@@ -4,7 +4,18 @@ import {
 import styled from "styled-components";
 
 
+export const RemoveFilterDesktop = styled.div`
+
+  ${ breakpoint("desktop",`
+    display: none;
+  `) }
+`
+
 export const TopControls = styled.div`
+  align-items: center;
+  display: grid;
+  gap: 0 ${ rem(8) };
+  grid-template-columns: 1fr max-content;
   padding: ${ rem(20) } ${ rem(16) } 0 ${ rem(16) };
 
   ${ breakpoint("tablet", `
@@ -12,7 +23,7 @@ export const TopControls = styled.div`
   `) }
 `
 
-export const FiltersWrapper = styled.div`
+export const ShowFiltersDesktop = styled.div`
   display: none;
 
   ${ breakpoint("desktop", `

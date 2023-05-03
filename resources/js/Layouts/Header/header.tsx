@@ -6,7 +6,7 @@ import {
   Navlist, 
   Wrapper } from "./header.styled"
 import ApplicationLogo from "@/Components/ApplicationLogo"
-import { useState } from "react"
+import { useExpansion } from "@/Hooks/useExpansion"
 
 
 type HeaderProps = {
@@ -14,9 +14,7 @@ type HeaderProps = {
 }
 
 const Header = ({ children }: HeaderProps) => {
-  const [ isExpanded, setIsExpanded ] = useState(false)
-
-  const handleExpansion = () => setIsExpanded(prev => !prev)
+  const [ isExpanded, handleExpansion ] = useExpansion()
 
   return (
     <Wrapper>

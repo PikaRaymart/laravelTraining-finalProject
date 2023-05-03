@@ -67,6 +67,7 @@ export const NavWrapper = styled.nav`
   position: fixed;
   transform: translateX(100%);
   width: ${ rem(180) };
+  z-index: 8;
 
   ${ breakpoint("tablet", `
     all: revert;
@@ -127,9 +128,12 @@ export const Hamburger = styled.button`
 
 export const Wrapper = styled.header`
   align-items: center;
+  background-color: #FFFFFF;
   border-bottom: 1px solid rgba(0, 0, 0, .1);
   display: flex;
-  height: ${ fluid(60, 9.6, 96) };
+  height: ${ fluid(60, 10.25, 96) };
   justify-content: space-between;
   padding: 0 ${ fluid(16, 8, 80) } 0 ${ fluid(16, 8, 80) };
+  position: relative;
+  z-index: 10;
 `
