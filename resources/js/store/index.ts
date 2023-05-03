@@ -3,11 +3,18 @@ import { createContainer } from "react-tracked"
 import { useImmerReducer } from "use-immer"
 
   
-type Draft = {
-  reactTracked: boolean
+export type BooksFilters = {
+  categories: string[]
 }
+
+type Draft = {
+  reactTracked: boolean,
+  booksFilters: BooksFilters
+}
+
 type Action = |
-  { type: "START_TRACKING" }
+  { type: "START_TRACKING" } |
+  { type: "SET_BOOKS_FILTERS", payload: BooksFilters }
 
 const reducer = ( draft: Draft, action: Action ) => {
   
@@ -15,13 +22,21 @@ const reducer = ( draft: Draft, action: Action ) => {
     case "START_TRACKING":
       
       return
+    
+    case "SET_BOOKS_FILTERS": 
+      draft.booksFilters = action.payload
+
+      return
     default:
       return draft
   } 
 }
 
 const initialState: Draft = {
-  reactTracked: true
+  reactTracked: true,
+  booksFilters: {
+    categories: []
+  }
 }
 
 const useValue = (): [ Draft, Dispatch<Action> ] => {

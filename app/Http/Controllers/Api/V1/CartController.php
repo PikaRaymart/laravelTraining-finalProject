@@ -15,9 +15,9 @@ class CartController extends Controller{
     // returns the populated cart
     $customer = authenticatedCustomer();
 
-    $info = $customer->with("carts.books")->first();
+    $cart = $customer->carts()->with("books")->get();
 
-    return new CartBookCollection($info["carts"]);
+    return new CartBookCollection($cart);
   }
 
   // Adds a book in the cart
@@ -25,11 +25,11 @@ class CartController extends Controller{
     $customer = authenticatedCustomer();
     $foundBook = Book::where("status", "=", "active")
       ->find($request->bookId);
-    
+
     if (!$foundBook) return response()->json(["message" => "No active book found with this id."], 404);
 
     if ($foundBook->stocks < $request->quantity) return response()->json(["message" => "Maximum quantity reached."], 400);
-    
+ 
     // check if the book is already present in the cart,
     if (count(array_filter($customer->carts->toArray(), fn($item) => $item["book_id"]==$foundBook->id))) {
       $foundCart = Cart::where("customer_id", $customer->id)
@@ -50,7 +50,7 @@ class CartController extends Controller{
     };
     // create a cart document
     $newCart = Cart::create([
-      "customer_id" => "1",
+      "customer_id" => $customer->id,
       "book_id" => $foundBook->id,
       "quantity" => $request->quantity
     ]);

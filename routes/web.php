@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\AdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,9 +32,9 @@ Route::get('/', function () {
 
 // Admin routes
 Route::middleware(["auth:sanctum", "admin"])->group(function() {
-  Route::get("/admin", function () {
-    return Inertia::render("Admin");
-  })->name("admin");
+	Route::controller(AdminController::class)->group(function() {
+		Route::get("/admin", "index")->name("admin");
+	});
 });
 
 // Default
