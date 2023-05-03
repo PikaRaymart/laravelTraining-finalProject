@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 export const CreateBookLink = styled.div`
   inset: auto ${ rem(16) } ${ rem(24) } auto;
-  position: static;
+  position: fixed;
 
   a {
     background-color: ${ ({ theme }) => theme.colors.dark1 };
@@ -24,6 +24,7 @@ export const CreateBookLink = styled.div`
 
   ${ breakpoint("tablet", `
     margin-left: ${ rem(16) };
+    position: static;
 
     a {
       border-radius: ${ rem(56) };

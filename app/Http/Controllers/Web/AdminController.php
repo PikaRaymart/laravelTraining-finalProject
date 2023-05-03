@@ -22,4 +22,9 @@ class AdminController extends Controller{
       "books" => new AdminBookCollection($books)
     ]);
   }
+
+  function create() {
+    
+    return Inertia::render("Admin/Book/Create");
+  }
 }

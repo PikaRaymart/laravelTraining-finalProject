@@ -25,11 +25,11 @@ const Header = ({ children }: HeaderProps) => {
         onClick={ handleExpansion }
         aria-expanded={ isExpanded }>
           <img 
-            src="images/icons/hamburger.png"
+            src="/images/icons/hamburger.png"
             alt=""
             aria-hidden="true" />
           <img 
-            src="images/icons/hamburger-close.png" 
+            src="/images/icons/hamburger-close.png" 
             alt=""
             aria-hidden="true" />
       </Hamburger>

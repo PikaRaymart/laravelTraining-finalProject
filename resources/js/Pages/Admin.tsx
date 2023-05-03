@@ -28,7 +28,7 @@ const AdminPage: PageWithLayout = () =>{
             <Filters />
           </RemoveFilterDesktop>
           <CreateBookLink>
-            <Link href={ route("admin") }>
+            <Link href={ route("create-book") }>
               <img 
                 src="/images/icons/create-book.png" 
                 alt=""
