@@ -36,6 +36,13 @@ export const FormControls = styled.div`
   position: fixed;
 `
 
+export const FormError = styled.p`
+  color: ${ ({ theme }) => theme.colors.red };
+  font-size: ${ rem(14) };
+  font-weight: 500;
+  margin: ${ rem(2) } 0 0 ${ rem(12) };
+`
+
 export const Input = styled.input`
   border: 1px solid ${ ({  theme }) => theme.colors.grey1 };
   border-radius: ${ rem(4) };

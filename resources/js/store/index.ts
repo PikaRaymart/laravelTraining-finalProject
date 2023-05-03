@@ -8,7 +8,14 @@ export type BooksFilters = {
 }
 
 export type Book = {
-
+  title: string,
+  author: string,
+  description: string,
+  image: File | null,
+  status: string,
+  category: string,
+  stocks: number,
+  price: number
 }
 
 type Draft = {

@@ -35,6 +35,7 @@ Route::middleware(["auth:sanctum", "admin"])->group(function() {
 	Route::controller(AdminController::class)->group(function() {
 		Route::get("/admin", "index")->name("admin");
 		Route::get("/admin/create", "create")->name("create-book");
+		Route::post("/admin/store", "store")->name("store-book");
 	});
 });
 
