@@ -105,8 +105,9 @@ export const PhotoLabel = styled.label`
 `
 
 export const FloatingPhoto = styled.img`
-  inset: 0;
-  position: absolute;
+  margin: 0 auto;
+  height: 100%;
+  width: 80%;
 `
 
 export const PhotoInnerContainer = styled.div`
@@ -133,7 +134,7 @@ type PhotoContainerProps = {
 
 export const PhotoContainer = styled.div<PhotoContainerProps>`
   aspect-ratio: 1/1;
-  background-color: #F9FAFC;
+  background-color: ${ ({ hasImage }) => hasImage? "" : "#F9FAFC" };
   border-radius: ${ rem(8) };
   border: ${ ({ theme, hasImage }) => hasImage? "" : `2px dashed ${ theme.colors.dark2 }` };
   max-width: ${ rem(400) };

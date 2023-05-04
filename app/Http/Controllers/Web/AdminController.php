@@ -14,7 +14,7 @@ class AdminController extends Controller{
   // Shows all the books for the admin
   function index() {
     $categories = Category::all();
-    $books = Book::paginate(2);
+    $books = Book::paginate(8);
 
     return Inertia::render("Admin", [
       "booksFilters" => [
