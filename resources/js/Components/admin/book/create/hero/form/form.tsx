@@ -50,7 +50,7 @@ const Form = () =>{
   return (
     <Wrapper onSubmit={ handleFormSubmit }>
       <FormInnerContainer>
-        <PhotoContainer>
+        <PhotoContainer hasImage={ !!data.image }>
           <input
             className="sr-only"
             type="file"

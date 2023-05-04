@@ -1,44 +1,15 @@
-import { useBooksFilters } from "@/Hooks/useBooksFilters"
+import { useSetupBooks } from "@/Hooks/useSetupBooks"
 import { AdminHeader } from "@/Layouts/Admin/Header"
 import { PageWithLayout } from "@/app"
-import { Head, Link } from "@inertiajs/react"
-import { 
-  RemoveFilterDesktop,
-  ShowFiltersDesktop, 
-  MainGridContainer, 
-  MainWrapper, 
-  TopControls,
-  CreateBookLink} from "./Admin/admin.styled"
-import { Searchbar } from "@/Components/searchbar"
-import { Filters } from "@/Components/filters"
+import { Head } from "@inertiajs/react"
+import { AdminHome } from "@/Components/admin/home"
 
 
 const AdminPage: PageWithLayout = () =>{
-  useBooksFilters()
+  useSetupBooks()
 
   return (
-    <MainWrapper>
-      <ShowFiltersDesktop>
-        <Filters />
-      </ShowFiltersDesktop>
-      <MainGridContainer>
-        <TopControls>
-          <Searchbar />
-          <RemoveFilterDesktop>
-            <Filters />
-          </RemoveFilterDesktop>
-          <CreateBookLink>
-            <Link href={ route("create-book") }>
-              <img 
-                src="/images/icons/create-book.png" 
-                alt=""
-                aria-hidden="true" />
-              <span>Create Product</span>
-            </Link>
-          </CreateBookLink>
-        </TopControls>
-      </MainGridContainer>
-    </MainWrapper>
+    <AdminHome />
   )
 }
 

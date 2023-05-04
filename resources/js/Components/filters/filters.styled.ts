@@ -76,6 +76,7 @@ export const CategoryList = styled.ul`
 export const Legend = styled.legend`
   color: ${ ({ theme }) => theme.colors.dark1 };
   font-weight: 600;
+  font-size: ${ rem(14) };
   margin-bottom: ${ rem(12) };
   position: static;
 `
@@ -92,6 +93,7 @@ export const Fieldset = styled.fieldset`
 export const FilterHeading = styled.h2`
   color: ${ ({ theme }) => theme.colors.dark1 };
   font-weight: 600;
+  font-size: ${ rem(16) };
   margin: 0 0 ${ rem(24) } ${ rem(48) };
 `
 
@@ -120,6 +122,7 @@ export const FilterInnerContainer = styled.div`
   transform: translateX(100%);
   visibility: hidden;
   width: ${ rem(300) };
+  z-index: 10;
 
   &::-webkit-scrollbar {
     display: none;

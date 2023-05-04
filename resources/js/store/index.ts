@@ -18,16 +18,31 @@ export type Book = {
   price: number
 }
 
+type Link = {
+  url: string | null,
+  label: string,
+  active: boolean
+}
+
+export type BooksMetaData = {
+  meta: {
+    links: Link[]
+  }
+}
+
 type Draft = {
   reactTracked: boolean,
   booksFilters: BooksFilters,
   books: Book[],
-  featuredBooks: Book[]
+  booksMetaData?: BooksMetaData,
+  featuredBooks?: Book[]
 }
 
 type Action = |
   { type: "START_TRACKING" } |
-  { type: "SET_BOOKS_FILTERS", payload: BooksFilters }
+  { type: "SET_BOOKS_FILTERS", payload: BooksFilters } |
+  { type: "SET_BOOKS", payload: Book[] } |
+  { type: "SET_BOOKS_METADATA", payload: BooksMetaData }
 
 const reducer = ( draft: Draft, action: Action ) => {
   
@@ -38,6 +53,15 @@ const reducer = ( draft: Draft, action: Action ) => {
     
     case "SET_BOOKS_FILTERS": 
       draft.booksFilters = action.payload
+
+      return
+    case "SET_BOOKS":
+      draft.books = action.payload
+
+      return
+
+    case "SET_BOOKS_METADATA":
+      draft.booksMetaData = action.payload
 
       return
     default:
@@ -51,7 +75,6 @@ const initialState: Draft = {
     categories: []
   },
   books: [],
-  featuredBooks: []
 }
 
 const useValue = (): [ Draft, Dispatch<Action> ] => {

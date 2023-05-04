@@ -135,7 +135,7 @@ export const PhotoContainer = styled.div<PhotoContainerProps>`
   aspect-ratio: 1/1;
   background-color: #F9FAFC;
   border-radius: ${ rem(8) };
-  border: ${ ({ theme, hasImage }) => hasImage? "" : `2px dashed ${ theme.colors.dark2 }` }
+  border: ${ ({ theme, hasImage }) => hasImage? "" : `2px dashed ${ theme.colors.dark2 }` };
   max-width: ${ rem(400) };
   margin: 0 auto ${ rem(16) };
   position: relative;
