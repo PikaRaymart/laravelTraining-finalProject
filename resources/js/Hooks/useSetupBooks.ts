@@ -28,5 +28,12 @@ export const useSetupBooks = () =>{
       type: "SET_BOOKS",
       payload: books.data
     })
+    
+    dispatch({
+      type: "SET_BOOKS_METADATA",
+      payload: {
+        meta: books.meta
+      }
+    })
   }, [])
 }

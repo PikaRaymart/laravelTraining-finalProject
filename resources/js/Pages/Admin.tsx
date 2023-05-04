@@ -15,6 +15,7 @@ const AdminPage: PageWithLayout = () =>{
 
 AdminPage.layout = page => <>
   <Head>
+    <meta charSet="utf-8" />
     <title>Admin | Home</title>
   </Head>
   <AdminHeader />

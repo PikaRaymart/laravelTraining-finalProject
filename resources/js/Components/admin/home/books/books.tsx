@@ -9,6 +9,7 @@ import {
   Stocks, 
   Title, 
   Wrapper } from "./books.styled"
+import { BooksPaginator } from "@/Components/paginator"
 
 
 const Books = () =>{
@@ -37,6 +38,7 @@ const Books = () =>{
       <List>
         { renderBooksList() }
       </List>
+      <BooksPaginator />
     </Wrapper>
   )
 }
