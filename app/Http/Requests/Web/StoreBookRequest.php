@@ -5,6 +5,8 @@ namespace App\Http\Requests\Web;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+use function GuzzleHttp\Promise\all;
+
 class StoreBookRequest extends FormRequest{
 
 	function authorize(): bool{
@@ -22,16 +24,16 @@ class StoreBookRequest extends FormRequest{
       "stocks" => "required|integer|min:1",
       "status" => ["required", Rule::in(["Active", "Draft"])]
 		];
-
+		
 		if ($this->request->all()["status"]==="Draft") {
-			$rules["author"] = "sometimes|required|string";
-			$rules["description"] = "sometimes|required|string";
-			$rules["category"] = "sometimes|required|string";
-			$rules["image"] = "sometimes|required";
-			$rules["price"] = "sometimes|required|integer|min:0";
-			$rules["stocks"] = "sometimes|required|integer|min:0";
+			$rules["author"] = "nullable|string";
+			$rules["description"] = "nullable|string";
+			$rules["category"] = "nullable|string";
+			$rules["image"] = "nullable";
+			$rules["price"] = "nullable|integer|min:0";
+			$rules["stocks"] = "nullable|integer|min:0";
 		}
-
+		
 		return $rules;
 	}
 }

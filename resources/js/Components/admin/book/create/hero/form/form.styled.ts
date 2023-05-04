@@ -2,15 +2,24 @@ import {
   breakpoint, 
   fluid, 
   rem } from "@/Styled/functions";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 
-export const FormOption = styled.button`
+type FormOptionProps = {
+  notAvailable?: boolean
+}
+
+export const FormOption = styled.button<FormOptionProps>`
   border-radius: ${ rem(56) };
   border: 1.5px solid;
   font-size: ${ fluid(14, 3.2, 16) };
   font-weight: 500;
   padding: ${ fluid(10, 2.4, 12) } ${ fluid(20, 4.8, 24) };
+
+  ${ ({ notAvailable }) => notAvailable && css`
+    cursor: not-allowed;
+    opacity: .5;
+  ` }
 `
 
 export const FormDiscard = styled(FormOption)`
@@ -54,6 +63,7 @@ export const Input = styled.input`
 `
 
 export const Textarea = styled(Input)`
+  display: block;
   height: auto;
 `
 
@@ -62,7 +72,12 @@ export const InputLabel = styled.label`
   display: block;
   font-size: ${ rem(14) };
   font-weight: 700;
-  margin-bottom: ${ rem(8) };
+
+  span {
+    color: ${ ({ theme }) => theme.colors.dark1 };
+    font-size: ${ rem(12) };
+    font-weight: 300;
+  }
 `
 
 export const InputContainer = styled.div`
@@ -89,6 +104,11 @@ export const PhotoLabel = styled.label`
   `) }
 `
 
+export const FloatingPhoto = styled.img`
+  inset: 0;
+  position: absolute;
+`
+
 export const PhotoInnerContainer = styled.div`
   display: grid;
   inset: 0;
@@ -107,11 +127,15 @@ export const PhotoInnerContainer = styled.div`
   }
 `
 
-export const PhotoContainer = styled.div`
+type PhotoContainerProps = {
+  hasImage?: boolean
+}
+
+export const PhotoContainer = styled.div<PhotoContainerProps>`
   aspect-ratio: 1/1;
   background-color: #F9FAFC;
   border-radius: ${ rem(8) };
-  border: 2px dashed ${ ({ theme }) => theme.colors.dark2 };
+  border: ${ ({ theme, hasImage }) => hasImage? "" : `2px dashed ${ theme.colors.dark2 }` }
   max-width: ${ rem(400) };
   margin: 0 auto ${ rem(16) };
   position: relative;

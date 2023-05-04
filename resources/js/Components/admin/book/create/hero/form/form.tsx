@@ -1,11 +1,13 @@
 import { useForm } from "@inertiajs/react"
 import { 
+  FloatingPhoto,
   FormControls,
   FormDiscard,
   FormError,
   FormInnerContainer, 
   FormSave, 
   Input, 
+  InputLabel,
   InputContainer, 
   PhotoContainer, 
   PhotoInnerContainer, 
@@ -13,9 +15,13 @@ import {
   PhotoNote, 
   Textarea, 
   Wrapper } from "./form.styled"
-import InputLabel from "@/Components/InputLabel"
-import { FormEvent, useCallback } from "react"
+import { FormEvent } from "react"
 import { Book } from "@/store"
+import { 
+  checkErrors, 
+  formDraftValidity, 
+  formValidity } from "./helpers"
+import { useBookImage } from "./form.hooks"
 
 
 const Form = () =>{
@@ -25,33 +31,20 @@ const Form = () =>{
     description: "",
     category: "",
     image: null,
-    price: 0,
-    stocks: 0,
+    price: 1,
+    stocks: 1,
     status: ""
   })
+  const imageUrl = useBookImage(data.image)
 
   const handleFormSubmit = ( event: FormEvent ) => {
     event.preventDefault()
 
-    const formData = new FormData()
-
-    for (const [key, val] of Object.entries(data)) {
-      if ( val && (typeof val ==="string" || val instanceof Blob ) ) {
-        formData.append(key, val)
-      }
-    }
-
-    post("/admin/store")
-  } 
-  
-  const checkErrors = ( e: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement, name: keyof typeof errors ) => {
-    if ( errors[name] ) {
-      e.setAttribute("aria-invalid", "true")
-      e.setAttribute("aria-describedBy", `${ name }-error`)
-    } else {
-      e.removeAttribute("aria-invalid")
-      e.removeAttribute("aria-describedBy")
-    }
+    if ( ( data.status==="Active" && !formValidity(data) ) || !formDraftValidity(data) ) return
+   
+    post("/admin/store", {
+      forceFormData: true
+    })
   }
 
   return (
@@ -73,6 +66,9 @@ const Form = () =>{
           </PhotoInnerContainer>
           <PhotoLabel htmlFor="image">
             <span className="sr-only">Chose book photo</span>
+            { imageUrl && <FloatingPhoto
+              src={ imageUrl }
+              alt={ data.title?? "" } /> }
           </PhotoLabel>
         </PhotoContainer>
         <PhotoNote>Make sure to choose a proper image file. Try using a much bigger image so resolution will be fine when viewing a single book.
@@ -84,7 +80,7 @@ const Form = () =>{
             id="status"
             name="status"
             value={ data.status }
-            ref={ e => e && checkErrors(e, "status") }
+            ref={ e => e && checkErrors(e, "status", errors.status) }
             onChange={ e => setData("status", e.target.value) }>
               <option value=""></option>
               <option value="Active">Active</option>
@@ -101,7 +97,7 @@ const Form = () =>{
             id="title"
             name="title"
             value={ data.title }
-            ref={ e => e && checkErrors(e, "title") }
+            ref={ e => e && checkErrors(e, "title", errors.title, ) }
             onChange={ e => setData("title", e.target.value) } />
           { errors.title && <FormError id="title-error">{ errors.title }</FormError> }
         </InputContainer>
@@ -112,18 +108,21 @@ const Form = () =>{
             id="author"
             name="author"
             value={ data.author }
-            ref={ e => e && checkErrors(e, "author") }
+            ref={ e => e && checkErrors(e, "author", errors.author) }
             onChange={ e => setData("author", e.target.value) } />
           { errors.author && <FormError id="author-error">{ errors.author }</FormError> }
         </InputContainer>
         <InputContainer>
-          <InputLabel htmlFor="status">Book category</InputLabel>
+          <InputLabel htmlFor="status">
+            Book category
+            <span> (comma separate for multiple categories)</span>
+          </InputLabel>
           <Input
             type="text"
             id="category"
             name="category"
             value={ data.category }
-            ref={ e => e && checkErrors(e, "category") }
+            ref={ e => e && checkErrors(e, "category", errors.category) }
             onChange={ e => setData("category", e.target.value) } />
           { errors.category && <FormError id="category-error">{ errors.category }</FormError> }
         </InputContainer>
@@ -133,8 +132,9 @@ const Form = () =>{
             type="number"
             id="stocks"
             name="stocks"
+            min="1"
             value={ data.stocks??0 }
-            ref={ e => e && checkErrors(e, "stocks") }
+            ref={ e => e && checkErrors(e, "stocks", errors.stocks) }
             onChange={ e => setData("stocks", parseInt(e.target.value)) } />
           { errors.stocks && <FormError id="stocks-error">{ errors.stocks }</FormError> }
         </InputContainer>
@@ -144,8 +144,9 @@ const Form = () =>{
             type="number"
             id="price"
             name="price"
+            min="1"
             value={ data.price??0 }
-            ref={ e => e && checkErrors(e, "price") }
+            ref={ e => e && checkErrors(e, "price", errors.price) }
             onChange={ e => setData("price", parseInt(e.target.value)) } />
           { errors.price && <FormError id="price-error">{ errors.price }</FormError> }
         </InputContainer>
@@ -157,13 +158,17 @@ const Form = () =>{
             name="status"
             rows={5}
             value={ data.description }
-            ref={ e => e && checkErrors(e, "description") }
+            ref={ e => e && checkErrors(e, "description", errors.description) }
             onChange={ e => setData("description", e.target.value) } />
           { errors.description && <FormError id="description-error">{ errors.description }</FormError> }
         </InputContainer>
       </FormInnerContainer>
       <FormControls>
-        <FormSave type="submit">Save</FormSave>
+        <FormSave
+          notAvailable={ !data.status || (data.status==="Active" && !formValidity(data)) || !formDraftValidity(data) } 
+          type="submit"
+          aria-disabled={ !data.status || (data.status==="Active" && !formValidity(data)) || !formDraftValidity(data) }>Save
+        </FormSave>
         <FormDiscard type="button">Discard</FormDiscard>
       </FormControls>
     </Wrapper>

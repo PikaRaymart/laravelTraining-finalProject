@@ -3,6 +3,7 @@
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\BookController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,6 +35,8 @@ Route::get('/', function () {
 Route::middleware(["auth:sanctum", "admin"])->group(function() {
 	Route::controller(AdminController::class)->group(function() {
 		Route::get("/admin", "index")->name("admin");
+	});
+	Route::controller(BookController::class)->group(function() {
 		Route::get("/admin/create", "create")->name("create-book");
 		Route::post("/admin/store", "store")->name("store-book");
 	});
