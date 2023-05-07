@@ -11,7 +11,7 @@ export const checkErrors = ( e: HTMLInputElement | HTMLTextAreaElement | HTMLSel
   }
 }
 
-export const formValidity = (data: Book) =>{
+export const formValidity = (data: Omit<Book, "id">) =>{
   for (const value of Object.values(data)) {
     if (!value) return false
   }
@@ -19,7 +19,7 @@ export const formValidity = (data: Book) =>{
   return true
 }
 
-export const formDraftValidity = (data: Book) => {
+export const formDraftValidity = (data: Omit<Book, "id">) => {
   
   return !data.title? false : true
 }

@@ -9,7 +9,6 @@ use App\Http\Resources\V1\AdminBookCollection;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AdminBookController extends Controller {
 
@@ -17,8 +16,6 @@ class AdminBookController extends Controller {
 	 * Displays all books for admin.
 	 */
 	public function index(Request $request){
-		$books = DB::table("books")->orderBy("id")->simplePaginate(15);
-
 		$query = Book::query();
     
     // Filter by category

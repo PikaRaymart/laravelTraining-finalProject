@@ -25,7 +25,7 @@ import { useBookImage } from "./form.hooks"
 
 
 const Form = () =>{
-  const { data, post, setData, errors } = useForm<Book>({
+  const { data, post, setData, errors } = useForm<Omit<Book, "id">>({
     title: "",
     author: "",
     description: "",

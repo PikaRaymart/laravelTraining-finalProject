@@ -56,6 +56,10 @@ export const Table = styled.table`
   border-spacing: 0;
   max-width: ${ rem(1000) };
   width: 100%;
+
+  input {
+    appearance: auto;
+  }
 `
 
 type StatusProps = {

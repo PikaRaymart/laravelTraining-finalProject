@@ -35,7 +35,7 @@ class BookController extends Controller{
   // Stores the sent book form data
   function store(StoreBookRequest $request) {
     $book = $request->all();
-    
+   
     if ($request->hasFile("image")) {
 			$image = $request->file("image");
 			$filename = time()."-".$image->getClientOriginalName();
@@ -43,23 +43,20 @@ class BookController extends Controller{
 			$book["image"] = $filename;
 		}
 
+    $categories = array_map("trim", explode(",", $request->category));
 		$newBook = Book::create($book);
   
-    if ($request->categories) {
-      $categories = array_map("trim", explode(",", $request->category));
-    
-      foreach ($categories as $categoryName) {
-        $category = Category::where("name", $categoryName)->first();
-  
-        if ($category) {
-          $newBook->categories()->attach($category);
-        } else {
-          $newCategory = Category::create(["name" => $categoryName]);
-  
-          $newBook->categories()->attach($newCategory);
-        }
-      }
-    }
+    foreach ($categories as $categoryName) {
+			$category = Category::where("name", $categoryName)->first();
+
+			if ($category) {
+				$newBook->categories()->attach($category);
+			} else {
+				$newCategory = Category::create(["name" => $categoryName]);
+
+				$newBook->categories()->attach($newCategory);
+			}
+		}
 
     return redirect("admin");
   }

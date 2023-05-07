@@ -14,15 +14,23 @@ import {
   PriceInput,
   FiltersOptionsContainer,
   FilterNow,
-  FilterReset} from "./filters.styled"
+  FilterReset,
+  PriceLabel} from "./filters.styled"
 import { useTrackedState } from "@/store"
-import { useForm } from "@inertiajs/react"
+import { useFilter } from "./filter.hook"
 
 
 const Filters = () => {
-  const [ isExpanded, handleExpansion ] = useExpansion()
   const { booksFilters: { categories } } = useTrackedState()
-  const {} = useForm()
+  const {
+    isExpanded,
+    handleExpansion,
+    handleFormSubmit,
+    handleCategoryChange,
+    handlePriceChange,
+    reset,
+    data
+  } = useFilter()
 
   const renderCategoryInputs = () => {
 
@@ -31,15 +39,16 @@ const Filters = () => {
         <input
           id={ category } 
           type="checkbox"
-          name={ category }
-          value={ category } />
+          value={ category }
+          checked={ data.category.includes(category) }
+          onChange={ () => handleCategoryChange(category) } />
         <CategoryLabel htmlFor={ category }>{ category }</CategoryLabel>
       </CategoryItem>
     ))
   }
-
+console.log(data)
   return (
-    <Wrapper>
+    <Wrapper onSubmit={ handleFormSubmit }>
       <FiltersTrigger 
         onClick={ handleExpansion }
         type="button"
@@ -69,27 +78,34 @@ const Filters = () => {
         <Fieldset>
           <Legend>Price</Legend>
           <PriceInputWrapper>
+            <PriceLabel htmlFor="price-from">Minimum</PriceLabel>
             <PriceInput
+              type="number"
+              min={ 0 }
               name="price-from"
               id="price-from"
-              placeholder="From: 100" />
-            <label 
-              className="sr-only"
-              htmlFor="price-from">Minimum price</label>
+              placeholder="From: 100"
+              value={ data.minPrice }
+              onChange={ e => handlePriceChange(e, "minPrice") } />
           </PriceInputWrapper>
           <PriceInputWrapper>
+            <PriceLabel htmlFor="price-to">Maximum</PriceLabel>
             <PriceInput
+              type="number"
+              min={ 0 }
               name="price-to"
               id="price-to"
-              placeholder="To: 200" />
-            <label 
-              className="sr-only"
-              htmlFor="price-to">Minimum price</label>
+              placeholder="To: 200"
+              value={ data.maxPrice }
+              onChange={ e => handlePriceChange(e, "maxPrice") } />
+            
           </PriceInputWrapper>
         </Fieldset>
         <FiltersOptionsContainer>
           <FilterNow type="submit">Filter now</FilterNow>
-          <FilterReset type="button">Reset</FilterReset>
+          <FilterReset 
+            type="button"
+            onClick={ () => reset() }>Reset</FilterReset>
         </FiltersOptionsContainer>
       </FilterInnerContainer>
     </Wrapper>

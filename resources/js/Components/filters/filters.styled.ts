@@ -33,6 +33,10 @@ export const FiltersOptionsContainer = styled.div`
   padding: 0 ${ rem(16) };
 `
 
+export const PriceLabel = styled.label`
+  font-size: ${ rem(15) };
+`
+
 export const PriceInput = styled.input`
   background-color: rgba(59, 86, 255, .02);
   border-radius: ${ rem(56) };
@@ -49,7 +53,7 @@ export const PriceInput = styled.input`
 export const PriceInputWrapper = styled.div`
 
   &:not(:last-of-type) {
-    margin-bottom: ${ rem(4) };
+    margin-bottom: ${ rem(8) };
   }
 `
 
@@ -64,6 +68,10 @@ export const CategoryItem = styled.li`
 
   &:not(:last-of-type) {
     margin-bottom: ${ rem(10) };
+  }
+
+  input {
+    appearance: auto;
   }
 `
 
