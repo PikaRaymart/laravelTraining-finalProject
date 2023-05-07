@@ -14,6 +14,7 @@ import {
   Wrapper } from "./books.styled"
 import { BooksPaginator } from "@/Components/paginator"
 import { useDetectResponsiveness } from "./books.hooks"
+import { Link } from "@inertiajs/react"
 
 
 const Books = () =>{
@@ -27,7 +28,9 @@ const Books = () =>{
           src={ `storage/books/${ book.image }` }
           alt={ book.title }  />
         <BookInfoContainter>
-          <Title>{ book.title }</Title>
+          <Title>
+            <Link href={ `/admin/edit/${ book.id }` }>{ book.title }</Link>
+          </Title>
           <Category>{ book.category }</Category>
           <Stocks>{ book.stocks } stocks left</Stocks>
         </BookInfoContainter>
@@ -53,7 +56,9 @@ const Books = () =>{
             alt={ book.title } />
         </td>
         <td>
-          <Title>{ book.title }</Title>
+          <Title>
+            <Link href={ `/admin/edit/${ book.id }` }>{ book.title }</Link>
+          </Title>
         </td>
         <td>
           <Category>{ book.category }</Category>

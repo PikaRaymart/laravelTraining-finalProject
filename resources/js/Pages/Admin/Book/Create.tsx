@@ -2,7 +2,7 @@ import { AdminHeader } from "@/Layouts/Admin/Header";
 import { PageWithLayout } from "@/app";
 import { Head } from "@inertiajs/react";
 import { MainWrapper } from "./Create/create.styled";
-import { AdminCreateBookHero } from "@/Components/admin/book/create/hero";
+import { AdminCreateBook } from "@/Components/admin/book/create";
 
 
 const CreateBookPage: PageWithLayout = () =>{
@@ -10,7 +10,7 @@ const CreateBookPage: PageWithLayout = () =>{
   return (
     <MainWrapper>
       <h1 className="sr-only">Create book</h1>
-      <AdminCreateBookHero />
+      <AdminCreateBook />
     </MainWrapper>
   )
 }

@@ -1,5 +1,5 @@
 import { CreateBookForm } from "./form"
-import { Wrapper } from "./hero.styled"
+import { Wrapper } from "./create.styled"
 
 
 const Hero = () => {

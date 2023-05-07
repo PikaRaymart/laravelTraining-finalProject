@@ -3,7 +3,7 @@ import { useForm } from "@inertiajs/react"
 import { FormEvent, useEffect, useState } from "react"
 
 
-export type FilterBookSearchProps = {
+export type FilterBooksProps = {
   category: string[] | string,
   minPrice: number,
   maxPrice: number
@@ -11,7 +11,7 @@ export type FilterBookSearchProps = {
 
 export const useFilter = () =>{
   const [ isExpanded, handleExpansion ] = useExpansion()
-  const { data, setData, reset, get } = useForm<FilterBookSearchProps>({
+  const { data, setData, reset, get } = useForm<FilterBooksProps>({
     category: [],
     minPrice: 0,
     maxPrice: 1000

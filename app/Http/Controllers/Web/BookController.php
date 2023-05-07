@@ -8,7 +8,6 @@ use App\Http\Resources\V1\AdminBookCollection;
 use App\Http\Resources\Web\CategoryCollection;
 use App\Models\Book;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class BookController extends Controller{
@@ -59,5 +58,12 @@ class BookController extends Controller{
 		}
 
     return redirect("admin");
+  }
+
+  function edit(Book $book) {
+    
+    return Inertia::render("Admin/Book/Update", [
+      "book" => $book
+    ]);
   }
 }

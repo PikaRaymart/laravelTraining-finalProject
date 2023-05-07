@@ -1,3 +1,4 @@
+import { useSearchbar } from "./searchbar.hook"
 import { 
   SearchInput,
   Wrapper,
@@ -5,16 +6,23 @@ import {
 
 
 const Searchbar = () =>{
+  const {
+    data,
+    handleFormSubmit,
+    handleSearchInput
+  } = useSearchbar()
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={ handleFormSubmit }>
       <label
         className="sr-only" 
         htmlFor="search">Search for book or category</label>
       <SearchInput
         id="search"
         name="search"
-        placeholder="Search for books or categories" />
+        value={ data.searchItem }
+        placeholder="Search for books or categories"
+        onChange={ handleSearchInput } />
     </Wrapper>
   )
 }

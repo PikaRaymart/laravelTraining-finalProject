@@ -1,0 +1,1 @@
+export { default as AdminCreateBook } from "./create"

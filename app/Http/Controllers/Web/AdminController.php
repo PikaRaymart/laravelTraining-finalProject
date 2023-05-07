@@ -23,7 +23,7 @@ class AdminController extends Controller{
 			$categoriesFilter = explode(',', $request->input('category'));
 
       foreach ($categoriesFilter as $category) {
-					$query->orWhere('category', 'LIKE', "%$category%");
+				$query->orWhere('category', 'LIKE', "%$category%");
 			}
     }
 
@@ -38,7 +38,7 @@ class AdminController extends Controller{
     }
 
     // Execute the query and return the results
-    $books = $query->paginate(1);
+    $books = $query->paginate(8);
 
     return Inertia::render("Admin", [
       "booksFilters" => [
