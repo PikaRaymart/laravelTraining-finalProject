@@ -1,4 +1,5 @@
 import { Home } from "@/Components/home";
+import { Footer } from "@/Layouts/Footer";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
 import { Book } from "@/store";
@@ -25,6 +26,7 @@ HomePage.layout = page => (
   </Head>
   <HeaderGuard />
     { page }
+  <Footer />
   </>
 )
 
