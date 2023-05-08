@@ -1,8 +1,8 @@
 import { AdminUpdateBook } from "@/Components/admin/book/update";
+import { MainWrapper } from "@/Components/admin/book/update/update.styled";
 import { AdminHeader } from "@/Layouts/Admin/Header";
 import { PageWithLayout } from "@/app";
 import { Head } from "@inertiajs/react";
-import { MainWrapper } from "./Update/update.styled";
 
 
 const Update:PageWithLayout = () =>{

@@ -1,4 +1,6 @@
-import { Wrapper } from "./create.styled"
+import { 
+  MainWrapper, 
+  Wrapper } from "./create.styled"
 import { BookForm } from "../form"
 import { 
   useBookForm, 
@@ -12,16 +14,19 @@ const Create = () => {
   const { imageUrl, handleChangeImageUrl } = useBookFormImage(null)
 
   return (
-    <Wrapper>
-      <BookForm
-        book={ data }
-        imageUrl={ imageUrl }
-        errors={ errors }
-        handleFormSubmit={ handleCreateBook }
-        handleDataChange={ handleDataChange }
-        handleImageChange={ handleImageChange }
-        handleChangeImageUrl={ handleChangeImageUrl }/>
-    </Wrapper>
+    <MainWrapper>
+      <h1 className="sr-only">Create book</h1>
+      <Wrapper>
+        <BookForm
+          book={ data }
+          imageUrl={ imageUrl }
+          errors={ errors }
+          handleFormSubmit={ handleCreateBook }
+          handleDataChange={ handleDataChange }
+          handleImageChange={ handleImageChange }
+          handleChangeImageUrl={ handleChangeImageUrl }/>
+      </Wrapper>
+    </MainWrapper>
   )
 }
 

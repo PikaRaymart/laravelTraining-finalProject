@@ -3,7 +3,9 @@ import {
   useBookForm, 
   useBookFormImage } from "../form/form.hooks"
 import { useUpdateBook } from "./update.hooks"
-import { Wrapper } from "./update.styled"
+import { 
+  MainWrapper, 
+  Wrapper } from "./update.styled"
 
 
 const Update = () =>{
@@ -12,16 +14,19 @@ const Update = () =>{
   const { imageUrl, handleChangeImageUrl } = useBookFormImage(null)
 
   return (
-    <Wrapper>
-      <BookForm 
-        book={ data }
-        imageUrl={ imageUrl }
-        errors={ errors }
-        handleFormSubmit={ handleUpdateBook }
-        handleDataChange={ handleDataChange }
-        handleImageChange={ handleImageChange }
-        handleChangeImageUrl={ handleChangeImageUrl }/>
-    </Wrapper>
+    <MainWrapper>
+      <Wrapper>
+        <h1 className="sr-only">Update book</h1>
+        <BookForm 
+          book={ data }
+          imageUrl={ imageUrl }
+          errors={ errors }
+          handleFormSubmit={ handleUpdateBook }
+          handleDataChange={ handleDataChange }
+          handleImageChange={ handleImageChange }
+          handleChangeImageUrl={ handleChangeImageUrl }/>
+      </Wrapper>
+    </MainWrapper>
   )
 }
 
