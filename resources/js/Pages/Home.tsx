@@ -16,7 +16,7 @@ HomePage.layout = page => (
   <>
   <Head>
     <meta charSet="utf-8" />
-    <title>Admin | Home</title>
+    <title>PlumeBooks | Get your books</title>
   </Head>
   <HeaderGuard />
     { page }
