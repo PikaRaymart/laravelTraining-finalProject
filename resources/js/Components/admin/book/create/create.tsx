@@ -14,13 +14,13 @@ const Create = () => {
   return (
     <Wrapper>
       <BookForm
-        book={ {...data, imageUrl} }
+        book={ data }
+        imageUrl={ imageUrl }
         errors={ errors }
         handleFormSubmit={ handleCreateBook }
         handleDataChange={ handleDataChange }
         handleImageChange={ handleImageChange }
-        handleChangeImageUrl={ handleChangeImageUrl }
-        />
+        handleChangeImageUrl={ handleChangeImageUrl }/>
     </Wrapper>
   )
 }

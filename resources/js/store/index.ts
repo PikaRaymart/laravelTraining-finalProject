@@ -12,7 +12,7 @@ export type Book = {
   title: string,
   author: string,
   description: string,
-  image: File | null,
+  image: File | null | string,
   status: string,
   category: string,
   stocks: number,

@@ -46,7 +46,7 @@ const Filters = () => {
       </CategoryItem>
     ))
   }
-console.log(data)
+
   return (
     <Wrapper onSubmit={ handleFormSubmit }>
       <FiltersTrigger 

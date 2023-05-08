@@ -14,7 +14,6 @@ import {
   PhotoNote, 
   Textarea, 
   Wrapper } from "./form.styled"
-import { FormEvent } from "react"
 import { Book } from "@/store"
 import { 
   checkErrors, 
@@ -26,9 +25,8 @@ import {
   HandleImageChange } from "./form.hooks"
 
 type FormProps = {
-  book: Omit<Book, "id"> & {
-    imageUrl: string
-  },
+  book: Omit<Book, "id">,
+  imageUrl: string,
   errors: Partial<Record<keyof Book, string>>,
   handleFormSubmit: HandleFormSubmit,
   handleDataChange: HandleDataChange,
@@ -38,15 +36,16 @@ type FormProps = {
 
 const Form = ({ 
   book, 
+  imageUrl,
   errors,
   handleFormSubmit,
   handleImageChange,
   handleDataChange,
   handleChangeImageUrl
 }: FormProps) =>{
-  
+
   return (
-    <Wrapper onSubmit={ handleFormSubmit }>
+    <Wrapper onSubmit={ event => handleFormSubmit(event, book) }>
       <FormInnerContainer>
         <PhotoContainer hasImage={ !!book.image }>
           <input
@@ -67,8 +66,11 @@ const Form = ({
           </PhotoInnerContainer>
           <PhotoLabel htmlFor="image">
             <span className="sr-only">Chose book photo</span>
-            { book.imageUrl && <FloatingPhoto
-              src={ book.imageUrl }
+            { imageUrl && <FloatingPhoto
+              src={ imageUrl }
+              alt={ book.title?? "" } /> }
+            { typeof book.image==="string" && !imageUrl && <FloatingPhoto
+              src={ `/storage/books/${ book.image }` }
               alt={ book.title?? "" } /> }
           </PhotoLabel>
         </PhotoContainer>

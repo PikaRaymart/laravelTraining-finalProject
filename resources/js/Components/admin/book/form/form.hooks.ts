@@ -5,13 +5,19 @@ import {
   useState } from "react"
 
 
-export type HandleFormSubmit = ( event: FormEvent ) => void
+type UseFormData = Omit<Book, "id"> & {
+  id?: number,
+  oldImage?: string
+}
+export type HandleFormSubmit = ( event: FormEvent, book: Omit<Book, "id"> & { id?: number } ) => void
 export type HandleDataChange = ( value: string | File, field: keyof Book ) => void
 export type HandleImageChange = ( event: React.ChangeEvent<HTMLInputElement> ) => void
 export type HandlePostForm = ( url: string ) => void
+export type HandleUpdateform = ( url: string ) => void
+export type HandleSetBookDefaults = ( book: Partial<Book> ) => void
 
 export const useBookForm = () => {
-  const { data, errors, setData, post } = useForm<Omit<Book, "id">>({
+  const { data, errors, setData, post, put } = useForm<UseFormData>({
     title: "",
     author: "",
     description: "",
@@ -21,10 +27,11 @@ export const useBookForm = () => {
     stocks: 1,
     status: ""
   })
+  const [ justRender, setJustRender ] = useState(false)
   
   const handleDataChange: HandleDataChange = ( value, field ) => {
     if ( field==="id" )return
-    
+
     if ( typeof data[field] === "number" && typeof value === "string" ) {
       setData(field, parseInt(value))
     } else if (value instanceof File) {
@@ -44,12 +51,34 @@ export const useBookForm = () => {
     })
   }
 
+  const handleUpdateForm: HandleUpdateform = ( url ) => {
+    post(url, {
+      forceFormData: true
+    })
+  }
+
+  const handleSetBookDefaults: HandleSetBookDefaults = ( book ) =>{
+    for ( const [key, val] of Object.entries(book) ) {
+      if ( val ) {
+        // @ts-ignore
+        data[key as keyof Book] = val
+        if ( key==="image" && typeof val ==="string" ) {
+          data.oldImage = val
+        }
+      }
+    }
+
+    setJustRender(prev => !prev)
+  }
+
   return {
     data,
     errors,
     handleDataChange,
     handleImageChange,
-    handlePostForm
+    handlePostForm,
+    handleUpdateForm,
+    handleSetBookDefaults
   }
 }
 

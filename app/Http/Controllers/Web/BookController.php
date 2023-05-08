@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\StoreBookRequest;
+use App\Http\Requests\Web\UpdateBookRequest;
 use App\Http\Resources\V1\AdminBookCollection;
+use App\Http\Resources\Web\AdminBookResource;
 use App\Http\Resources\Web\CategoryCollection;
 use App\Models\Book;
 use App\Models\Category;
@@ -60,10 +62,31 @@ class BookController extends Controller{
     return redirect("admin");
   }
 
+  // shows a form for editing a book
   function edit(Book $book) {
     
     return Inertia::render("Admin/Book/Update", [
-      "book" => $book
+      "book" => new AdminBookResource($book)
     ]);
+  }
+
+  // stores the updated value of the book
+  function update(UpdateBookRequest $request, Book $book) {
+    $updateData = $request->all();
+
+		if ($request->hasFile("image")) {
+			$image = $request->file("image");
+			$filename = time()."-".$image->getClientOriginalName();
+			$path = $image->storeAs("public/books", $filename);
+			$updateData["image"] = $filename;
+      
+      if ($request->oldImage) {
+        unlink(storage_path("app/public/books/".$request->oldImage));
+      }
+		}
+
+		$book->update($updateData);
+
+		return redirect("admin");
   }
 }
