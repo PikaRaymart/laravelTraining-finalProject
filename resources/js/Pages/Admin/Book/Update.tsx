@@ -9,6 +9,7 @@ const Update:PageWithLayout = () =>{
 
   return (
     <MainWrapper>
+      <h1 className="sr-only">Update book</h1>
       <AdminUpdateBook />
     </MainWrapper>
   )

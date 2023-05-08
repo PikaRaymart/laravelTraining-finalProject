@@ -24,9 +24,11 @@ const Books = () =>{
   const renderBooksList = () => {
     const mappedBooks = books.map(book => (
       <ListItem key={ book.title }>
-        <Image
-          src={ `storage/books/${ book.image }` }
-          alt={ book.title }  />
+        { book.image && (
+          <Image
+            src={ `storage/books/${ book.image }` }
+            alt={ book.title }  />
+        ) }
         <BookInfoContainter>
           <Title>
             <Link href={ `/admin/edit/${ book.id }` }>{ book.title }</Link>
@@ -51,9 +53,11 @@ const Books = () =>{
             name={ `${ book.id }` } />
         </td>
         <td>
-          <Image
+          { book.image && (
+            <Image
             src={ `storage/books/${ book.image }` }
             alt={ book.title } />
+          ) }
         </td>
         <td>
           <Title>

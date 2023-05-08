@@ -42,20 +42,20 @@ class BookController extends Controller{
 			$book["image"] = $filename;
 		}
 
-    $categories = array_map("trim", explode(",", $request->category));
+    $categories = $request->category? array_map("trim", explode(",", $request->category)) : [];
 		$newBook = Book::create($book);
-  
+
     foreach ($categories as $categoryName) {
-			$category = Category::where("name", $categoryName)->first();
-
-			if ($category) {
-				$newBook->categories()->attach($category);
-			} else {
-				$newCategory = Category::create(["name" => $categoryName]);
-
-				$newBook->categories()->attach($newCategory);
-			}
-		}
+      $category = Category::where("name", $categoryName)->first();
+  
+      if ($category) {
+        $newBook->categories()->attach($category);
+      } else {
+        $newCategory = Category::create(["name" => $categoryName]);
+  
+        $newBook->categories()->attach($newCategory);
+      }
+    }
 
     return redirect("admin");
   }
