@@ -42,12 +42,15 @@ class LoginUserController extends Controller{
 	 * Destroy an authenticated session.
 	 */
 	function destroy(Request $request): RedirectResponse{
-		Auth::guard('web')->logout();
-
+		if (Auth::guard("customer")->check()) {
+			Auth::guard("customer")->logout();
+		} else {
+			Auth::guard("web")->logout();
+		}
 		$request->session()->invalidate();
 
 		$request->session()->regenerateToken();
-
+		
 		return redirect('/');
 	}
 }

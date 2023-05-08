@@ -10,7 +10,7 @@ import { Link } from "@inertiajs/react"
 
 const Guard = () => {
   const { auth } = usePageProps()
-
+  
   if ( !auth.user ) {
     return (
       <Header>

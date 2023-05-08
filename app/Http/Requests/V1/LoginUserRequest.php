@@ -25,7 +25,7 @@ class LoginUserRequest extends FormRequest{
 			"message" => "",
 			"token" => ""
 		];
-	
+		
 		if ($credentials["email"]==="admin@admin.com" && auth()->attempt($credentials)) {
       $user = authenticatedUser();      
       $adminToken = $user->createToken("admin-token", ["admin"]);

@@ -8,7 +8,7 @@ if (!function_exists("currentAuthenticatedUser")) {
 
     return [
       "user" => $adminAuth?? $customerAuth,
-			"type" => $adminAuth? "admin" : "customer"
+			"type" => $adminAuth? "admin" : ($customerAuth? "customer" : null)
     ];
   }
 }

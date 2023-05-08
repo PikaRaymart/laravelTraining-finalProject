@@ -8,7 +8,7 @@ import styled, { css } from "styled-components";
 export const NavItem = styled.li`
   font-weight: 500;
 
-  a {
+  a, button {
     border-radius: ${ rem(56) };
     color: ${ ({ theme }) => theme.colors.navlink };
     display: block;
@@ -22,7 +22,7 @@ export const NavItem = styled.li`
 
 export const Signout = styled(NavItem)`
 
-  a {
+  a, button {
     border: 1px solid ${ ({ theme }) => theme.colors.red };
     color: ${ ({ theme }) => theme.colors.red };
   }
