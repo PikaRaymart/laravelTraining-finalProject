@@ -34,7 +34,6 @@ const Header = ({ children }: HeaderProps) => {
             aria-hidden="true" />
       </Hamburger>
       <DropdownOverlay />
-      
       <NavWrapper>
         <Navlist>
           { children }

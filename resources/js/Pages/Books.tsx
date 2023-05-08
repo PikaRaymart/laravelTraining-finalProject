@@ -1,13 +1,23 @@
+import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
+import { Head } from "@inertiajs/react";
 
 
-const Books: PageWithLayout = () =>{
+const BooksPage: PageWithLayout = () =>{
 
   return (
     <main></main>
   )
 }
 
-Books.layout = page => page
+BooksPage.layout = page => (
+  <>
+    <Head>
+      <title>Books | Collections</title>
+    </Head>
+    <HeaderGuard />
+    { page }
+  </>
+)
 
-export default Books
+export default BooksPage

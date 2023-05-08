@@ -20,15 +20,15 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-	return Inertia::render('Welcome', [
-		'canLogin' => Route::has('login'),
-		'canRegister' => Route::has('register'),
-		'laravelVersion' => Application::VERSION,
-		'phpVersion' => PHP_VERSION,
+	$adminAuth = auth()->user();
+	$customerAuth = auth("customer")->user();
+
+	return Inertia::render("Home", [
 		"auth" => [
-			"user" => auth()->user()?? auth("customer")->user()
+			"user" => $adminAuth?? $customerAuth,
+			"type" => $adminAuth? "admin" : "customer"
 		]
-	]);
+		]);
 })->name("home");
 
 // Admin routes
