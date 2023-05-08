@@ -5,6 +5,7 @@ import {
     Price, 
     Title, 
     Wrapper } from "./book.styled"
+import { Link } from "@inertiajs/react"
 
 
 type BookProps = {
@@ -18,7 +19,12 @@ const Book = ({ book }: BookProps) => {
       <Image
         src={ `/storage/books/${ book.image }` }
         alt={ book.title } />
-      <Title>{ book.title }</Title>
+      <Title>
+        <Link
+          href={ `/books/${ book.id }` }>
+          { book.title }
+        </Link>
+      </Title>
       <Author>{ book.author }</Author>
       <Price>₱{ book.price.toFixed(2) }</Price>
     </Wrapper>

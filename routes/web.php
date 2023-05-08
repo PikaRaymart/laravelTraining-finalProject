@@ -23,6 +23,10 @@ Route::controller(PageController::class)->group(function() {
 	Route::get("/", "home")->name("home");
 });
 
+Route::controller(BookController::class)->group(function() {
+	Route::get("/books/{book}", "show")->name("show-book");
+});
+
 // Admin routes
 Route::middleware(["auth:sanctum", "admin"])->group(function() {
 	Route::controller(AdminController::class)->group(function() {

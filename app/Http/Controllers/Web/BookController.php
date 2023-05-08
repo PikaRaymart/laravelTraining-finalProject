@@ -7,6 +7,7 @@ use App\Http\Requests\Web\StoreBookRequest;
 use App\Http\Requests\Web\UpdateBookRequest;
 use App\Http\Resources\V1\AdminBookCollection;
 use App\Http\Resources\Web\AdminBookResource;
+use App\Http\Resources\Web\BookResource;
 use App\Http\Resources\Web\CategoryCollection;
 use App\Models\Book;
 use App\Models\Category;
@@ -31,6 +32,15 @@ class BookController extends Controller{
   function create() {
     
     return Inertia::render("Admin/Book/Create");
+  }
+
+  // Shows a single book
+  function show(Book $book) {
+
+    return Inertia::render("Books/Book", [
+      "auth" => currentAuthenticatedUser(),
+      "book" => new BookResource($book)
+    ]);
   }
 
   // Stores the sent book form data
