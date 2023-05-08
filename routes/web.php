@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Web\PageController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\BookController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,17 +19,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-	$adminAuth = auth()->user();
-	$customerAuth = auth("customer")->user();
-
-	return Inertia::render("Home", [
-		"auth" => [
-			"user" => $adminAuth?? $customerAuth,
-			"type" => $adminAuth? "admin" : "customer"
-		]
-		]);
-})->name("home");
+Route::controller(PageController::class)->group(function() {
+	Route::get("/", "home")->name("home");
+});
 
 // Admin routes
 Route::middleware(["auth:sanctum", "admin"])->group(function() {
