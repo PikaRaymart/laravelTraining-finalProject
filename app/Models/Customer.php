@@ -32,4 +32,9 @@ class Customer extends Authenticatable{
 	function carts(): HasMany {
 		return $this->hasMany(Cart::class);
 	}
+
+	function getRedirectRoute(){
+
+		return "/";
+}
 }

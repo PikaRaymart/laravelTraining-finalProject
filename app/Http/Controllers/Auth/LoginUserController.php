@@ -28,8 +28,14 @@ class LoginUserController extends Controller{
 		$request->authenticate();
 
 		$request->session()->regenerate();
+
+		$user = currentAuthenticatedUser();
+
+		if ($user["type"]==="customer") {
+			return redirect()->intended(RouteServiceProvider::HOME);
+		}
 	
-		return redirect()->intended(RouteServiceProvider::HOME);
+		return redirect("admin");
 	}
 
 	/**
