@@ -1,12 +1,15 @@
+import { Books } from "@/Components/books";
+import { useSetupBooks } from "@/Hooks/useSetupBooks";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
 import { Head } from "@inertiajs/react";
 
 
 const BooksPage: PageWithLayout = () =>{
+  useSetupBooks()
 
   return (
-    <main></main>
+    <Books />
   )
 }
 

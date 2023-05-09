@@ -68,6 +68,8 @@ export const ShowFiltersDesktop = styled.div`
 
   ${ breakpoint("desktop", `
     display: block;
+    position: sticky;
+    top: 0;
   `) }
 `
 
@@ -78,6 +80,7 @@ export const MainGridContainer = styled.div`
 export const MainWrapper = styled.main`
 
   ${ breakpoint("desktop", `
+    align-items: start;
     display: grid;
     grid-template-columns: ${ rem(300) } 1fr; 
   `) }

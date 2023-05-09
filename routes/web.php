@@ -23,7 +23,9 @@ Route::controller(PageController::class)->group(function() {
 	Route::get("/", "home")->name("home");
 });
 
+// Default
 Route::controller(BookController::class)->group(function() {
+	Route::get("/books", "index")->name("books");
 	Route::get("/books/{book}", "show")->name("show-book");
 });
 
@@ -40,11 +42,6 @@ Route::middleware(["auth:sanctum", "admin"])->group(function() {
 	});
 });
 
-// Default
-Route::get("/books", function() {
-	
-	return Inertia::render("Books");
-})->name("books");
 
 Route::get('/dashboard', function () {
 	return Inertia::render('Dashboard');

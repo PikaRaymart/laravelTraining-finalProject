@@ -1,12 +1,10 @@
 import { Book as BookType } from "@/store"
+import { Image, Wrapper } from "./book.styled"
 import { 
-  Image, 
-  Wrapper } from "./book.styled"
-import { Link } from "@inertiajs/react"
-import { 
+  Author, 
   Title,
-  Author,
   Price } from "@/Components/shared/book/book.styled"
+import { Link } from "@inertiajs/react"
 
 
 type BookProps = {
@@ -21,8 +19,7 @@ const Book = ({ book }: BookProps) => {
         src={ `/storage/books/${ book.image }` }
         alt={ book.title } />
       <Title>
-        <Link
-          href={ `/books/${ book.id }` }>
+        <Link href={ `/books/${ book.id }` }>
           { book.title }
         </Link>
       </Title>

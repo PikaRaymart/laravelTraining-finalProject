@@ -20,6 +20,10 @@ import { useTrackedState } from "@/store"
 import { useFilter } from "./filter.hook"
 
 
+type FiltersProps = {
+  url: string
+}
+
 const Filters = () => {
   const { booksFilters: { categories } } = useTrackedState()
   const {
