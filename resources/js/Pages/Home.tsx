@@ -13,7 +13,6 @@ export type HomePageProps = PageProps<{
 
 const HomePage: PageWithLayout = (props: PageProps) =>{
   
-  console.log(props)
   return (
     <Home />
   )
