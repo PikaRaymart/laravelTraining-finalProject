@@ -39,7 +39,7 @@ export const BasicInfo = styled.p`
 
 export const Stocks = styled(BasicInfo)`
   color: ${ ({ theme }) => theme.colors.blue };
-  margin-bottom: ${ rem(32) };
+  margin-bottom: ${ rem(24) };
 `
 
 export const Author = styled(BasicInfo)`
@@ -87,5 +87,5 @@ export const BookWrapper = styled.div`
 `
 
 export const MainWrapper = styled.main`
-  padding: ${ fluid(48, 6.4, 64) } ${ fluid(24, 6, 80) };
+  padding: ${ fluid(48, 6.4, 64) } ${ fluid(16, 6, 80) };
 `

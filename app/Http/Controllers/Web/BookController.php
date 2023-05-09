@@ -44,6 +44,7 @@ class BookController extends Controller{
     $books = $query->paginate(8);
 
     return Inertia::render("Books", [
+      "auth" => currentAuthenticatedUser(),
       "booksFilters" => [
         "categories" => new CategoryCollection($categories),
       ],

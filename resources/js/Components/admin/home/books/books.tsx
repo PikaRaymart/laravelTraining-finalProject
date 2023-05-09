@@ -13,8 +13,8 @@ import {
   Title, 
   Wrapper } from "./books.styled"
 import { BooksPaginator } from "@/Components/paginator"
-import { useDetectResponsiveness } from "./books.hooks"
 import { Link } from "@inertiajs/react"
+import { useDetectResponsiveness } from "@/Hooks/useDetectResponsiveness"
 
 
 const Books = () =>{

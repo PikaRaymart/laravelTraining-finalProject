@@ -5,6 +5,7 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\BookController;
+use App\Http\Controllers\Web\CartController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -42,6 +43,11 @@ Route::middleware(["auth:sanctum", "admin"])->group(function() {
 	});
 });
 
+Route::middleware("auth:customer")->group(function() {
+	Route::controller(CartController::class)->group(function() {
+		Route::get("/cart", "index")->name("cart");
+	});
+});
 
 Route::get('/dashboard', function () {
 	return Inertia::render('Dashboard');

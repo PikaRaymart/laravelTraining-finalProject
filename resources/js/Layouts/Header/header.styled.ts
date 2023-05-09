@@ -5,6 +5,35 @@ import {
 import styled, { css } from "styled-components";
 
 
+export const CartLink = styled.div`
+  margin: 0 ${ rem(16) } 0 auto;
+  position: relative;
+
+  &::after {
+    content: "";
+    background-color: #E9E9E9;
+    height: ${ rem(32) };
+    inset: ${ rem(4) } -${ rem(8) } 0 auto;
+    position: absolute;
+    width: 1px;
+
+    ${ breakpoint("desktop", `
+      inset: ${ rem(4) } auto auto -${ rem(8) };
+    `) }
+  }
+
+  ${ breakpoint("desktop", `
+    margin: 0 0 0 ${ rem(32) };
+  `) }
+
+  a {
+    display: grid;
+    height: ${ rem(40) };
+    place-content: center;
+    width: ${ rem(40) };
+  }
+`
+
 export const NavItem = styled.li`
   font-weight: 500;
 
@@ -84,6 +113,7 @@ export const DropdownOverlay = styled.div`
 
 export const Hamburger = styled.button`
   height: ${ rem(24) };
+  margin-left: ${ rem(4) };
   position: relative;
   width: ${ rem(24) };
   z-index: 10;

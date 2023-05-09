@@ -43,11 +43,10 @@ const Book = () => {
             Only { book.stocks } left
           </Stocks>
           <DescriptionWrapper>
-            <h2>Book description:</h2>
+            <h2 className="sr-only">Book description:</h2>
             <Description>{ book.description }</Description>
           </DescriptionWrapper>
-          <BookOptions />
-          {/* { auth.user && <BookOptions /> } */}
+          { auth.user && <BookOptions /> }
         </ContentContainer>
       </BookWrapper>
     </MainWrapper>

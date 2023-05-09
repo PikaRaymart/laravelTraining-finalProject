@@ -1,4 +1,5 @@
 import { 
+  breakpoint,
   fluid, 
   rem } from "@/Styled/functions";
 import styled from "styled-components";
@@ -42,7 +43,11 @@ export const QuantityWrapper = styled.div`
   gap: 0 ${ rem(4) };
   height: ${ rem(46) };
   max-width: max-content;
-  margin-right: ${ rem(48) };
+  margin-right: auto;
+
+  ${ breakpoint("desktop", `
+    margin-right: ${ rem(48) };
+  `) }
 `
 
 export const Wrapper = styled.div`

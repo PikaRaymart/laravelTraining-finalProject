@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react"
 import { 
+  CartLink,
   DropdownOverlay, 
   Hamburger, 
   NavWrapper, 
@@ -7,6 +8,9 @@ import {
   Wrapper } from "./header.styled"
 import ApplicationLogo from "@/Components/ApplicationLogo"
 import { useHeader } from "./header.hook"
+import { useDetectResponsiveness } from "@/Hooks/useDetectResponsiveness"
+import { usePageProps } from "@/Hooks/usePageProps"
+import { PageProps } from "@/types"
 
 
 type HeaderProps = {
@@ -15,12 +19,24 @@ type HeaderProps = {
 
 const Header = ({ children }: HeaderProps) => {
   const { isExpanded, handleExpansion } = useHeader()
+  const isMobile = useDetectResponsiveness()
+  const { auth } = usePageProps<PageProps>()
 
   return (
     <Wrapper>
       <Link href={ route("home") }>
         <ApplicationLogo />
       </Link>
+      { !!auth.user && auth.type==="customer" && isMobile && (
+        <CartLink>
+          <Link href={ route("cart") }>
+            <img 
+              src="/images/icons/cart.png" 
+              alt=""
+              aria-hidden="true" />
+          </Link>
+        </CartLink>
+      ) }
       <Hamburger
         onClick={ handleExpansion }
         aria-expanded={ isExpanded }>

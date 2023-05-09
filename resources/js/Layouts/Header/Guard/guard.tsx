@@ -1,7 +1,7 @@
 import { AdminHeader } from "@/Layouts/Admin/Header"
 import { Header } from ".."
 import { usePageProps } from "@/Hooks/usePageProps"
-import { GuestHeader } from "@/Layouts/Guest/header"
+import { CustomerHeader } from "@/Layouts/Guest/header"
 import { 
   NavItem, 
   Signout } from "../header.styled"
@@ -31,7 +31,7 @@ const Guard = () => {
     return <AdminHeader />
   }
 
-  return <GuestHeader />
+  return <CustomerHeader />
 }
 
 

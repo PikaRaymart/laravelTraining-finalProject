@@ -1,1 +1,1 @@
-export { default as GuestHeader } from "./header"
+export { default as CustomerHeader } from "./header"

@@ -32,7 +32,7 @@ class LoginUserController extends Controller{
 		$user = currentAuthenticatedUser();
 
 		if ($user["type"]==="customer") {
-			return redirect()->intended(RouteServiceProvider::HOME);
+			return redirect("/");
 		}
 	
 		return redirect("admin");
