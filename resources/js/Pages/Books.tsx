@@ -1,5 +1,6 @@
 import { Books } from "@/Components/books";
 import { useSetupBooks } from "@/Hooks/useSetupBooks";
+import { Footer } from "@/Layouts/Footer";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
 import { Head } from "@inertiajs/react";
@@ -20,6 +21,7 @@ BooksPage.layout = page => (
     </Head>
     <HeaderGuard />
     { page }
+    <Footer />
   </>
 )
 

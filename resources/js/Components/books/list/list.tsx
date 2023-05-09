@@ -1,6 +1,7 @@
 import { useTrackedState } from "@/store"
 import { Wrapper } from "./list.styled"
 import { BookItem } from "./book"
+import { BooksPaginator } from "@/Components/paginator"
 
 
 const List = () => {
@@ -17,9 +18,12 @@ const List = () => {
   }
 
   return (
-    <Wrapper>
-      { renderBooks() }
-    </Wrapper>
+    <>
+      <Wrapper>
+        { renderBooks() }
+      </Wrapper>
+      <BooksPaginator />
+    </>
   )
 }
 

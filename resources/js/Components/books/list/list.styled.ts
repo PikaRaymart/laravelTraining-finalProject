@@ -9,7 +9,7 @@ export const Wrapper = styled.ul`
   display: grid;
   gap: ${ rem(24) } ${ rem(16) };
   grid-template-columns: repeat(auto-fill, minmax(${ rem(160) }, 1fr));
-  margin-top: ${ rem(32) };
+  margin: ${ rem(32) } 0 ${ rem(80) };
   padding: 0 ${ fluid(16, 2.4, 24) };
 
   ${ breakpoint("tablet", `

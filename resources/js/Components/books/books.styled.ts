@@ -22,6 +22,7 @@ export const MainGridContainer = styled.div`
 `
 
 export const MainWrapper = styled.main`
+  margin-bottom: ${ rem(80) };
 
   ${ breakpoint("desktop", `
     align-items: start;
