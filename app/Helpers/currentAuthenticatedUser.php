@@ -2,7 +2,7 @@
 
 
 if (!function_exists("currentAuthenticatedUser")) {
-  function currentAuthenticatedUser() {
+  function currentAuthenticatedUser(): array {
     $adminAuth = auth()->user();
 	  $customerAuth = auth("customer")->user();
 

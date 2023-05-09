@@ -15,11 +15,11 @@ class CartController extends Controller{
   function index() {
     $customer = currentAuthenticatedUser();
 
-    // $cart = $customer->carts()->with("books")->get();
+    $cart = $customer["user"]->carts()->with("books")->get();
 
     return Inertia::render("Cart", [
       "auth" => currentAuthenticatedUser(),
-      // "cart" => $cart
+      "cart" => new CartBookCollection($cart)
     ]);
   }
 
