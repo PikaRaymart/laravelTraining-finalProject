@@ -13,19 +13,19 @@ class CartController extends Controller{
 	
   function index() {
     // returns the populated cart
-    $customer = authenticatedCustomer();
+    $customer = authenticatedUser();
 
     $cart = $customer->carts()->with("books")->get();
-
+  
     return new CartBookCollection($cart);
   }
 
   // Adds a book in the cart
   function store(AddToCartRequest $request) {
-    $customer = authenticatedCustomer();
+    $customer = authenticatedUser();
     $foundBook = Book::where("status", "=", "active")
       ->find($request->bookId);
-
+ 
     if (!$foundBook) return response()->json(["message" => "No active book found with this id."], 404);
 
     if ($foundBook->stocks < $request->quantity) return response()->json(["message" => "Maximum quantity reached."], 400);

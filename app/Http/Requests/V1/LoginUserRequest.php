@@ -40,6 +40,8 @@ class LoginUserRequest extends FormRequest{
       }
     }
 
-		return $loginData;
+		if ($loginData["token"] && $loginData["message"]) return response()->json($loginData, 200);
+
+    return response()->json(["message" => "Log in unsucessfully."]);
 	}
 }

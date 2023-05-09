@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UpdateCartRequest;
 use App\Http\Requests\V1\AddToCartRequest;
-use App\Http\Resources\V1\CartBookCollection;
+use App\Http\Resources\Web\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
 use Inertia\Inertia;
@@ -13,8 +13,13 @@ use Inertia\Inertia;
 class CartController extends Controller{
 	
   function index() {
+    $customer = currentAuthenticatedUser();
+
+    // $cart = $customer->carts()->with("books")->get();
+
     return Inertia::render("Cart", [
-      "auth" => currentAuthenticatedUser()
+      "auth" => currentAuthenticatedUser(),
+      // "cart" => $cart
     ]);
   }
 

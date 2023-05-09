@@ -4,7 +4,7 @@ import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
 import { Book } from "@/store";
 import { PageProps } from "@/types";
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 
 
 export type HomePageProps = PageProps<{
@@ -12,7 +12,7 @@ export type HomePageProps = PageProps<{
 }>
 
 const HomePage: PageWithLayout = (props: PageProps) =>{
-  
+
   return (
     <Home />
   )
