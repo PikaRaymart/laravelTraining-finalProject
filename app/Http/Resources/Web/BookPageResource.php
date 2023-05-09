@@ -5,7 +5,7 @@ namespace App\Http\Resources\Web;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookResource extends JsonResource{
+class BookPageResource extends JsonResource{
 
 	public function toArray(Request $request): array{
 	  
@@ -14,7 +14,9 @@ class BookResource extends JsonResource{
 			"title" => $this->title,
 			"author" => $this->author,
 			"image" => $this->image,
-			"price" => $this->price
+			"price" => $this->price,
+			"stocks" => $this->stocks,
+			"description" => $this->description
 		];
 	}
 }

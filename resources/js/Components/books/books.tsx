@@ -14,6 +14,7 @@ const Books = () => {
 
   return (
     <MainWrapper>
+      <h1 className="sr-only">Books collection</h1>
       <ShowFiltersDesktop>
         <Filters />
       </ShowFiltersDesktop>

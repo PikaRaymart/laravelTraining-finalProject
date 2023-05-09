@@ -7,7 +7,7 @@ use App\Http\Requests\Web\StoreBookRequest;
 use App\Http\Requests\Web\UpdateBookRequest;
 use App\Http\Resources\Web\AdminBookResource;
 use App\Http\Resources\Web\BookCollection;
-use App\Http\Resources\Web\BookResource;
+use App\Http\Resources\Web\BookPageResource;
 use App\Http\Resources\Web\CategoryCollection;
 use App\Models\Book;
 use App\Models\Category;
@@ -62,7 +62,7 @@ class BookController extends Controller{
 
     return Inertia::render("Books/Book", [
       "auth" => currentAuthenticatedUser(),
-      "book" => new BookResource($book)
+      "book" => new BookPageResource($book)
     ]);
   }
 
