@@ -8,16 +8,14 @@ use App\Http\Requests\V1\AddToCartRequest;
 use App\Http\Resources\V1\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
+use Inertia\Inertia;
 
 class CartController extends Controller{
 	
   function index() {
-    // returns the populated cart
-    $customer = authenticatedCustomer();
-
-    $cart = $customer->carts()->with("books")->get();
-
-    return new CartBookCollection($cart);
+    return Inertia::render("Cart", [
+      "auth" => currentAuthenticatedUser()
+    ]);
   }
 
   // Adds a book in the cart
