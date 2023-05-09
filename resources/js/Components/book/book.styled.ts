@@ -49,7 +49,7 @@ export const Author = styled(BasicInfo)`
 export const Title = styled.h1`
   font-size: ${ fluid(24, 2.8, 28) };
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.4;
 `
 
 export const Image = styled.img`
@@ -87,5 +87,5 @@ export const BookWrapper = styled.div`
 `
 
 export const MainWrapper = styled.main`
-  padding: ${ fluid(48, 6.4, 64) } ${ fluid(24, 8, 80) };
+  padding: ${ fluid(48, 6.4, 64) } ${ fluid(24, 6, 80) };
 `

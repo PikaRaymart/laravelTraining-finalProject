@@ -13,14 +13,15 @@ import {
   Title} from "./book.styled"
 import { Book as BookType } from "@/store"
 import { PageProps } from "@/types"
+import { BookOptions } from "./options"
 
 
-type BookPageProps = PageProps & {
+export type BookPageProps = PageProps & {
   book: BookType
 }
 
 const Book = () => {
-  const { book } = usePageProps<BookPageProps>()
+  const { book, auth } = usePageProps<BookPageProps>()
 
   return (
     <MainWrapper>
@@ -45,6 +46,8 @@ const Book = () => {
             <h2>Book description:</h2>
             <Description>{ book.description }</Description>
           </DescriptionWrapper>
+          <BookOptions />
+          {/* { auth.user && <BookOptions /> } */}
         </ContentContainer>
       </BookWrapper>
     </MainWrapper>
