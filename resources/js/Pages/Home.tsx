@@ -22,7 +22,7 @@ HomePage.layout = page => (
   <>
   <Head>
     <meta charSet="utf-8" />
-    <title>PlumeBooks | Get your books</title>
+    <title>Get your books</title>
   </Head>
   <HeaderGuard />
     { page }

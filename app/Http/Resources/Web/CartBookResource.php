@@ -15,14 +15,17 @@ class CartBookResource extends JsonResource{
     $book = $this->books[0];
 
 		$conversion = [
-      "id" => $book["id"],
-      "title" => $book["title"],
-      "author" => $book["author"],
-      "description" => $book["description"],
-      "category" => $book["category"],
-      "image" => $book["image"],
-      "price" => $book["price"],
-      "quantity" => $this->quantity
+      "cartId" => $this->id,
+      "quantity" => $this->quantity,
+      "book" => [
+        "id" => $book["id"],
+        "title" => $book["title"],
+        "author" => $book["author"],
+        "description" => $book["description"],
+        "category" => $book["category"],
+        "image" => $book["image"],
+        "price" => $book["price"],
+      ]
     ];
 
     return $conversion;

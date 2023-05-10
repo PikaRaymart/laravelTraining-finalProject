@@ -11,8 +11,8 @@ use App\Models\Cart;
 
 class CartController extends Controller{
 	
+  // returns the populated cart
   function index() {
-    // returns the populated cart
     $customer = authenticatedUser();
 
     $cart = $customer->carts()->with("books")->get();

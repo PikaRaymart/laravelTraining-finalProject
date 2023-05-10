@@ -2,7 +2,7 @@ import {
   breakpoint,
   fluid, 
   rem } from "@/Styled/functions";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 
 export const Option = styled.button`
@@ -33,7 +33,11 @@ export const QuantityButton = styled.button`
   }
 `
 
-export const QuantityWrapper = styled.div`
+type QuantityWrapperProps = {
+  isSmall?: boolean
+}
+
+export const QuantityWrapper = styled.div<QuantityWrapperProps>`
   align-items: center;
   background-color: rgba(59, 86, 255, .08);
   color: ${ ({ theme }) => theme.colors.dark1 };
@@ -44,6 +48,15 @@ export const QuantityWrapper = styled.div`
   height: ${ rem(46) };
   max-width: max-content;
   margin-right: auto;
+
+  ${ ({ isSmall }) => isSmall && css`
+    height: ${ rem(40) };
+    
+    ${ QuantityButton } {
+      height: ${ rem(40) };
+      width: ${ rem(40) };
+    }
+  ` }
 
   ${ breakpoint("desktop", `
     margin-right: ${ rem(48) };
