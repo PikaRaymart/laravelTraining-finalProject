@@ -10,6 +10,7 @@ use App\Http\Resources\Web\BookCollection;
 use App\Http\Resources\Web\BookPageResource;
 use App\Http\Resources\Web\CategoryCollection;
 use App\Models\Book;
+use App\Models\Cart;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -60,10 +61,22 @@ class BookController extends Controller{
 
   // Shows a single book
   function show(Book $book) {
+    $currentUser = currentAuthenticatedUser();
+    $ownedCart = null;
 
+    if ( $currentUser["user"] ) {
+      $ownedCart = Cart::where("customer_id", $currentUser["user"]->id)
+        ->whereHas('books', function ($query) use ($book) {
+            $query->where('books.id', $book->id);
+        })
+        ->with("books")
+        ->get();
+    }
+    
     return Inertia::render("Books/Book", [
       "auth" => currentAuthenticatedUser(),
-      "book" => new BookPageResource($book)
+      "book" => new BookPageResource($book),
+      "availableStocks" => $ownedCart && count($ownedCart)!==0? $ownedCart[0]["quantity"] : $book->stocks
     ]);
   }
 

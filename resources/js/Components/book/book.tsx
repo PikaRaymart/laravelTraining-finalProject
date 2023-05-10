@@ -10,18 +10,14 @@ import {
   MainWrapper, 
   Price, 
   Stocks, 
-  Title} from "./book.styled"
-import { Book as BookType } from "@/store"
-import { PageProps } from "@/types"
+  Title } from "./book.styled"
 import { BookOptions } from "./options"
+import { BookPageProps } from "@/Pages/Books/Book"
 
-
-export type BookPageProps = PageProps & {
-  book: BookType
-}
 
 const Book = () => {
-  const { book, auth } = usePageProps<BookPageProps>()
+  const { book, auth, availableStocks } = usePageProps<BookPageProps>()
+  console.log(availableStocks)
 
   return (
     <MainWrapper>

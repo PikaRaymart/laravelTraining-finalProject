@@ -17,12 +17,12 @@ export const CartLink = styled.div`
     position: absolute;
     width: 1px;
 
-    ${ breakpoint("desktop", `
+    ${ breakpoint("tablet", `
       inset: ${ rem(4) } auto auto -${ rem(8) };
     `) }
   }
 
-  ${ breakpoint("desktop", `
+  ${ breakpoint("tablet", `
     margin: 0 0 0 ${ rem(32) };
   `) }
 
