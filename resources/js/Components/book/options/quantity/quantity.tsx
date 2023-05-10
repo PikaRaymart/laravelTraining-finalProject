@@ -1,6 +1,6 @@
 import { 
   QuantityWrapper,
-  QuantityButton  } from "../options.styled"
+  QuantityButton  } from "./quantity.styled"
 
 
 type QuantityProps = {

@@ -6,6 +6,7 @@ import {
   Author } from "@/Components/cart/book/book.styled"
 import { Price } from "@/Components/book/book.styled"
 import { BookRemoveOption } from "@/Components/book/options/remove"
+import { Link } from "@inertiajs/react"
 
 
 type BookProps = {
@@ -24,7 +25,9 @@ const Book = ({ children, book, handleRemoveCartBook }: BookProps) => {
             src={ `/storage/books/${ book.image }` }
             alt={ book.title } />
           <div>
-            <Title>{ book.title }</Title>
+            <Title>
+              <Link href={ `/books/${ book.id }` }>{ book.title }</Link>
+            </Title>
             <Author>{ book.author }</Author>
           </div>
         </BookInfoContainer>

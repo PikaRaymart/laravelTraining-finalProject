@@ -1,4 +1,6 @@
-import { Label, Wrapper } from "./remove.styled"
+import { 
+  Label, 
+  Wrapper } from "./remove.styled"
 
 
 type RemoveProps = {
