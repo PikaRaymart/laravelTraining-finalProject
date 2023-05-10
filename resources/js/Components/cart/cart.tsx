@@ -33,7 +33,7 @@ const Cart = () => {
                 book={ book }
                 quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
                 handleChangeCartQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }
-                handleRemoveCartBook={ handleRemoveCartBook } />
+                handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) } />
                 )) }
           </CartList>
         )  }

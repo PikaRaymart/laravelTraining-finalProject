@@ -11,16 +11,13 @@ import { Price } from "@/Components/shared/book/book.styled"
 import { 
   QuantityButton, 
   QuantityWrapper } from "@/Components/book/options/options.styled"
-import { 
-  HandleChangeCartQuantity, 
-  HandleRemoveCartBook } from "../../cart.hooks"
 
 
 type BookProps = {
   book: BookType,
   quantity: number,
   handleChangeCartQuantity: ( quantity: number ) => void,
-  handleRemoveCartBook: HandleRemoveCartBook
+  handleRemoveCartBook: ( remove: boolean ) => void
 }
 
 const Book = ({ book, quantity, handleChangeCartQuantity, handleRemoveCartBook }: BookProps) => {
@@ -57,12 +54,15 @@ const Book = ({ book, quantity, handleChangeCartQuantity, handleRemoveCartBook }
               </svg>
             </QuantityButton>
           </QuantityWrapper>
-          <RemoveBook>
+          <RemoveBook >
+            <legend className="sr-only">cart book remove</legend>
             <input 
               className="sr-only"
               type="radio"
               id={ book.id + "-remove" }
-              name={ book.id + "delete" } />
+              value="true"
+              name={ book.id + "delete" }
+              onChange={ () => handleRemoveCartBook(true) }  />
             <RemoveLabel htmlFor={ book.id + "-remove" }>
               <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10.253" height="10.253" viewBox="0 0 10.253 10.253">
                 <g id="remove-red" transform="translate(5.127 -3.359) rotate(45)">
@@ -75,8 +75,10 @@ const Book = ({ book, quantity, handleChangeCartQuantity, handleRemoveCartBook }
               className="sr-only"
               type="radio"
               id={ book.id + "-undo" }
-              name={ book.id + "delete" } 
-              defaultChecked/>
+              value="false"
+              name={ book.id + "delete" }  
+              defaultChecked
+              onChange={ () => handleRemoveCartBook(false) }/>
             <RemoveLabel htmlFor={ book.id + "-undo" }>
               <svg xmlns="http://www.w3.org/2000/svg" width="12.171" height="13.508" viewBox="0 0 12.171 13.508">
                 <g id="Edit_Undo" data-name="Edit / Undo" transform="translate(-4.168 -2.25)">

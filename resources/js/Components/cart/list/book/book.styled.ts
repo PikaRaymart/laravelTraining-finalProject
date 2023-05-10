@@ -29,7 +29,7 @@ export const RemoveLabel = styled.label`
   }
 `
 
-export const RemoveBook = styled.div`
+export const RemoveBook = styled.fieldset`
   height: ${ rem(40) };
   margin-left: ${ rem(24) };
   position: relative;

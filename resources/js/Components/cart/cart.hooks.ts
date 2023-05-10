@@ -1,7 +1,9 @@
 import { usePageProps } from "@/Hooks/usePageProps"
 import { CartPageProps } from "@/Pages/Cart"
 import { useForm } from "@inertiajs/react"
-import { FormEvent, useEffect } from "react"
+import { 
+  FormEvent, 
+  useEffect } from "react"
 
 
 type Update = {
@@ -15,7 +17,7 @@ type CartFormData = {
 }
 
 export type HandleChangeCartQuantity = ( cartId: number, quantity: number ) => void
-export type HandleRemoveCartBook = ( cartId: number ) => void
+export type HandleRemoveCartBook = ( cartId: number, remove: boolean ) => void
 
 export const useCart = () => {
   const { cart } = usePageProps<CartPageProps>()
@@ -35,12 +37,18 @@ export const useCart = () => {
     }
   }
 
-  const handleRemoveCartBook: HandleRemoveCartBook = ( cartId ) => {
+  const handleRemoveCartBook: HandleRemoveCartBook = ( cartId, remove ) => {
     const updateIndex = data.updates.findIndex(update => update.cartId===cartId)
+ 
+    if ( updateIndex===-1 ) return
 
-    if ( updateIndex!==-1 ) {
+    if ( remove ) {
       const newUpdates = [ ...data.updates ]
       newUpdates[updateIndex].delete = true
+      setData("updates", newUpdates)
+    } else {
+      const newUpdates = [ ...data.updates ]
+      newUpdates[updateIndex].delete = false
       setData("updates", newUpdates)
     }
   }
