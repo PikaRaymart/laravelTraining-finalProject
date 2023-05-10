@@ -1,1 +1,1 @@
-export { default as BookItem } from "./book"
+export { default as ListBook } from "./book"

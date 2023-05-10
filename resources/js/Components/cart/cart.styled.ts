@@ -53,6 +53,7 @@ export const CartBottomRow = styled.form`
 
 export const InnerWrapper = styled.div`
   max-width: ${ rem(800) };
+  margin: 0 auto;
 `
 
 export const MainWrapper = styled.main`

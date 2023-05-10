@@ -7,13 +7,15 @@ import {
   InnerWrapper, 
   MainWrapper, 
   TotalCartPrice, 
-  UpdateOption} from "./cart.styled"
+  UpdateOption } from "./cart.styled"
 import { CartList } from "./list"
 import { CartTable } from "./table"
 import { Link } from "@inertiajs/react"
 import { usePageProps } from "@/Hooks/usePageProps"
 import { CartPageProps } from "@/Pages/Cart"
-import { BookItem } from "./list/book"
+import { ListBook } from "./list/book"
+import { TableBook } from "./table/book"
+import { BookQuantityOption } from "../book/options/quantity"
 
 
 const Cart = () => {
@@ -28,16 +30,34 @@ const Cart = () => {
         { isMobile && (
           <CartList>
             { cart.map(({ cartId, book }) => (
-              <BookItem
+              <ListBook
                 key={ cartId }
                 book={ book }
-                quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
-                handleChangeCartQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }
-                handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) } />
+                handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) }>
+                <BookQuantityOption
+                  quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
+                  stocks={ book.stocks }
+                  handleChangeQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }
+                  isSmall={ true } />
+              </ListBook>
                 )) }
           </CartList>
         )  }
-        { !isMobile && <CartTable /> }
+        { !isMobile && (
+          <CartTable>
+            { cart.map(({ cartId, book }) => (
+              <TableBook
+                key={ cartId }
+                book={ book }
+                handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) } >
+                <BookQuantityOption
+                  quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
+                  stocks={ book.stocks }
+                  handleChangeQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }/>
+              </TableBook>
+                )) }
+          </CartTable>
+        ) }
         <CartBottomRow onSubmit={ handleSubmitCartUpdates }>
           <TotalCartPrice>
             <span>Total: </span>
