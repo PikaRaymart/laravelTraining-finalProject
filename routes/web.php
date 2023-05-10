@@ -46,6 +46,7 @@ Route::middleware(["auth:sanctum", "admin"])->group(function() {
 Route::middleware("auth:customer")->group(function() {
 	Route::controller(CartController::class)->group(function() {
 		Route::get("/cart", "index")->name("cart");
+		Route::post("/cart", "update")->name("update-cart");
 	});
 });
 

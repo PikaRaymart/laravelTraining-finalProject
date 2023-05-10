@@ -25,6 +25,7 @@ class CartBookResource extends JsonResource{
         "category" => $book["category"],
         "image" => $book["image"],
         "price" => $book["price"],
+        "stocks" => $book["stocks"],
       ]
     ];
 

@@ -1,4 +1,7 @@
+import { usePageProps } from "@/Hooks/usePageProps"
+import { CartPageProps } from "@/Pages/Cart"
 import { useForm } from "@inertiajs/react"
+import { FormEvent, useEffect } from "react"
 
 
 type Update = {
@@ -11,12 +14,56 @@ type CartFormData = {
   updates: Update[]
 }
 
+export type HandleChangeCartQuantity = ( cartId: number, quantity: number ) => void
+export type HandleRemoveCartBook = ( cartId: number ) => void
+
 export const useCart = () => {
-  const { data, setData } = useForm<CartFormData>({
+  const { cart } = usePageProps<CartPageProps>()
+  const { data, setData, post } = useForm<CartFormData>({
     updates: []
   })
 
+  const handleChangeCartQuantity: HandleChangeCartQuantity = ( cartId, quantity ) => {
+    const updateIndex = data.updates.findIndex(update => update.cartId===cartId)
+    
+    if ( updateIndex!==-1 ) {
+      const newUpdates = [ ...data.updates ]
+      newUpdates[updateIndex] = { cartId, quantity }
+      setData("updates", newUpdates)
+    } else {
+      setData("updates", data.updates.concat({ cartId, quantity }))
+    }
+  }
+
+  const handleRemoveCartBook: HandleRemoveCartBook = ( cartId ) => {
+    const updateIndex = data.updates.findIndex(update => update.cartId===cartId)
+
+    if ( updateIndex!==-1 ) {
+      const newUpdates = [ ...data.updates ]
+      newUpdates[updateIndex].delete = true
+      setData("updates", newUpdates)
+    }
+  }
+
+  const handleSubmitCartUpdates = ( event: FormEvent ) =>{
+    event.preventDefault()
+    post("/cart")
+  }
+
+  useEffect(() => {
+    if ( cart.length ) {
+      const newUpdates = cart.reduce(( accu, curr ) => accu.concat([{
+        cartId: curr.cartId,
+        quantity: curr.quantity
+      }]), [] as Update[])
+      setData("updates", newUpdates)
+    }
+  }, [ cart ])
+
   return {
-    data
+    data,
+    handleChangeCartQuantity,
+    handleRemoveCartBook,
+    handleSubmitCartUpdates
   }
 }

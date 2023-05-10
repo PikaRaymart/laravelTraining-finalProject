@@ -11,15 +11,19 @@ import { Price } from "@/Components/shared/book/book.styled"
 import { 
   QuantityButton, 
   QuantityWrapper } from "@/Components/book/options/options.styled"
+import { 
+  HandleChangeCartQuantity, 
+  HandleRemoveCartBook } from "../../cart.hooks"
 
 
 type BookProps = {
   book: BookType,
   quantity: number,
-  // handleChangeQuantity:
+  handleChangeCartQuantity: ( quantity: number ) => void,
+  handleRemoveCartBook: HandleRemoveCartBook
 }
 
-const Book = ({ book, quantity }: BookProps) => {
+const Book = ({ book, quantity, handleChangeCartQuantity, handleRemoveCartBook }: BookProps) => {
 
   return (
     <Wrapper>
@@ -32,14 +36,18 @@ const Book = ({ book, quantity }: BookProps) => {
         <Price>₱{ book.price.toFixed(2) }</Price>
         <OptionsContainer>
           <QuantityWrapper isSmall={ true }>
-            <QuantityButton>
+            <QuantityButton 
+              onClick={ () => !(quantity-1 < 1)? handleChangeCartQuantity(quantity-1) : null }
+              aria-disabled={ quantity-1<1 }>
               <span className="sr-only">remove 1 order</span>
               <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13.25" height="1.25" viewBox="0 0 13.25 1.25">
                 <line id="subtract" x2="12" transform="translate(0.625 0.625)" fill="none" stroke="#404548" strokeLinecap="round" strokeWidth="1.25"/>
               </svg>
             </QuantityButton>
             { quantity }
-            <QuantityButton>
+            <QuantityButton 
+              onClick={ () => !(quantity+1 > book.stocks)? handleChangeCartQuantity(quantity+1) : null }
+              aria-disabled={ quantity+1>book.stocks }>
               <span className="sr-only">add 1 order</span>
               <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13.25" height="13.25" viewBox="0 0 13.25 13.25">
                 <g id="quantity-add" transform="translate(-713.875 -688.875)">
