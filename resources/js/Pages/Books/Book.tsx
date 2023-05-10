@@ -9,7 +9,8 @@ import { Head } from "@inertiajs/react";
 
 export type BookPageProps = PageProps & {
   book: BookType,
-  availableStocks: number
+  availableStocks: number,
+  limitReached: boolean
 }
 
 const BookPage: PageWithLayout = () => {

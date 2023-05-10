@@ -72,11 +72,12 @@ class BookController extends Controller{
         ->with("books")
         ->get();
     }
-    
+   
     return Inertia::render("Books/Book", [
       "auth" => currentAuthenticatedUser(),
       "book" => new BookPageResource($book),
-      "availableStocks" => $ownedCart && count($ownedCart)!==0? $ownedCart[0]["quantity"] : $book->stocks
+      "availableStocks" => $ownedCart && count($ownedCart)!==0? $book->stocks - $ownedCart[0]["quantity"] : $book->stocks,
+      "limitReached" => $ownedCart && count($ownedCart)!==0 && $ownedCart[0]["quantity"]===$book->stocks
     ]);
   }
 

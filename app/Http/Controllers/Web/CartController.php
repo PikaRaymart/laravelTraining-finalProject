@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UpdateCartRequest;
-use App\Http\Requests\V1\AddToCartRequest;
+use App\Http\Requests\Web\AddToCartRequest;
 use App\Http\Resources\Web\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
@@ -49,7 +49,7 @@ class CartController extends Controller{
 
       $foundCart->save();
 
-      return response()->json(["message" => "Successfully added book to cart."], 200);
+      return redirect()->back();
     };
     // create a cart document
     $newCart = Cart::create([
@@ -60,12 +60,12 @@ class CartController extends Controller{
 
     $newCart->books()->attach($foundBook->id);
 
-    return response()->json(["message" => "Successfully added book to cart."], 200);
+    return redirect()->back();
   }
 
   // updates the cart of the customer
   function update(UpdateCartRequest $request) {
-   
+
     foreach ($request->all()["updates"] as $update) {
       if (isset($update["delete"]) && $update["delete"]==true) {
         Cart::destroy($update["cartId"]);

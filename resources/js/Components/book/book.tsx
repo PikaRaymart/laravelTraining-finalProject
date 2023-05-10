@@ -16,8 +16,7 @@ import { BookPageProps } from "@/Pages/Books/Book"
 
 
 const Book = () => {
-  const { book, auth, availableStocks } = usePageProps<BookPageProps>()
-  console.log(availableStocks)
+  const { book, auth } = usePageProps<BookPageProps>()
 
   return (
     <MainWrapper>

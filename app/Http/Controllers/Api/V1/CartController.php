@@ -62,7 +62,7 @@ class CartController extends Controller{
 
   // updates the cart of the customer
   function update(UpdateCartRequest $request) {
-
+ 
     foreach ($request->all()["updates"] as $update) {
       if (isset($update["delete"]) && $update["delete"]==true) {
         Cart::destroy($update["cartId"]);

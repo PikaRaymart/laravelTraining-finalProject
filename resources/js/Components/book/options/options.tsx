@@ -7,16 +7,18 @@ import { BookQuantityOption } from "./quantity"
 
 
 const Options = () =>{ 
-  const { data, handleChangeQuantity, stocks } = useBookOptions()
+  const { data, handleChangeQuantity, stocks, handleSendAddToCart, limitReached } = useBookOptions()
 
   return (
-    <Wrapper>
+    <Wrapper >
       <BookQuantityOption
-         quantity={ data.quantity }
+         quantity={  limitReached? 0 : data.quantity }
          handleChangeQuantity={ quantity => handleChangeQuantity(quantity) }
-         stocks={ stocks }/>
-      <CartButton>Add to cart</CartButton>
-      <BuyButton>Buy now</BuyButton>
+         stocks={ limitReached? 0 : stocks }/>
+      <form onSubmit={ handleSendAddToCart }>
+        <CartButton>Add to cart</CartButton>
+        <BuyButton>Buy now</BuyButton>
+      </form>
     </Wrapper>
   )
 }
