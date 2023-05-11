@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteBooksRequest;
 use App\Http\Requests\Web\StoreBookRequest;
 use App\Http\Requests\Web\UpdateBookRequest;
 use App\Http\Resources\Web\AdminBookResource;
@@ -139,7 +140,9 @@ class BookController extends Controller{
   }
 
   // deletes multiple books
-  function deleteBulk(Request $request) {
-    dd($request->all());
+  function deleteBulk(DeleteBooksRequest $request) {
+		Book::destroy($request->bookIds);
+
+		return redirect()->back();
   }
 }

@@ -11,19 +11,34 @@ import {
   Stocks, 
   Title } from "../books.styled"
 import { Link } from "@inertiajs/react"
+import { 
+  HandleAddIdToDeletion, 
+  HandleBulkIdAddition, 
+  UseBooksFormData} from "../book.hook"
 
 
-const Table = () => {
+type TableProps = {
+  data: UseBooksFormData,
+  handleAddIdToDeletion: HandleAddIdToDeletion,
+  handleBulkIdAddition: HandleBulkIdAddition
+}
+
+const Table = ({ data, handleAddIdToDeletion, handleBulkIdAddition }: TableProps) => {
   const { books } = usePageProps<AdminPageProps>()
 
   const renderBooks = () =>{
     const mappedBooks = books.data.map(book => (
       <TableRow key={ book.title }>
         <td>
+          <label
+            className="sr-only" 
+            htmlFor={ `${book.id}` }>add { book.title } for deletion</label>
           <input 
             type="checkbox"
             id={ `${ book.id }` }
-            name={ `${ book.id }` } />
+            name={ `${ book.id }` }
+            checked={ !!data.bookIds.find(bookId => bookId===book.id) }
+            onChange={ () => handleAddIdToDeletion(book.id) } />
         </td>
         <td>
           { book.image && (
@@ -57,10 +72,14 @@ const Table = () => {
       <TableHead>
         <tr>
           <th>
+            <label
+              className="sr-only" 
+              htmlFor="select-all">add all books for deletion</label>
             <input
               id="select-all"
               name="select-all" 
-              type="checkbox" />
+              type="checkbox"
+              onChange={ event => handleBulkIdAddition(event, books.data.reduce((accu, curr) => accu.concat(curr.id), [] as number[])) } />
           </th>
           <th></th>
           <th>Book</th>

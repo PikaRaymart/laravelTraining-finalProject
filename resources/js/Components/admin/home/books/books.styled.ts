@@ -3,7 +3,18 @@ import {
   fluid, 
   rem } from "@/Styled/functions";
 import styled from "styled-components";
+import { 
+  FormControls, 
+  FormOption } from "../../book/form/form.styled";
 
+
+export const DeleteButton = styled(FormOption)`
+  background-color: #FFFFFF;
+  color: ${ ({ theme }) => theme.colors.dark1 };
+`
+
+export const DeleteContainer = styled(FormControls)`
+`
 
 type StatusProps = {
   isActive: string
