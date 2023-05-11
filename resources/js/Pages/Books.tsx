@@ -2,12 +2,12 @@ import { Books } from "@/Components/books";
 import { Footer } from "@/Layouts/Footer";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
+import { PageProps } from "@/types";
+import { Head } from "@inertiajs/react";
 import { 
   BooksFilters, 
-  BooksMetaData, 
-  PageProps } from "@/types";
-import { Head } from "@inertiajs/react";
-import { Book } from "./Books/Book";
+  BooksMetaData,
+  Book } from "./Books/books";
 
 
 export type BooksPageProps = PageProps<{

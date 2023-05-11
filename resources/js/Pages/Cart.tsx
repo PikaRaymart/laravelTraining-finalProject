@@ -2,19 +2,17 @@ import { Cart } from "@/Components/cart";
 import { Footer } from "@/Layouts/Footer";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
-import { Book } from "@/Pages/Books/Book";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
+import { Book } from "./Books/books";
 
-
-export type CartItem = {
-  cartId: number,
-  quantity: number,
-  book: Book
-}
 
 export type CartPageProps = PageProps<{
-  cart: CartItem[]
+  cart: {
+    cartId: number,
+    quantity: number,
+    book: Book
+  }[]
 }>
 
 const CartPage: PageWithLayout = () => {

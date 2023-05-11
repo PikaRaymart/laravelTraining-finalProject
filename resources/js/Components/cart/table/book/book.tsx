@@ -1,4 +1,3 @@
-import { Book as BookType } from "@/Pages/Books/Book"
 import { 
   BookInfoContainer, 
   TableRow } from "./book.styled"
@@ -9,6 +8,7 @@ import {
 import { Price } from "@/Components/book/book.styled"
 import { BookRemoveOption } from "@/Components/book/options/remove"
 import { Link } from "@inertiajs/react"
+import { Book as BookType } from "@/Pages/Books/books"
 
 
 type BookProps = {

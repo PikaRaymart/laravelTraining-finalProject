@@ -2,11 +2,11 @@ import { AdminHeader } from "@/Layouts/Admin/Header"
 import { PageWithLayout } from "@/app"
 import { Head } from "@inertiajs/react"
 import { AdminHome } from "@/Components/admin/home"
+import { PageProps } from "@/types"
 import { 
+  Book,
   BooksFilters, 
-  BooksMetaData, 
-  PageProps} from "@/types"
-import { Book } from "./Books/Book"
+  BooksMetaData } from "./Books/books"
 
 
 export type AdminPageProps = PageProps<{

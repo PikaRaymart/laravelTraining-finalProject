@@ -4,19 +4,8 @@ import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
+import { Book } from "./books";
 
-
-export type Book = {
-  id: number,
-  title: string,
-  author: string,
-  description: string,
-  image: File | null | string,
-  status: string,
-  category: string,
-  stocks: number,
-  price: number
-}
 
 export type BookPageProps = PageProps & {
   book: Book,

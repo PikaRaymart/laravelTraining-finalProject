@@ -1,9 +1,11 @@
-import { Book as BookType } from "@/Pages/Books/Book"
-import { Image, Wrapper } from "./book.styled"
+import { 
+  Image, 
+  Wrapper } from "./book.styled"
 import { 
   Author, 
   Title,
   Price } from "@/Components/shared/book/book.styled"
+import { Book as BookType } from "@/Pages/Books/books"
 import { Link } from "@inertiajs/react"
 
 
