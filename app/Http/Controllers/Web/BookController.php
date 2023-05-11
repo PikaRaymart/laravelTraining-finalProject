@@ -137,4 +137,9 @@ class BookController extends Controller{
 
 		return redirect("admin");
   }
+
+  // deletes multiple books
+  function deleteBulk(Request $request) {
+    dd($request->all());
+  }
 }

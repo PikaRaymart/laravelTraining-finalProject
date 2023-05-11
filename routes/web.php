@@ -40,6 +40,7 @@ Route::middleware(["auth:sanctum", "admin"])->group(function() {
 		Route::post("/admin/store", "store")->name("store-book");
 		Route::get("/admin/edit/{book}", "edit")->name("edit-book");
 		Route::post("/admin/update/{book}", "update")->name("update-book");
+		Route::delete("/admin/delete/bulk", "deleteBulk")->name("delete-books");
 	});
 });
 
