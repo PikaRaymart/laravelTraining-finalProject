@@ -20,7 +20,7 @@ import { BookQuantityOption } from "../book/options/quantity"
 
 const Cart = () => {
   const { data, handleChangeCartQuantity, handleRemoveCartBook, handleSubmitCartUpdates } = useCart()
-  const { cart } = usePageProps<CartPageProps>()
+  const { cart, ...rest } = usePageProps<CartPageProps>()
   const isMobile = useDetectResponsiveness()
 
   return (
@@ -66,7 +66,7 @@ const Cart = () => {
           <CartOptions>
             <UpdateOption type="submit">Update Cart</UpdateOption>
             <CheckoutOption>
-              <Link href="#">Proceed Checkout</Link>
+              <Link href="/checkout/cart">Proceed Checkout</Link>
             </CheckoutOption>
           </CartOptions>
         </CartBottomRow>

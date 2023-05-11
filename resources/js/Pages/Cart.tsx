@@ -12,7 +12,9 @@ export type CartPageProps = PageProps<{
     cartId: number,
     quantity: number,
     book: Book
-  }[]
+  }[],
+  success?: string,
+  failure?: string
 }>
 
 const CartPage: PageWithLayout = () => {

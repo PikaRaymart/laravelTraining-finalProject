@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\Web\PageController;
-use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\Web\PayPalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\BookController;
 use App\Http\Controllers\Web\CartController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,6 +51,15 @@ Route::middleware("auth:customer")->group(function() {
 	});
 });
 
+// Paypal routes
+Route::middleware("auth:customer")->group(function() {
+	Route::controller(PayPalController::class)->group(function() {
+		Route::get("/checkout/cart", "checkout")->name("cart-checkout");
+		Route::get("/checkout/success-transaction", "checkoutSuccessTransaction")->name("checkoutSuccessTransaction");
+		Route::get("/checkout/cancel-transaction", "checkoutCancelTransaction")->name("checkoutCancelTransaction");
+	});
+});
+
 Route::get('/dashboard', function () {
 	return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -63,11 +71,5 @@ Route::middleware('auth')->group(function () {
 	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-Route::get('create-transaction', [PayPalController::class, 'createTransaction'])->name('createTransaction');
-Route::get('process-transaction', [PayPalController::class, 'processTransaction'])->name('processTransaction');
-Route::get('success-transaction', [PayPalController::class, 'successTransaction'])->name('successTransaction');
-Route::get('cancel-transaction', [PayPalController::class, 'cancelTransaction'])->name('cancelTransaction');
 
 require __DIR__.'/auth.php';

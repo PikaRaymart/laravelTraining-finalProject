@@ -9,6 +9,7 @@ use App\Http\Resources\Web\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
 use Inertia\Inertia;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class CartController extends Controller{
 	
