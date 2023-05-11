@@ -1,13 +1,23 @@
 import { Books } from "@/Components/books";
-import { useSetupBooks } from "@/Hooks/useSetupBooks";
 import { Footer } from "@/Layouts/Footer";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
+import { 
+  BooksFilters, 
+  BooksMetaData, 
+  PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
+import { Book } from "./Books/Book";
 
+
+export type BooksPageProps = PageProps<{
+  booksFilters: BooksFilters,
+  books: BooksMetaData & {
+    data: Book[]
+  }
+}>
 
 const BooksPage: PageWithLayout = () =>{
-  useSetupBooks()
 
   return (
     <Books />

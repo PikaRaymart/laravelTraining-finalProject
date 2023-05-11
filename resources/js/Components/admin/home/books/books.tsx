@@ -1,4 +1,3 @@
-import { useTrackedState } from "@/store"
 import { 
   BookInfoContainter,
   Category,
@@ -15,14 +14,16 @@ import {
 import { BooksPaginator } from "@/Components/paginator"
 import { Link } from "@inertiajs/react"
 import { useDetectResponsiveness } from "@/Hooks/useDetectResponsiveness"
+import { usePageProps } from "@/Hooks/usePageProps"
+import { AdminPageProps } from "@/Pages/Admin"
 
 
 const Books = () =>{
-  const { books } = useTrackedState()
+  const { books } = usePageProps<AdminPageProps>()
   const isMobile = useDetectResponsiveness()
 
   const renderBooksList = () => {
-    const mappedBooks = books.map(book => (
+    const mappedBooks = books.data.map(book => (
       <ListItem key={ book.title }>
         { book.image && (
           <Image
@@ -44,7 +45,7 @@ const Books = () =>{
   }
 
   const renderBooksTableBody = () =>{
-    const mappedBooks = books.map(book => (
+    const mappedBooks = books.data.map(book => (
       <TableRow key={ book.title }>
         <td>
           <input 

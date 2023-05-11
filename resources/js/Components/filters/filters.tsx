@@ -1,4 +1,3 @@
-import { useExpansion } from "@/Hooks/useExpansion"
 import { 
   Fieldset,
   FilterClose,
@@ -16,16 +15,13 @@ import {
   FilterNow,
   FilterReset,
   PriceLabel} from "./filters.styled"
-import { useTrackedState } from "@/store"
 import { useFilter } from "./filter.hook"
+import { usePageProps } from "@/Hooks/usePageProps"
+import { AdminPageProps } from "@/Pages/Admin"
 
-
-type FiltersProps = {
-  url: string
-}
 
 const Filters = () => {
-  const { booksFilters: { categories } } = useTrackedState()
+  const { booksFilters } = usePageProps<AdminPageProps>()
   const {
     isExpanded,
     handleExpansion,
@@ -38,7 +34,7 @@ const Filters = () => {
 
   const renderCategoryInputs = () => {
 
-    return categories.map(category => (
+    return booksFilters.categories.map(category => (
       <CategoryItem key={ category }>
         <input
           id={ category } 

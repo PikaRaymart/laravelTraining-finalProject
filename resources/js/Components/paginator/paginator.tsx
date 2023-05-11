@@ -1,16 +1,17 @@
-import { useTrackedState } from "@/store"
 import { 
   LinkItem,
   LinksList, 
   Wrapper } from "./paginator.styled"
 import { Link } from "@inertiajs/react"
+import { usePageProps } from "@/Hooks/usePageProps"
+import { AdminPageProps } from "@/Pages/Admin"
 
 
 const Paginator = () => {
-  const { booksMetaData } = useTrackedState()
+  const { books } = usePageProps<AdminPageProps>()
   
   const renderLinks = () =>{
-    const links = booksMetaData?.meta.links.map((link, index) => (
+    const links = books.meta.links.map((link, index) => (
       <LinkItem 
         key={ `${ index }${ link.url?? "current" }` }
         isActive={ link.active }>
@@ -18,7 +19,7 @@ const Paginator = () => {
           { !link.active && (
             <Link href={ link.url }>
               { index===0? "<" : 
-                index===booksMetaData.meta.links.length-1? ">" : link.label }
+                index===books.meta.links.length-1? ">" : link.label }
             </Link>
           ) }
           { link.active && link.label }

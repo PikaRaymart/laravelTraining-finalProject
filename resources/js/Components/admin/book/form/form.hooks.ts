@@ -1,4 +1,4 @@
-import { Book } from "@/store"
+import { Book } from "@/Pages/Books/Book"
 import { useForm } from "@inertiajs/react"
 import { 
   FormEvent, 

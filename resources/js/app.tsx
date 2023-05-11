@@ -1,10 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
-
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { Provider } from './store';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, Theme } from './Styled/base';
 
@@ -24,9 +22,7 @@ createInertiaApp({
       <>
       <GlobalStyle />
       <ThemeProvider theme={ Theme }>
-        <Provider>
-          <App {...props} />
-        </Provider>
+        <App {...props} />
       </ThemeProvider>
       </>
     );

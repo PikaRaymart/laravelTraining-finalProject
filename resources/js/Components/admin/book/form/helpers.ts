@@ -1,4 +1,4 @@
-import { Book } from "@/store"
+import { Book } from "@/Pages/Books/Book"
 
 
 export const checkErrors = ( e: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement, name: string, error?: string ) => {

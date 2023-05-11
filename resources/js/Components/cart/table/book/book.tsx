@@ -1,5 +1,7 @@
-import { Book as BookType } from "@/store"
-import { BookInfoContainer, TableRow } from "./book.styled"
+import { Book as BookType } from "@/Pages/Books/Book"
+import { 
+  BookInfoContainer, 
+  TableRow } from "./book.styled"
 import { 
   Image,
   Title,

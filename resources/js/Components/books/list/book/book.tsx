@@ -1,4 +1,4 @@
-import { Book as BookType } from "@/store"
+import { Book as BookType } from "@/Pages/Books/Book"
 import { Image, Wrapper } from "./book.styled"
 import { 
   Author, 

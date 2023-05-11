@@ -1,14 +1,15 @@
-import { useTrackedState } from "@/store"
 import { Wrapper } from "./list.styled"
 import { BookItem } from "./book"
 import { BooksPaginator } from "@/Components/paginator"
+import { usePageProps } from "@/Hooks/usePageProps"
+import { BooksPageProps } from "@/Pages/Books"
 
 
 const List = () => {
-  const { books } = useTrackedState()
+  const { books } = usePageProps<BooksPageProps>()
 
   const renderBooks = () => {
-    const mappedBooks = books.map(book => (
+    const mappedBooks = books.data.map(book => (
       <BookItem
         key={ book.id }
         book={ book } />

@@ -1,14 +1,25 @@
-import { Book } from "@/Components/book";
+import { Book as BookHome } from "@/Components/book";
 import { Footer } from "@/Layouts/Footer";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
-import { Book as BookType } from "@/store";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 
 
+export type Book = {
+  id: number,
+  title: string,
+  author: string,
+  description: string,
+  image: File | null | string,
+  status: string,
+  category: string,
+  stocks: number,
+  price: number
+}
+
 export type BookPageProps = PageProps & {
-  book: BookType,
+  book: Book,
   availableStocks: number,
   limitReached: boolean
 }
@@ -16,7 +27,7 @@ export type BookPageProps = PageProps & {
 const BookPage: PageWithLayout = () => {
   
   return (
-    <Book />
+    <BookHome />
   )
 }
 

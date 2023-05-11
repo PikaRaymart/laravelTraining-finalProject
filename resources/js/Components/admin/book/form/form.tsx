@@ -14,7 +14,6 @@ import {
   PhotoNote, 
   Textarea, 
   Wrapper } from "./form.styled"
-import { Book } from "@/store"
 import { 
   checkErrors, 
   formDraftValidity, 
@@ -23,6 +22,7 @@ import {
   HandleDataChange, 
   HandleFormSubmit, 
   HandleImageChange } from "./form.hooks"
+import { Book } from "@/Pages/Books/Book"
 
 type FormProps = {
   book: Omit<Book, "id">,

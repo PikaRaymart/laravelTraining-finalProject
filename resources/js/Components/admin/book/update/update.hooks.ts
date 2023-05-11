@@ -4,7 +4,7 @@ import {
   HandleSetBookDefaults, 
   HandleUpdateform} from "../form/form.hooks"
 import { usePage } from "@inertiajs/react"
-import { Book } from "@/store"
+import { Book } from "@/Pages/Books/Book"
 import { 
   formDraftValidity, 
   formValidity } from "../form/helpers"
