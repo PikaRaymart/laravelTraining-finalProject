@@ -17,7 +17,11 @@ export const useBooks = () => {
 
   const handleDeleteBooks = ( event:FormEvent ) =>{
     event.preventDefault()
-    form.delete("/admin/delete/bulk")
+    form.delete("/admin/delete/bulk", {
+      onSuccess: () =>{
+        setData("bookIds", [])
+      }
+    })
   }
 
   const handleAddIdToDeletion: HandleAddIdToDeletion = ( bookId ) => {

@@ -10,6 +10,10 @@ export const Option = styled.button`
   font-size: ${ fluid(14, 1.6, 16) };
   font-weight: 600;
   padding: ${ fluid(10, 1.2, 12) } ${ fluid(20, 2.4, 24) };
+
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+  }
 `
 
 export const BuyButton = styled(Option)`

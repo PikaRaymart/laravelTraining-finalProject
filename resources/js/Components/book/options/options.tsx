@@ -16,8 +16,8 @@ const Options = () =>{
          handleChangeQuantity={ quantity => handleChangeQuantity(quantity) }
          stocks={ limitReached? 0 : stocks }/>
       <form onSubmit={ handleSendAddToCart }>
-        <CartButton>Add to cart</CartButton>
-        <BuyButton>Buy now</BuyButton>
+        <CartButton aria-disabled={ limitReached }>Add to cart</CartButton>
+        <BuyButton aria-disabled={ true } type="button">Buy now</BuyButton>
       </form>
     </Wrapper>
   )

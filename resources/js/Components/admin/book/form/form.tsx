@@ -22,7 +22,8 @@ import {
   HandleDataChange, 
   HandleFormSubmit, 
   HandleImageChange } from "./form.hooks"
-import { Book } from "@/Pages/Books/Book"
+import { Book } from "@/Pages/Books/books"
+
 
 type FormProps = {
   book: Omit<Book, "id">,
@@ -159,7 +160,7 @@ const Form = ({
             as="textarea"
             id="status"
             name="status"
-            rows={5}
+            rows={8}
             value={ book.description }
             ref={ e => e && checkErrors(e, "description", errors.description) }
             onChange={ event => handleDataChange(event.target.value, "description") } />

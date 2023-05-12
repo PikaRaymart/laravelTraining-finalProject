@@ -141,7 +141,15 @@ class BookController extends Controller{
 
   // deletes multiple books
   function deleteBulk(DeleteBooksRequest $request) {
-		Book::destroy($request->bookIds);
+    $bookIds = $request->bookIds;
+
+    // update all the cart that has the books
+    Cart::whereHas('books', function ($query) use ($bookIds) {
+      $query->whereIn('book_id', $bookIds);
+    })->delete();
+
+    // destroy all the books
+		Book::destroy($bookIds);
 
 		return redirect()->back();
   }
