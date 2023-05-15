@@ -26,6 +26,7 @@ const Cart = () => {
 
   return (
     <MainWrapper>
+      { flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       { wasSuccessful && !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <h1 className="sr-only">Your cart</h1>
       <InnerWrapper>

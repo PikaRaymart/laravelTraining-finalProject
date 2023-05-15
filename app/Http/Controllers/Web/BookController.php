@@ -106,7 +106,7 @@ class BookController extends Controller{
       }
     }
 
-    return redirect("admin");
+    return redirect("admin")->with("success", "Successfully created book.");
   }
 
   // shows a form for editing a book
@@ -134,7 +134,7 @@ class BookController extends Controller{
 
 		$book->update($updateData);
 
-		return redirect("admin");
+		return redirect("admin")->with("success", "Successfully updated book.");
   }
 
   // deletes multiple books

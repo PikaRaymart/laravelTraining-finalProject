@@ -9,12 +9,16 @@ import {
 import { Searchbar } from "@/Components/searchbar"
 import { Link } from "@inertiajs/react"
 import { BooksList } from "./books"
+import { usePageProps } from "@/Hooks/usePageProps"
+import { ToastSuccess } from "@/Components/toast/success"
 
 
 const Home = () => {
+  const { flash } = usePageProps() 
 
   return (
     <MainWrapper>
+      { !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <ShowFiltersDesktop>
         <Filters />
       </ShowFiltersDesktop>

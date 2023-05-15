@@ -64,9 +64,9 @@ class PayPalController extends Controller{
           return Inertia::location($links["href"]);
 				}
 			}
-			return redirect()->back();
+			return redirect("cart")->with("success", "Success");
 		} else {
-			return redirect()->back();
+			return redirect("cart")->with("success", "Success");
 		}
 	}
 
@@ -86,11 +86,7 @@ class PayPalController extends Controller{
 				$book = Book::findOrFail($cartItem->books[0]->id);
 
 				if ($cartItem->quantity > $book->stocks) {
-					return Inertia::render("Cart", [
-						"auth" => currentAuthenticatedUser(),
-						"cart" => new CartBookCollection($cart),
-						"success" => "Book quantity overflows the original stocks. Check your cart."
-					]);
+					return redirect("cart")->with("failure", "Book quantity overflows the original stocks. Check your cart.");
 				}
 			}
 
@@ -103,17 +99,10 @@ class PayPalController extends Controller{
 
 			Cart::where("customer_id", $customer->id)->delete();
 
-    	return Inertia::render("Cart", [
-    	  "auth" => currentAuthenticatedUser(),
-    	  "cart" => new CartBookCollection($customer->carts()->with("books")->get()),
-				"success" => "Successfully bought books. Thank you!"
-    	]);
+			return redirect("cart")->with("success", "Checkout successfully. Thank you!");
 		} else {
-			return Inertia::render("Cart", [
-    	  "auth" => currentAuthenticatedUser(),
-    	  "cart" => new CartBookCollection($cart),
-				"failure" => "Checkout unsuccessfully."
-    	]);
+
+			return redirect("cart")->with("failure", "Checkout unsuccessfully. Please try again.");
 		}
 	}
 
