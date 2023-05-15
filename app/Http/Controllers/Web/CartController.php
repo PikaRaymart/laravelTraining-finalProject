@@ -48,7 +48,7 @@ class CartController extends Controller{
 
       $foundCart->save();
 
-      return redirect("/books/{$foundBook->id}")->with("message", "Successfully added book to cart.");
+      return redirect("/books/{$foundBook->id}")->with("success", "Successfully added book to cart.");
     };
     // create a cart document
     $newCart = Cart::create([
@@ -59,7 +59,7 @@ class CartController extends Controller{
 
     $newCart->books()->attach($foundBook->id);
 
-    return redirect("/books/{$foundBook->id}")->with("message", "Successfully added book to cart.");
+    return redirect("/books/{$foundBook->id}")->with("success", "Successfully added book to cart.");
   }
 
   // updates the cart of the customer
@@ -74,6 +74,6 @@ class CartController extends Controller{
       }
     }
 
-    return redirect("cart")->with("message", "Successfully updated cart.");
+    return redirect("cart")->with("success", "Successfully updated cart.");
   }
 }

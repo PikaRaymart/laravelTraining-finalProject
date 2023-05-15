@@ -11,7 +11,7 @@ type BookOptionsForm = {
 
 export const useBookOptions = () => {
   const { book, availableStocks, limitReached } = usePageProps<BookPageProps>()
-  const { data, setData, post } = useForm<BookOptionsForm>({
+  const { data, setData, post,wasSuccessful } = useForm<BookOptionsForm>({
     quantity: 1,
     bookId: book.id
   })
@@ -38,6 +38,7 @@ export const useBookOptions = () => {
     handleChangeQuantity,
     handleSendAddToCart,
     stocks: availableStocks,
-    limitReached
+    limitReached,
+    wasSuccessful
   }
 }

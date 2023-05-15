@@ -16,15 +16,17 @@ import { CartPageProps } from "@/Pages/Cart"
 import { ListBook } from "./list/book"
 import { TableBook } from "./table/book"
 import { BookQuantityOption } from "../book/options/quantity"
+import { ToastSuccess } from "../toast/success"
 
 
 const Cart = () => {
-  const { data, handleChangeCartQuantity, handleRemoveCartBook, handleSubmitCartUpdates } = useCart()
-  const { cart, ...rest } = usePageProps<CartPageProps>()
+  const { data, handleChangeCartQuantity, handleRemoveCartBook, handleSubmitCartUpdates, wasSuccessful } = useCart()
+  const { cart, flash } = usePageProps<CartPageProps>()
   const isMobile = useDetectResponsiveness()
 
   return (
     <MainWrapper>
+      { wasSuccessful && !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <h1 className="sr-only">Your cart</h1>
       <InnerWrapper>
         { isMobile && (

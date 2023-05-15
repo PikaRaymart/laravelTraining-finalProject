@@ -21,7 +21,7 @@ export type HandleRemoveCartBook = ( cartId: number, remove: boolean ) => void
 
 export const useCart = () => {
   const { cart } = usePageProps<CartPageProps>()
-  const { data, setData, put } = useForm<CartFormData>({
+  const { data, setData, put, wasSuccessful } = useForm<CartFormData>({
     updates: []
   })
 
@@ -72,6 +72,7 @@ export const useCart = () => {
     data,
     handleChangeCartQuantity,
     handleRemoveCartBook,
-    handleSubmitCartUpdates
+    handleSubmitCartUpdates,
+    wasSuccessful
   }
 }
