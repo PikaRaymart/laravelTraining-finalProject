@@ -9,17 +9,15 @@ use App\Http\Resources\Web\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
 use Inertia\Inertia;
-use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class CartController extends Controller{
 	
   function index() {
-    $customer = currentAuthenticatedUser();
+    $customer = authenticatedCustomer();
 
-    $cart = $customer["user"]->carts()->with("books")->get();
+    $cart = $customer->carts()->with("books")->get();
 
     return Inertia::render("Cart", [
-      "auth" => currentAuthenticatedUser(),
       "cart" => new CartBookCollection($cart)
     ]);
   }
@@ -50,7 +48,7 @@ class CartController extends Controller{
 
       $foundCart->save();
 
-      return redirect()->back();
+      return redirect("/books/{$foundBook->id}")->with("message", "Successfully added book to cart.");
     };
     // create a cart document
     $newCart = Cart::create([
@@ -61,7 +59,7 @@ class CartController extends Controller{
 
     $newCart->books()->attach($foundBook->id);
 
-    return redirect()->back();
+    return redirect("/books/{$foundBook->id}")->with("message", "Successfully added book to cart.");
   }
 
   // updates the cart of the customer
@@ -76,6 +74,6 @@ class CartController extends Controller{
       }
     }
 
-    return redirect()->back();
+    return redirect("cart")->with("message", "Successfully updated cart.");
   }
 }

@@ -13,6 +13,7 @@ export const useSearchbar = () => {
 
   const handleFormSubmit = (e: FormEvent) =>{
     e.preventDefault()
+    console.log(data.searchItem)
   }
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) =>{

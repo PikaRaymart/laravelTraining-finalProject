@@ -12,9 +12,6 @@ const AdminHeader = () =>{
       <NavItem>
         <Link href={ route("admin") }>Dashboard</Link>
       </NavItem>
-      <NavItem>
-        <Link href={ route("books") }>Books</Link>
-      </NavItem>
       <Signout>
         <Link href={ route("admin-logout") } method="post" as="button">Sign Out</Link>
       </Signout>

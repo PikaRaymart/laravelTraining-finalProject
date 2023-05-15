@@ -5,6 +5,7 @@ import { PageWithLayout } from "@/app";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 import { Book } from "./Books/books";
+import { usePageProps } from "@/Hooks/usePageProps";
 
 
 export type CartPageProps = PageProps<{
@@ -18,7 +19,7 @@ export type CartPageProps = PageProps<{
 }>
 
 const CartPage: PageWithLayout = () => {
-  
+
   return (
     <Cart />
   )

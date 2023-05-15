@@ -15,9 +15,6 @@ class PageController extends Controller{
       ->limit(8)
       ->get();
 
-    return Inertia::render("Home", [
-      "auth" => currentAuthenticatedUser(),
-      "featuredBooks" => new BookCollection($featuredBooks)
-      ]);
+    return Inertia::render("Home", ["featuredBooks" => new BookCollection($featuredBooks)]);
   }
 }

@@ -16,12 +16,12 @@ const Searchbar = () =>{
     <Wrapper onSubmit={ handleFormSubmit }>
       <label
         className="sr-only" 
-        htmlFor="search">Search for book or category</label>
+        htmlFor="search">Search for books</label>
       <SearchInput
         id="search"
         name="search"
         value={ data.searchItem }
-        placeholder="Search for books or categories"
+        placeholder="Search for books"
         onChange={ handleSearchInput } />
     </Wrapper>
   )

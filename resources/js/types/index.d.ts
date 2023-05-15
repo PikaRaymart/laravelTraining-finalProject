@@ -10,5 +10,8 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
 	auth: {
 		user: User | null;
 		type: "admin" | "customer" | null
-	};
+	},
+	flash: {
+		message: null | string
+	}
 };

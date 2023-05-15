@@ -3,7 +3,7 @@ import { Footer } from "@/Layouts/Footer";
 import { HeaderGuard } from "@/Layouts/Header/Guard";
 import { PageWithLayout } from "@/app";
 import { PageProps } from "@/types";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import { Book } from "./books";
 
 
@@ -14,7 +14,7 @@ export type BookPageProps = PageProps & {
 }
 
 const BookPage: PageWithLayout = () => {
-  
+
   return (
     <BookHome />
   )

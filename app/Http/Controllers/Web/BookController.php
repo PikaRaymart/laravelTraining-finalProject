@@ -46,7 +46,6 @@ class BookController extends Controller{
     $books = $query->paginate(8);
 
     return Inertia::render("Books", [
-      "auth" => currentAuthenticatedUser(),
       "booksFilters" => [
         "categories" => new CategoryCollection($categories),
       ],
@@ -62,11 +61,11 @@ class BookController extends Controller{
 
   // Shows a single book
   function show(Book $book) {
-    $currentUser = currentAuthenticatedUser();
+    $currentCustomer = authenticatedCustomer();
     $ownedCart = null;
 
-    if ( $currentUser["user"] ) {
-      $ownedCart = Cart::where("customer_id", $currentUser["user"]->id)
+    if ( $currentCustomer ) {
+      $ownedCart = Cart::where("customer_id", $currentCustomer->id)
         ->whereHas('books', function ($query) use ($book) {
             $query->where('books.id', $book->id);
         })
@@ -75,7 +74,6 @@ class BookController extends Controller{
     }
    
     return Inertia::render("Books/Book", [
-      "auth" => currentAuthenticatedUser(),
       "book" => new BookPageResource($book),
       "availableStocks" => $ownedCart && count($ownedCart)!==0? $book->stocks - $ownedCart[0]["quantity"] : $book->stocks,
       "limitReached" => $ownedCart && count($ownedCart)!==0 && $ownedCart[0]["quantity"]===$book->stocks
