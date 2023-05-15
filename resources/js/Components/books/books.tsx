@@ -16,13 +16,13 @@ const Books = () => {
     <MainWrapper>
       <h1 className="sr-only">Books collection</h1>
       <ShowFiltersDesktop>
-        <Filters />
+        <Filters url="/books" />
       </ShowFiltersDesktop>
       <MainGridContainer>
         <TopControls>
-          <Searchbar />
+          <Searchbar url="/books" />
           <RemoveFilterDesktop>
-            <Filters />
+            <Filters  url="/books"/>
           </RemoveFilterDesktop>
         </TopControls>
         <BooksList />

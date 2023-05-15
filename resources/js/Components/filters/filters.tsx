@@ -18,19 +18,23 @@ import {
 import { useFilter } from "./filter.hook"
 import { usePageProps } from "@/Hooks/usePageProps"
 import { AdminPageProps } from "@/Pages/Admin"
+import { useExpansion } from "@/Hooks/useExpansion"
 
 
-const Filters = () => {
+type FiltersProps = {
+  url: string
+}
+
+const Filters = ({ url }: FiltersProps) => {
   const { booksFilters } = usePageProps<AdminPageProps>()
   const {
-    isExpanded,
-    handleExpansion,
     handleFormSubmit,
     handleCategoryChange,
     handlePriceChange,
     reset,
     data
-  } = useFilter()
+  } = useFilter(url)
+  const [ isExpanded, handleExpansion ] = useExpansion()
 
   const renderCategoryInputs = () => {
 

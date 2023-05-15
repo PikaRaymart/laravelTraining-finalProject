@@ -1,31 +1,42 @@
-import { useExpansion } from "@/Hooks/useExpansion"
 import { useForm } from "@inertiajs/react"
-import { 
-  FormEvent, 
-  useEffect, 
-  useState } from "react"
+import { FormEvent } from "react"
 
 
-export type FilterBooksProps = {
+type FilterFormProps = {
   category: string[] | string,
   minPrice: number,
   maxPrice: number
 }
 
-export const useFilter = () =>{
-  const [ isExpanded, handleExpansion ] = useExpansion()
-  const { data, setData, reset, get } = useForm<FilterBooksProps>({
+type PartialFilterFormProps = Partial<Omit<FilterFormProps, "category">> & {
+  category?: string,
+  [ key: string ]: any
+}
+
+type UseFilterProps = string
+
+export const useFilter = (url: UseFilterProps) =>{
+  const { data, setData, reset } = useForm<FilterFormProps>({
     category: [],
     minPrice: 0,
-    maxPrice: 1000
+    maxPrice: 0
   })
-  const [ shouldSubmit, setShouldSubmit ] = useState(false)
+  const { data: filterData, get } = useForm<PartialFilterFormProps>()
 
   const handleFormSubmit = ( e: FormEvent ) => {
     e.preventDefault()
 
-    setData("category", Array.isArray(data.category) && data.category.length? data.category.join(",") : "")
-    setShouldSubmit(true)
+    for ( const[key, val] of Object.entries(data) ) {
+      if ( Array.isArray(val) && val.length ) {
+        filterData.category = Array.isArray(data.category) && data.category.length? data.category.join(",") : ""
+      }
+   
+      else if ( typeof val === "number" && val ) {
+        filterData[key] = val
+      }
+    }
+
+    get(url, { preserveState: true })
   }
 
   const handleCategoryChange = ( category: string ) =>{
@@ -37,24 +48,29 @@ export const useFilter = () =>{
   }
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>, dataField: "minPrice" | "maxPrice") =>{
+    if ( !e.target.value ) {
+      e.preventDefault()
+      return
+    }
+
+    e.target.value = `${ parseInt(e.target.value) }`
     setData(dataField, parseInt(e.target.value))
   }
 
-  useEffect(() =>{
-    if ( shouldSubmit ) {
-      get("/admin")
-      setShouldSubmit(false)
-    } 
-  }, [ shouldSubmit ])
+  const handleResetForm = () =>{
+    reset()
+
+    for ( const key of Object.keys(filterData)) {
+      filterData[key] = undefined
+    }
+  }
 
   return {
-    isExpanded,
-    handleExpansion,
     handleFormSubmit,
     handlePriceChange,
     handleCategoryChange,
     data,
     setData,
-    reset
+    reset: handleResetForm
   }
 }

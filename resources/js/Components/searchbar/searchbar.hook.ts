@@ -2,27 +2,37 @@ import { useForm } from "@inertiajs/react"
 import { FormEvent } from "react"
 
 
-export type SearchbarProps = {
-  searchItem: string
-}
+type SearchbarFormProps = { searchItem: string }
+type PartialSearchbarFormProps = Partial<SearchbarFormProps>
+type UseSearchbarProps = string
 
-export const useSearchbar = () => {
-  const { data, get, setData } = useForm<SearchbarProps>({
+export const useSearchbar = (url: UseSearchbarProps) => {
+  const { data, setData } = useForm<SearchbarFormProps>("Searchbar", {
     searchItem: ""
   })
-
+  const { data: searchbarData, get } = useForm<PartialSearchbarFormProps>()
+  
   const handleFormSubmit = (e: FormEvent) =>{
     e.preventDefault()
-    console.log(data.searchItem)
-  }
+    searchbarData.searchItem = data.searchItem
 
+    get(url, { preserveState: true })
+  }
+  
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
     setData("searchItem", e.target.value)
+  }
+
+  const handleResetSearchbar = () =>{
+    setData("searchItem", "")
+    searchbarData.searchItem = undefined
+    get(url)
   }
 
   return {
     data,
     handleFormSubmit,
-    handleSearchInput
+    handleSearchInput,
+    handleResetSearchbar
   }
 }

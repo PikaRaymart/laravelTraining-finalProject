@@ -20,11 +20,13 @@ class BookController extends Controller{
 	
   // Shows all the books
   function index(Request $request) {
+    
     $categories = Category::all();
     $query = Book::query()->where("status", "Active");
     
     // Filter by category
     if ($request->filled('category')) {
+      dd($request->query());
 			$categoriesFilter = explode(',', $request->input('category'));
 
       foreach ($categoriesFilter as $category) {
@@ -40,6 +42,15 @@ class BookController extends Controller{
     // Filter by maximum price
     if ($request->filled('maxPrice')) {
         $query->where('price', '<=', $request->input('maxPrice'));
+    }
+
+    // Filter by a searchItem for the category or title of the book
+    if ($request->filled('searchItem')) {
+      $searchItem = $request->input('searchItem');
+      $query->where(function ($query) use ($searchItem) {
+        $query->where('category', 'LIKE', "%$searchItem%")
+          ->orWhere('title', 'LIKE', "%$searchItem%");
+      });
     }
 
     // Execute the query and return the results

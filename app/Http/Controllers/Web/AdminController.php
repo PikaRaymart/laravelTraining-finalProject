@@ -37,6 +37,15 @@ class AdminController extends Controller{
         $query->where('price', '<=', $request->input('maxPrice'));
     }
 
+    // Filter by a searchItem for the category or title of the book
+    if ($request->filled('searchItem')) {
+      $searchItem = $request->input('searchItem');
+      $query->where(function ($query) use ($searchItem) {
+        $query->where('category', 'LIKE', "%$searchItem%")
+          ->orWhere('title', 'LIKE', "%$searchItem%");
+      });
+    }
+
     // Execute the query and return the results
     $books = $query->paginate(8);
 

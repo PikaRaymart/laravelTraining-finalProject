@@ -20,13 +20,13 @@ const Home = () => {
     <MainWrapper>
       { !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <ShowFiltersDesktop>
-        <Filters />
+        <Filters url="/admin" />
       </ShowFiltersDesktop>
       <MainGridContainer>
         <TopControls>
-          <Searchbar />
+          <Searchbar url="/admin" />
           <RemoveFilterDesktop>
-            <Filters />
+            <Filters url="/admin" />
           </RemoveFilterDesktop>
           <CreateBookLink>
             <Link href={ route("create-book") }>

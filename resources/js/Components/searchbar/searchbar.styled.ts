@@ -1,8 +1,20 @@
 import { 
+  breakpoint,
   fluid, 
   rem } from "@/Styled/functions";
 import styled from "styled-components";
 
+
+export const ClearSearchbar = styled.button`
+  display: block;
+  inset: 50% ${ rem(16) } auto auto;
+  position: absolute;
+  transform: translateY(-50%) scale(.8);
+
+  ${ breakpoint("desktop", `
+    transform: translateY(-50%) scale(1);
+  `) }
+`
 
 export const SearchInput = styled.input`
   border-radius: ${ rem(56) };
@@ -13,5 +25,6 @@ export const SearchInput = styled.input`
 `
 
 export const Wrapper = styled.form`
+  position: relative;
   width: 100%;
 `
