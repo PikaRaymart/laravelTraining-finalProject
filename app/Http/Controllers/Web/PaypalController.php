@@ -26,64 +26,28 @@ class PayPalController extends Controller{
 		if ($request->quantity > $book->stocks) return redirect("/books/{$book->id}")->withErrors([ "error" => "Quantity exceeds book's stock." ]);
 
 		$response = paypalCreateOrder([$order], "checkoutSuccessTransaction", "checkoutCancelTransaction");
-
+	
 		if (isset($response['id']) && $response['id'] != null) {
 			foreach ($response['links'] as $links) {
 				if ($links['rel'] == 'approve') {
           return Inertia::location($links["href"]);
 				}
 			}
-			return redirect("cart")->with("success", "Success");
+			return redirect("/books/{$book->id}")->with("success", "Success");
 		} else {
-			return redirect("cart")->with("success", "Success");
+			return redirect("/books/{$book->id}")->with("success", "Success");
 		}
 	}
 
 	function checkoutCart() {
 		$customer = authenticatedCustomer();
     $cart = $customer->carts()->with("books")->get()->toArray();
-		$provider = new PayPalClient();
-		$provider->setApiCredentials(config('paypal'));
-		$paypalToken = $provider->getAccessToken();
-		$response = $provider->createOrder([
-			"intent" => "CAPTURE",
-			"application_context" => [
-				"return_url" => route('checkoutSuccessTransaction'),
-				"cancel_url" => route('checkoutCancelTransaction'),
-			],
-			"purchase_units" => [
-				0 => [
-					"amount" => [
-						"currency_code" => "PHP",
-						"value" => array_reduce($cart, function($accu, $curr) {
-              return $accu + $curr["books"][0]["price"] * $curr["quantity"];
-            }, 0) + 50,
-            "breakdown" => [
-              "item_total" => [
-                "currency_code" => "PHP",
-                "value" => array_reduce($cart, function($accu, $curr) {
-                  return $accu + $curr["books"][0]["price"] * $curr["quantity"];
-                }, 0),
-              ],
-              "shipping" => [
-                "currency_code" => "PHP",
-                "value" => "50"
-              ]
-            ]
-          ],
-          "items" => array_map(function($singleCart) {
-            return [
-              "name" => $singleCart["books"][0]["title"],
-              "unit_amount" => [
-                "currency_code" => "PHP",
-                "value" => $singleCart["books"][0]["price"]
-              ],
-              "quantity" => $singleCart["quantity"]
-            ];
-          }, $cart)
-				]
-			]
-		]);
+		$orders = array_map(fn ($cart) => [
+			"quantity" => $cart["quantity"],
+			"book" => $cart["books"][0]
+		], $cart);
+		$response = paypalCreateOrder($orders, "checkoutSuccessTransaction", "checkoutCancelTransaction");
+		dd($response);
 
 		if (isset($response['id']) && $response['id'] != null) {
 			foreach ($response['links'] as $links) {

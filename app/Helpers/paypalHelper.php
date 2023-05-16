@@ -14,9 +14,9 @@ if (!function_exists("paypalCreateOorder")) {
 		$provider->setApiCredentials(config('paypal'));
 		$paypalToken = $provider->getAccessToken();
     $ordersValue = array_reduce($orders, function($accu, $curr) {
-      return $accu + $curr["book"]->price * $curr["quantity"];
+      return $accu + $curr["book"]["price"] * $curr["quantity"];
     }, 0);
-    
+
     return $provider->createOrder([
 			"intent" => "CAPTURE",
 			"application_context" => [
@@ -41,10 +41,10 @@ if (!function_exists("paypalCreateOorder")) {
           ],
           "items" => array_map(function($order) {
             return [
-              "name" => $order["book"]->title,
+              "name" => $order["book"]["title"],
               "unit_amount" => [
                 "currency_code" => "PHP",
-                "value" => $order["book"]->price
+                "value" => $order["book"]["price"]
               ],
               "quantity" => $order["quantity"]
             ];

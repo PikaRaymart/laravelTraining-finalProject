@@ -32,8 +32,12 @@ class Customer extends Authenticatable{
 		return $this->hasMany(Cart::class);
 	}
 
-	function getRedirectRoute(){
+	function orders() {
+		return $this->hasMany(Order::class);
+	}
 
+	function getRedirectRoute(){
 		return "/";
 	}
+
 }
