@@ -9,7 +9,14 @@ import { ToastSuccess } from "@/Components/toast/success"
 
 
 const Options = () =>{ 
-  const { data, handleChangeQuantity, stocks, handleSendAddToCart, limitReached, wasSuccessful } = useBookOptions()
+  const { 
+    data, 
+    handleChangeQuantity, 
+    stocks, 
+    handleSendAddToCart, 
+    limitReached, 
+    wasSuccessful,
+    handleBuyBook } = useBookOptions()
   const { flash } = usePageProps()
 
   return (
@@ -22,7 +29,9 @@ const Options = () =>{
           stocks={ limitReached? 0 : stocks }/>
         <form onSubmit={ handleSendAddToCart }>
           <CartButton aria-disabled={ limitReached }>Add to cart</CartButton>
-          <BuyButton aria-disabled={ true } type="button">Buy now</BuyButton>
+          <BuyButton 
+            onClick={ handleBuyBook }
+            aria-disabled={ limitReached } type="button">Buy now</BuyButton>
         </form>
       </Wrapper>
     </>

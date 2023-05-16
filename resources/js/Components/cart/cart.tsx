@@ -20,8 +20,15 @@ import { ToastSuccess } from "../toast/success"
 
 
 const Cart = () => {
-  const { data, handleChangeCartQuantity, handleRemoveCartBook, handleSubmitCartUpdates, wasSuccessful } = useCart()
-  const { cart, flash } = usePageProps<CartPageProps>()
+  const { 
+    data, 
+    handleChangeCartQuantity, 
+    handleRemoveCartBook, 
+    handleSubmitCartUpdates, 
+    wasSuccessful } = useCart()
+  const { 
+    cart, 
+    flash } = usePageProps<CartPageProps>()
   const isMobile = useDetectResponsiveness()
 
   return (
