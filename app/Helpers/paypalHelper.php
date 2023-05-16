@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 if (!function_exists("paypalCreateOorder")) {
@@ -52,5 +54,16 @@ if (!function_exists("paypalCreateOorder")) {
 				]
 			]
     ]);
+  }
+}
+
+if (!function_exists("paypalCapturePaymentOrder")) {
+  function paypalCapturePaymentOrder(Request $request) {
+    $provider = new PayPalClient;
+		$provider->setApiCredentials(config('paypal'));
+		$provider->getAccessToken();
+		$response = $provider->capturePaymentOrder($request['token']);
+
+    return $response;
   }
 }

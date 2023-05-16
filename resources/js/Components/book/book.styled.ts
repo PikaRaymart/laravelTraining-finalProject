@@ -9,6 +9,7 @@ export const Description = styled.p`
   color: ${ ({ theme }) => theme.colors.dark1 };
   font-size: ${ fluid(14, 3, 15) };
   line-height: 1.7;
+  white-space: pre-wrap;
 `
 
 export const DescriptionWrapper = styled.div`

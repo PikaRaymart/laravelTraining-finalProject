@@ -55,9 +55,11 @@ Route::middleware("auth:customer")->group(function() {
 Route::middleware("auth:customer")->group(function() {
 	Route::controller(PayPalController::class)->group(function() {
 		Route::post("/checkout", "checkout")->name("checkout");
-		Route::get("/checkout/cart", "checkoutCart")->name("cart-checkout");
 		Route::get("/checkout/success-transaction", "checkoutSuccessTransaction")->name("checkoutSuccessTransaction");
 		Route::get("/checkout/cancel-transaction", "checkoutCancelTransaction")->name("checkoutCancelTransaction");
+		Route::get("/checkout/cart", "checkoutCart")->name("cart-checkout");
+		Route::get("/checkout/cart/success-transaction", "cartCheckoutSuccessTransaction")->name("cartCheckoutSuccessTransaction");
+		Route::get("/checkout/cart/cancel-transaction", "cartCheckoutCancelTransaction")->name("cartCheckoutCancelTransaction");
 	});
 });
 

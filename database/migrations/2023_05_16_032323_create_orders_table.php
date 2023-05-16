@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration{
 	function up(): void{
 		Schema::create('orders', function (Blueprint $table) {
-      $table->id();
-      $table->foreignId('customer_id')->constrained();
-      $table->timestamps();
+	    $table->id();
+	    $table->string("paypal");
+			$table->boolean("completed")->default(false);
+	    $table->foreignId('customer_id')->constrained();
+	    $table->timestamps();
   });
 	}
 

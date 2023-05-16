@@ -7,14 +7,17 @@ use App\Http\Resources\Web\BookResource;
 use App\Http\Resources\Web\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PayPalController extends Controller{
 
-	// showing the paypal ui
+	// checkout's a single book order
 	public function checkout(Request $request){
+		$customer = auth("customer")->user();
     $book = Book::where('id', $request->bookId)->first();
 		$order = [
 			"quantity" => $request->quantity,
@@ -26,19 +29,68 @@ class PayPalController extends Controller{
 		if ($request->quantity > $book->stocks) return redirect("/books/{$book->id}")->withErrors([ "error" => "Quantity exceeds book's stock." ]);
 
 		$response = paypalCreateOrder([$order], "checkoutSuccessTransaction", "checkoutCancelTransaction");
-	
+
 		if (isset($response['id']) && $response['id'] != null) {
+
+			// Create the order
+			$order = new Order();
+			$order->customer_id = $customer->id;
+			$order->paypal = $response["id"];
+			$order->save();
+
+			// Create the orderItem
+			$orderItem = new OrderItem();
+			$orderItem->order_id = $order->id;
+			$orderItem->book_id = $book->id;
+			$orderItem->quantity = $request->quantity;
+			$orderItem->save();
+
 			foreach ($response['links'] as $links) {
 				if ($links['rel'] == 'approve') {
           return Inertia::location($links["href"]);
 				}
 			}
-			return redirect("/books/{$book->id}")->with("success", "Success");
-		} else {
-			return redirect("/books/{$book->id}")->with("success", "Success");
-		}
+			return redirect("/books/{$book->id}")->with("success", "Success checking out. Thank you!");
+		} 
+
+		return redirect("/books/{$book->id}")->with("failure", "Server error. Please try again later.");
 	}
 
+	// redirect for a successfull transaction
+	public function checkoutSuccessTransaction(Request $request){
+		$response = paypalCapturePaymentOrder($request);
+		$foundOrder = Order::with('orderItems.book')->where('paypal', $request["token"])->first();
+
+		if (!$foundOrder) return redirect("cart")->with("failure", "Checkout unsuccessfully. Please try again.");
+
+		if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+
+			foreach ($foundOrder->orderItems as $orderItem) {
+				$book = $orderItem->book;
+				// Access other properties of the book or perform operations
+				$book->stocks = $book->stocks-$orderItem->quantity;
+				$book->save();
+			}
+
+			$foundOrder->completed = true;
+			$foundOrder->save();
+
+			return redirect("/books/{$foundOrder->orderItems[0]->book->id}")->with("success", "Checkout successfully. Thank you!");
+		} 
+
+		return redirect("/books/{$foundOrder->orderItems[0]->book->id}")->with("failure", "Checkout unsuccessfully. Please try again.");
+	}
+
+	// redirect for cancellation of the paypal
+	public function checkoutCancelTransaction(Request $request){
+		$paypalToken = $request["token"];
+		
+		Order::where("paypal", $paypalToken)->delete();
+
+		return redirect("books");
+	}
+
+	// checkout for the cart of the customer
 	function checkoutCart() {
 		$customer = authenticatedCustomer();
     $cart = $customer->carts()->with("books")->get()->toArray();
@@ -46,8 +98,7 @@ class PayPalController extends Controller{
 			"quantity" => $cart["quantity"],
 			"book" => $cart["books"][0]
 		], $cart);
-		$response = paypalCreateOrder($orders, "checkoutSuccessTransaction", "checkoutCancelTransaction");
-		dd($response);
+		$response = paypalCreateOrder($orders, "cartCheckoutSuccessTransaction", "cartCheckoutCancelTransaction");
 
 		if (isset($response['id']) && $response['id'] != null) {
 			foreach ($response['links'] as $links) {
@@ -61,14 +112,14 @@ class PayPalController extends Controller{
 		}
 	}
 
-	// redirect for a successfull transaction
-	public function checkoutSuccessTransaction(Request $request){
-		$provider = new PayPalClient;
-		$provider->setApiCredentials(config('paypal'));
-		$provider->getAccessToken();
-		$response = $provider->capturePaymentOrder($request['token']);
+	// redirect for cancellation of the paypal
+	public function cartCheckoutSuccessTransaction(Request $request){
+		$response = paypalCapturePaymentOrder($request);
 		$customer = authenticatedCustomer();
     $cart = $customer->carts()->with("books")->get();
+		$foundOrder = Order::where("paypal", $response["id"])->first();
+
+		if (!$foundOrder) return redirect("cart")->with("failure", "Checkout unsuccessfully. Please try again.");
 
 		if (isset($response['status']) && $response['status'] == 'COMPLETED') {
 
@@ -98,7 +149,8 @@ class PayPalController extends Controller{
 	}
 
 	// redirect for cancellation of the paypal
-	public function checkoutCancelTransaction(Request $request){
+	public function cartCheckoutCancelTransaction(Request $request){
 		return redirect()->route("cart");
 	}
+
 }
