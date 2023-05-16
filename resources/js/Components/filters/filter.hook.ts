@@ -27,15 +27,15 @@ export const useFilter = (url: UseFilterProps) =>{
     e.preventDefault()
 
     for ( const[key, val] of Object.entries(data) ) {
-      if ( Array.isArray(val) && val.length ) {
-        filterData.category = Array.isArray(data.category) && data.category.length? data.category.join(",") : ""
+      if ( Array.isArray(val) ) {
+        filterData.category = Array.isArray(data.category) && data.category.length? data.category.join(",") : undefined
       }
    
       else if ( typeof val === "number" && val ) {
         filterData[key] = val
       }
     }
-
+    
     get(url, { preserveState: true })
   }
 

@@ -22,11 +22,10 @@ class BookController extends Controller{
   function index(Request $request) {
     
     $categories = Category::all();
-    $query = Book::query()->where("status", "Active");
-    
+    $query = Book::query();
+
     // Filter by category
     if ($request->filled('category')) {
-      dd($request->query());
 			$categoriesFilter = explode(',', $request->input('category'));
 
       foreach ($categoriesFilter as $category) {
@@ -54,7 +53,7 @@ class BookController extends Controller{
     }
 
     // Execute the query and return the results
-    $books = $query->paginate(8);
+    $books = $query->where("status", "=", "Active")->paginate(8);
 
     return Inertia::render("Books", [
       "booksFilters" => [
@@ -72,7 +71,7 @@ class BookController extends Controller{
 
   // Shows a single book
   function show(Book $book) {
-    $currentCustomer = authenticatedCustomer();
+    $currentCustomer = auth("customer")->user();
     $ownedCart = null;
 
     if ( $currentCustomer ) {
