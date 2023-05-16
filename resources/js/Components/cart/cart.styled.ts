@@ -17,10 +17,13 @@ const FormOption = css`
   }
 `
 
-export const CheckoutOption = styled.button`
-  ${ FormOption };
-  background-color: ${ ({ theme }) => theme.colors.red };
-  display: block;
+export const CheckoutOption = styled.div`
+
+  a {
+    ${ FormOption };
+    background-color: ${ ({ theme }) => theme.colors.red };
+    display: block;
+  }
 `
 
 export const UpdateOption = styled.button`

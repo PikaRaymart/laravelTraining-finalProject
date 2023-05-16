@@ -13,13 +13,15 @@ import {
   Title } from "./book.styled"
 import { BookOptions } from "./options"
 import { BookPageProps } from "@/Pages/Books/Book"
+import { ToastSuccess } from "../toast/success"
 
 
 const Book = () => {
-  const { book, auth } = usePageProps<BookPageProps>()
+  const { book, auth, flash } = usePageProps<BookPageProps>()
 
   return (
     <MainWrapper>
+      { flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <BookWrapper>
         <ImageWrapper>
           <Image
