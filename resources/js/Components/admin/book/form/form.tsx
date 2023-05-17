@@ -23,6 +23,7 @@ import {
   HandleFormSubmit, 
   HandleImageChange } from "./form.hooks"
 import { Book } from "@/Pages/Books/books"
+import { Link } from "@inertiajs/react"
 
 
 type FormProps = {
@@ -173,7 +174,9 @@ const Form = ({
           type="submit"
           aria-disabled={ !book.status || (book.status==="Active" && !formValidity(book)) || !formDraftValidity(book) }>Save
         </FormSave>
-        <FormDiscard type="button">Discard</FormDiscard>
+        <FormDiscard as="div">
+          <Link href={ route("admin") }>Discard</Link>
+        </FormDiscard>
       </FormControls>
     </Wrapper>
   )

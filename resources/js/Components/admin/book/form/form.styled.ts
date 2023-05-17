@@ -23,11 +23,18 @@ export const FormOption = styled.button<FormOptionProps>`
 `
 
 export const FormDiscard = styled(FormOption)`
+  padding: 0;
+  position: relative;
 
   ${ ({ theme: { colors } }) => `
     border-color: ${ colors.red };
     color: ${ colors.red };
   ` }
+
+  a {
+    display: block;
+    padding: ${ fluid(10, 2.4, 12) } ${ fluid(20, 4.8, 24) };
+  }
 `
 
 export const FormSave = styled(FormOption)`
