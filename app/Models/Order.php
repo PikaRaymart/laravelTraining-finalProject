@@ -11,7 +11,8 @@ class Order extends Model{
   protected $fillable = [
 		"paypal",
 		"customer_id",
-		"completed"
+		"completed",
+		"address"
 	];
 
 	function customer(){

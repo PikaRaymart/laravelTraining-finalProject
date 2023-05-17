@@ -12,9 +12,7 @@ type Update = {
   delete?: boolean
 }
 
-type CartFormData = {
-  updates: Update[]
-}
+type CartFormData = { updates: Update[] }
 
 export type HandleChangeCartQuantity = ( cartId: number, quantity: number ) => void
 export type HandleRemoveCartBook = ( cartId: number, remove: boolean ) => void
@@ -55,6 +53,9 @@ export const useCart = () => {
 
   const handleSubmitCartUpdates = ( event: FormEvent ) =>{
     event.preventDefault()
+
+    if (!data.updates.length) return
+
     put("/cart")
   }
 

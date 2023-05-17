@@ -2,9 +2,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Web\BookCollection;
-use App\Http\Resources\Web\BookResource;
-use App\Http\Resources\Web\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Order;
@@ -72,7 +69,9 @@ class PayPalController extends Controller{
 				$book->save();
 			}
 
+			$address = (array) $response["purchase_units"][0]["shipping"]["address"];
 			$foundOrder->completed = true;
+			$foundOrder->address = join(", ", $address);
 			$foundOrder->save();
 
 			return redirect("/books/{$foundOrder->orderItems[0]->book->id}")->with("success", "Checkout successfully. Thank you!");
@@ -99,6 +98,10 @@ class PayPalController extends Controller{
 			"book" => $cartItem["books"][0]
 		], $cart->toArray());
 
+		foreach ($cart as $cartItem) {
+			if ($cartItem->quantity > $cartItem->books[0]->stocks) return redirect("cart")->with("error", "Quantity exceeds book's stocks.");
+		}
+
 		$response = paypalCreateOrder($orders, "cartCheckoutSuccessTransaction", "cartCheckoutCancelTransaction");
 	
 		if (isset($response['id']) && $response['id'] != null) {
@@ -110,9 +113,6 @@ class PayPalController extends Controller{
 		$order->save();
 	
 		foreach ($cart as $cartItem) {
-			// check first if book's stocks is not exceeded
-			if ($cartItem->quantity > $cartItem->books[0]->stocks) return redirect("cart")->with("error", "Quantity exceeds book's stocks.");
-
 			// Create the orderItem
 			$orderItem = new OrderItem();
 			$orderItem->order_id = $order->id;
@@ -149,7 +149,9 @@ class PayPalController extends Controller{
 			}
 
 			Cart::where("customer_id", $customer->id)->delete();
+			$address = (array) $response["purchase_units"][0]["shipping"]["address"];
 			$foundOrder->completed = true;
+			$foundOrder->address = join(", ", $address);
 			$foundOrder->save();
 
 			return redirect("cart")->with("success", "Checkout successfully. Thank you!");

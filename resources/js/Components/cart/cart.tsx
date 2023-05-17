@@ -4,6 +4,8 @@ import {
   CartBottomRow,
   CartOptions,
   CheckoutOption,
+  EmptyCartContainer,
+  EmptyCartImage,
   InnerWrapper, 
   MainWrapper, 
   TotalCartPrice, 
@@ -36,51 +38,62 @@ const Cart = () => {
       { flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       { wasSuccessful && !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <h1 className="sr-only">Your cart</h1>
-      <InnerWrapper>
-        { isMobile && (
-          <CartList>
-            { cart.map(({ cartId, book }) => (
-              <ListBook
-                key={ cartId }
-                book={ book }
-                handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) }>
-                <BookQuantityOption
-                  quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
-                  stocks={ book.stocks }
-                  handleChangeQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }
-                  isSmall={ true } />
-              </ListBook>
-                )) }
-          </CartList>
-        )  }
-        { !isMobile && (
-          <CartTable>
-            { cart.map(({ cartId, book }) => (
-              <TableBook
-                key={ cartId }
-                book={ book }
-                handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) } >
-                <BookQuantityOption
-                  quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
-                  stocks={ book.stocks }
-                  handleChangeQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }/>
-              </TableBook>
-                )) }
-          </CartTable>
-        ) }
-        <CartBottomRow onSubmit={ handleSubmitCartUpdates }>
-          <TotalCartPrice>
-            <span>Total: </span>
-            ₱{ data.updates.reduce((accu, curr) => accu + curr.quantity * (cart.find(cartItem => cartItem.cartId===curr.cartId)?.book.price??0), 0).toFixed(2) }
-          </TotalCartPrice>     
-          <CartOptions>
-            <UpdateOption type="submit">Update Cart</UpdateOption>
-            <CheckoutOption>
-              <Link href="/checkout/cart">Proceed Checkout</Link>
-            </CheckoutOption>
-          </CartOptions>
-        </CartBottomRow>
-      </InnerWrapper>
+      { !(!!cart.length) && (
+        <EmptyCartContainer>
+          <EmptyCartImage
+            src="/images/empty-cart.png"
+            alt=""
+            aria-hidden="true" />
+        </EmptyCartContainer>
+      ) }
+      { !!cart.length && (
+        <InnerWrapper>
+          { isMobile && (
+            <CartList>
+              { cart.map(({ cartId, book }) => (
+                <ListBook
+                  key={ cartId }
+                  book={ book }
+                  handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) }>
+                  <BookQuantityOption
+                    quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
+                    stocks={ book.stocks }
+                    handleChangeQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }
+                    isSmall={ true } />
+                </ListBook>
+                  )) }
+            </CartList>
+          )  }
+          { !isMobile && (
+            <CartTable>
+              { cart.map(({ cartId, book }) => (
+                <TableBook
+                  key={ cartId }
+                  book={ book }
+                  handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(cartId, remove) } >
+                  <BookQuantityOption
+                    quantity={ data.updates.find(update => update.cartId===cartId)?.quantity?? 0 }
+                    stocks={ book.stocks }
+                    handleChangeQuantity={ ( quantity: number ) => handleChangeCartQuantity(cartId, quantity) }/>
+                </TableBook>
+                  )) }
+            </CartTable>
+          ) }
+          <CartBottomRow onSubmit={ handleSubmitCartUpdates }>
+            <TotalCartPrice>
+              <span>Total: </span>
+              ₱{ data.updates.reduce((accu, curr) => accu + curr.quantity * (cart.find(cartItem => cartItem.cartId===curr.cartId)?.book.price??0), 0).toFixed(2) }
+            </TotalCartPrice>     
+            <CartOptions>
+              <UpdateOption type="submit">Update Cart</UpdateOption>
+              <CheckoutOption>
+                <Link href="/checkout/cart">Proceed Checkout</Link>
+              </CheckoutOption>
+            </CartOptions>
+          </CartBottomRow>
+        </InnerWrapper>
+
+      ) }
     </MainWrapper>
   )
 }
