@@ -8,14 +8,14 @@ import {
   TopControls} from "./home.styled"
 import { Searchbar } from "@/Components/searchbar"
 import { Link } from "@inertiajs/react"
-import { BooksList } from "./books"
+import { AdminBooks } from "./books"
 import { usePageProps } from "@/Hooks/usePageProps"
 import { ToastSuccess } from "@/Components/toast/success"
 
 
 const Home = () => {
   const { flash } = usePageProps() 
-
+ 
   return (
     <MainWrapper>
       { !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
@@ -38,7 +38,7 @@ const Home = () => {
             </Link>
           </CreateBookLink>
         </TopControls>
-        <BooksList />
+        <AdminBooks />
       </MainGridContainer>
     </MainWrapper>
   )

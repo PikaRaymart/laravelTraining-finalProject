@@ -7,14 +7,23 @@ import { useDetectResponsiveness } from "@/Hooks/useDetectResponsiveness"
 import { BooksTable } from "./table"
 import { BooksList } from "./list"
 import { useBooks } from "./book.hook"
+import { ToastSuccess } from "@/Components/toast/success"
+import { usePageProps } from "@/Hooks/usePageProps"
 
 
 const Books = () =>{
   const isMobile = useDetectResponsiveness()
-  const { data, handleDeleteBooks, handleAddIdToDeletion, handleBulkIdAddition } = useBooks()
+  const { 
+    data, 
+    handleDeleteBooks, 
+    handleAddIdToDeletion, 
+    handleBulkIdAddition,
+    wasSuccessful } = useBooks()
+  const { flash } = usePageProps()
 
   return (
     <Wrapper>
+      { wasSuccessful && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <form onSubmit={ handleDeleteBooks }>
         { !!data.bookIds.length && (
           <DeleteContainer>
@@ -22,7 +31,12 @@ const Books = () =>{
           </DeleteContainer>
         ) }
       </form>
-      { isMobile && <BooksList /> }
+      { isMobile && (
+        <BooksList
+          data={ data }
+          handleBulkIdAddition={ handleBulkIdAddition } 
+          handleAddIdToDeletion={ handleAddIdToDeletion } />
+      ) }
       { !isMobile && (
         <BooksTable
           data={ data }

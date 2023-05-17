@@ -11,7 +11,7 @@ export type HandleAddIdToDeletion = ( bookId: number ) => void
 export type HandleBulkIdAddition = ( event: React.ChangeEvent<HTMLInputElement>, bookIds: number[] ) => void
 
 export const useBooks = () => { 
-  const { data, setData, ...form } = useForm<UseBooksFormData>({
+  const { data, setData, wasSuccessful, ...form } = useForm<UseBooksFormData>({
     bookIds: []
   })
 
@@ -36,6 +36,7 @@ export const useBooks = () => {
     data,
     handleDeleteBooks,
     handleAddIdToDeletion,
-    handleBulkIdAddition
+    handleBulkIdAddition,
+    wasSuccessful
   }
 }

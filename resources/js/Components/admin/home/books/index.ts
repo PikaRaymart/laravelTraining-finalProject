@@ -1,1 +1,1 @@
-export { default as BooksList } from "./books"
+export { default as AdminBooks } from "./books"

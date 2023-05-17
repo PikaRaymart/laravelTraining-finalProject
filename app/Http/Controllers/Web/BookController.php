@@ -159,6 +159,6 @@ class BookController extends Controller{
     // destroy all the books
 		Book::destroy($bookIds);
 
-		return redirect()->back();
+		return redirect("admin")->with("success", count($bookIds)>1? "Books deleted." : "Book deleted.");
   }
 }

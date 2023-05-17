@@ -5,6 +5,10 @@ import {
   Status } from "../books.styled";
 
 
+export const InputContainer = styled.div`
+  margin-right: ${ rem(12) };
+`
+
 export const ListItem = styled.li`
   align-items: center;
   display: flex;
@@ -15,14 +19,19 @@ export const ListItem = styled.li`
   }
 
   ${ Image } {
-    align-self: flex-start;
+    align-self: center;
   }
 
   ${ Status } {
     margin: 0 ${ rem(16) } 0 auto;
   }
+
+  input {
+    appearance: auto;
+  }
 `
 
 export const Wrapper = styled.ul`
-  border: 1px solid ${ ({ theme }) => theme.colors.grey3 };
+  border-top: 1px solid ${ ({ theme }) => theme.colors.grey3 };
+  border-bottom: 1px solid ${ ({ theme }) => theme.colors.grey3 };
 `
