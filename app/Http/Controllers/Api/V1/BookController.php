@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\DeleteBooksRequest;
-use App\Http\Requests\V1\StoreBookRequest;
-use App\Http\Requests\V1\UpdateBookRequest;
-use App\Http\Resources\V1\BookCollection;
-use App\Http\Resources\V1\BookPageResource;
-use App\Http\Resources\V1\CategoryCollection;
+use App\Http\Requests\Api\V1\DeleteBooksRequest;
+use App\Http\Requests\Api\V1\StoreBookRequest;
+use App\Http\Requests\Api\V1\UpdateBookRequest;
+use App\Http\Resources\Api\V1\BookCollection;
+use App\Http\Resources\Api\V1\BookPageResource;
+use App\Http\Resources\Api\V1\CategoryCollection;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Category;

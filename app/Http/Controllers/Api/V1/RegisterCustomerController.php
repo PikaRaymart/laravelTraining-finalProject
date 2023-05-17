@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\RegisterCustomerRequest;
+use App\Http\Requests\Api\V1\RegisterCustomerRequest;
 
 class RegisterCustomerController extends Controller{
   

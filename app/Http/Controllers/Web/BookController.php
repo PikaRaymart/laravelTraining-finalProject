@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeleteBooksRequest;
+use App\Http\Requests\Web\DeleteBooksRequest;
 use App\Http\Requests\Web\StoreBookRequest;
 use App\Http\Requests\Web\UpdateBookRequest;
 use App\Http\Resources\Web\AdminBookResource;

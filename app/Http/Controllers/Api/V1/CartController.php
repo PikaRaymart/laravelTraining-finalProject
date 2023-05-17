@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\UpdateCartRequest;
-use App\Http\Requests\V1\AddToCartRequest;
-use App\Http\Resources\V1\CartBookCollection;
+use App\Http\Requests\Api\V1\UpdateCartRequest;
+use App\Http\Requests\Api\V1\AddToCartRequest;
+use App\Http\Resources\Api\V1\CartBookCollection;
 use App\Models\Book;
 use App\Models\Cart;
 
@@ -17,7 +17,7 @@ class CartController extends Controller{
 
     $cart = $customer->carts()->with("books")->get();
   
-    return new CartBookCollection($cart);
+    return response()->json(new CartBookCollection($cart), 200);
   }
 
   // Adds a book in the cart

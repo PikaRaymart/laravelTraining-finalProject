@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\AdminBookCollection;
+use App\Http\Resources\Api\V1\AdminBookCollection;
 use App\Http\Resources\Web\CategoryCollection;
 use App\Models\Category;
 use Illuminate\Http\Request;
