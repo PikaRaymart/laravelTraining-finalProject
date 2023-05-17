@@ -156,8 +156,16 @@ class BookController extends Controller{
       $query->whereIn('book_id', $bookIds);
     })->delete();
 
-    // destroy all the books
-		Book::destroy($bookIds);
+    $books = Book::whereIn("id", $bookIds)->get();
+
+    foreach($books as $book) {
+      if ($book->image) {
+        $imagePath = storage_path("app/public/books/".$book->image);
+        unlink($imagePath);
+      }
+
+      $book->delete();
+    }
 
 		return redirect("admin")->with("success", count($bookIds)>1? "Books deleted." : "Book deleted.");
   }
