@@ -10,6 +10,8 @@ return new class extends Migration{
 	    $table->id();
 	    $table->string("paypal");
 			$table->boolean("completed")->default(false);
+			$table->string("address")->nullable();
+			$table->string("buyer")->nullable();
 	    $table->foreignId('customer_id')->constrained();
 	    $table->timestamps();
   });

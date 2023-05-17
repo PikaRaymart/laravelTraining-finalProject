@@ -33,25 +33,30 @@ Route::group($v1ApiHelper, function() {
   Route::middleware(["auth:sanctum", "admin"])->group(function() {
     Route::controller(BookController::class)->group(function(){
       Route::put("books/{book}", "update");
+
       Route::delete("books/delete/bulk", "deleteBulk");
     });
     Route::apiResource("admin", AdminController::class);
+
     Route::apiResource("books", BookController::class);
   });
 
   // Handles the customer
   Route::middleware(["auth:sanctum", "customer"])->group(function() {
     Route::put("/cart", [CartController::class, "update"]);
+
     Route::apiResource("cart", CartController::class);
   });
 
   Route::middleware(["auth:sanctum", "customer"])->group(function() {
     Route::post("/checkout/cart", [CheckoutController::class, "cartCheckout"]);
+
     Route::apiResource("checkout", CheckoutController::class);
   });
 
   Route::controller(BookController::class)->group(function(){
     Route::get("books", "index");
+    
     Route::get("books/{book}", "show");
   });
 });

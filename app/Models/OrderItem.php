@@ -14,11 +14,11 @@ class OrderItem extends Model{
 		"quantity"
 	];
 
-	public function order(){
+	function order(){
 		return $this->belongsTo(Order::class);
 	}
 
-	public function book(){
+	function book(){
 		return $this->belongsTo(Book::class);
 	}
 }

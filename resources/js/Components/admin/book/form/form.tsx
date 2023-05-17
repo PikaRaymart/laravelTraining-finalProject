@@ -96,7 +96,7 @@ const Form = ({
       </FormInnerContainer>
       <FormInnerContainer>
         <InputContainer>
-          <InputLabel htmlFor="status">Book title</InputLabel>
+          <InputLabel htmlFor="title">Book title</InputLabel>
           <Input
             type="text"
             id="title"
@@ -107,7 +107,7 @@ const Form = ({
           { errors.title && <FormError id="title-error">{ errors.title }</FormError> }
         </InputContainer>
         <InputContainer>
-          <InputLabel htmlFor="status">Book author</InputLabel>
+          <InputLabel htmlFor="author">Book author</InputLabel>
           <Input
             type="text"
             id="author"
@@ -118,7 +118,7 @@ const Form = ({
           { errors.author && <FormError id="author-error">{ errors.author }</FormError> }
         </InputContainer>
         <InputContainer>
-          <InputLabel htmlFor="status">
+          <InputLabel htmlFor="category">
             Book category
             <span> (comma separate for multiple categories)</span>
           </InputLabel>
@@ -132,7 +132,7 @@ const Form = ({
           { errors.category && <FormError id="category-error">{ errors.category }</FormError> }
         </InputContainer>
         <InputContainer>
-          <InputLabel htmlFor="quantity">Stocks</InputLabel>
+          <InputLabel htmlFor="stocks">Stocks</InputLabel>
           <Input
             type="number"
             id="stocks"
@@ -159,7 +159,7 @@ const Form = ({
           <InputLabel htmlFor="description">Book description</InputLabel>
           <Textarea
             as="textarea"
-            id="status"
+            id="description"
             name="status"
             rows={8}
             value={ book.description }
