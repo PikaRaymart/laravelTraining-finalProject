@@ -4,10 +4,10 @@ import {
   HandleSetBookDefaults, 
   HandleUpdateform} from "../form/form.hooks"
 import { usePage } from "@inertiajs/react"
-import { Book } from "@/Pages/Books/Book"
 import { 
   formDraftValidity, 
   formValidity } from "../form/helpers"
+import { Book } from "@/Pages/Books/books"
 
 
 type PageProps = {
@@ -22,7 +22,7 @@ export const useUpdateBook = ( handleUpdateForm: HandleUpdateform, handleSetBook
 
     if ( !id || ( book.status==="Active" && !formValidity(book) ) || !formDraftValidity(book) ) return
     
-    handleUpdateForm(`/admin/update/${ id }`)
+    handleUpdateForm(`/books/update/${ id }`)
   }
 
   useEffect(() =>{

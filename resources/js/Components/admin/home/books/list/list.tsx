@@ -49,7 +49,7 @@ const List = ({ data, handleAddIdToDeletion, handleBulkIdAddition }: ListProps) 
         ) }
         <BookInfoContainter>
           <Title>
-            <Link href={ `/admin/edit/${ book.id }` }>{ book.title }</Link>
+            <Link href={ `/books/edit/${ book.id }` }>{ book.title }</Link>
           </Title>
           <Category>{ book.category }</Category>
           <Stocks>{ book.stocks } stocks left</Stocks>

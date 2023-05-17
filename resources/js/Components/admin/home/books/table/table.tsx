@@ -49,7 +49,7 @@ const Table = ({ data, handleAddIdToDeletion, handleBulkIdAddition }: TableProps
         </td>
         <td>
           <Title>
-            <Link href={ `/admin/edit/${ book.id }` }>{ book.title }</Link>
+            <Link href={ `/books/edit/${ book.id }` }>{ book.title }</Link>
           </Title>
         </td>
         <td>

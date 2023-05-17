@@ -19,14 +19,9 @@ use Inertia\Inertia;
 |
 */
 
+// Pages
 Route::controller(PageController::class)->group(function() {
 	Route::get("/", "home")->name("home");
-});
-
-// Default
-Route::controller(BookController::class)->group(function() {
-	Route::get("/books", "index")->name("books");
-	Route::get("/books/{book}", "show")->name("show-book");
 });
 
 // Admin routes
@@ -35,12 +30,18 @@ Route::middleware(["auth:sanctum", "admin"])->group(function() {
 		Route::get("/admin", "index")->name("admin");
 	});
 	Route::controller(BookController::class)->group(function() {
-		Route::get("/admin/create", "create")->name("create-book");
-		Route::post("/admin/store", "store")->name("store-book");
-		Route::get("/admin/edit/{book}", "edit")->name("edit-book");
-		Route::post("/admin/update/{book}", "update")->name("update-book");
-		Route::delete("/admin/delete/bulk", "deleteBulk")->name("delete-books");
+		Route::get("/books/create", "create")->name("create-book");
+		Route::post("/books/store", "store")->name("store-book");
+		Route::get("/books/edit/{book}", "edit")->name("edit-book");
+		Route::post("/books/update/{book}", "update")->name("update-book");
+		Route::delete("/books/delete/bulk", "deleteBulk")->name("delete-books");
 	});
+});
+
+// Default
+Route::controller(BookController::class)->group(function() {
+	Route::get("/books", "index")->name("books");
+	Route::get("/books/{book}", "show")->name("show-book");
 });
 
 Route::middleware("auth:customer")->group(function() {

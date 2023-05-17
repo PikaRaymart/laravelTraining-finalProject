@@ -11,7 +11,7 @@ export const useCreateBook = ( handlePostForm: HandlePostForm ) =>{
 
     if ( ( book.status==="Active" && !formValidity(book) ) || !formDraftValidity(book) ) return
 
-    handlePostForm("/admin/store")
+    handlePostForm("/books/store")
   }
 
   return {

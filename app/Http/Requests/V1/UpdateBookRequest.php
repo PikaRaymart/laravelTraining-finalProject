@@ -21,22 +21,18 @@ class UpdateBookRequest extends FormRequest{
 	public function rules(): array{
 		$rules = [
 			"title" => "required|string",
-      "author" => "required|string",
-      "description" => "required|string",
-      "category" => "required|string",
-      "image" => "required",
-      "price" => "required|integer|min:0",
-      "stocks" => "required|integer|min:0",
+      "author" => "nullable|string",
+      "description" => "nullable|string",
+      "category" => "nullable|string",
+      "image" => "nullable|sometimes|image",
+			"oldImage" => "sometimes|string",
+      "price" => "nullable|integer|min:0",
+      "stocks" => "nullable|integer|min:0",
       "status" => ["required", Rule::in(["Active", "Draft"])]
 		];
-
-		if ($this->method()==="PATCH" || $this->request->all()["status"]==="Draft") {
-			$rules["author"] = "sometimes|required|string";
-			$rules["description"] = "sometimes|required|string";
-			$rules["category"] = "sometimes|required|string";
-			$rules["image"] = "sometimes|required";
-			$rules["price"] = "sometimes|required|integer|min:0";
-			$rules["stocks"] = "sometimes|required|integer|min:0";
+		
+		if (is_string($this->image)) {
+			$rules["image"] = "required|string";
 		}
 
 		return $rules;

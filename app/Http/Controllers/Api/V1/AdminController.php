@@ -3,12 +3,50 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\AdminBookCollection;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller {
+
+  // Shows all the books for the admin
+  function index(Request $request) {
+    $query = Book::query();
+    
+    // Filter by category
+    if ($request->filled('category')) {
+			$categoriesFilter = explode(',', $request->input('category'));
+
+      foreach ($categoriesFilter as $category) {
+				$query->orWhere('category', 'LIKE', "%$category%");
+			}
+    }
+
+    // Filter by minimum price
+    if ($request->filled('minPrice')) {
+        $query->where('price', '>=', $request->query('minPrice'));
+    }
+
+    // Filter by maximum price
+    if ($request->filled('maxPrice')) {
+        $query->where('price', '<=', $request->input('maxPrice'));
+    }
+
+    // Filter by a searchItem for the category or title of the book
+    if ($request->filled('searchItem')) {
+      $searchItem = $request->input('searchItem');
+      $query->where(function ($query) use ($searchItem) {
+        $query->where('category', 'LIKE', "%$searchItem%")
+          ->orWhere('title', 'LIKE', "%$searchItem%");
+      });
+    }
+
+    $books = $query->paginate(8);
+
+    return response()->json((new AdminBookCollection($books))->appends($request->query()), 200);
+  }
 
   // Creates the admin account plus the tokens that can be used by the api
   function store(Request $request) {
@@ -39,14 +77,10 @@ class AdminController extends Controller {
       $adminToken = $user->createToken("admin-token", ["admin"]);
       $customerToken = $user->createToken("customer-token", ["customer"]);
 
-      return [
+      return response()->json([
         "admin" => $adminToken->plainTextToken,
         "customer" => $customerToken->plainTextToken
-      ];
+      ], 200);
     }
   }
-
-	public function index(){
-
-	}
 };

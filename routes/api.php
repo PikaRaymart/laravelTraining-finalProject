@@ -1,17 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\V1\AdminBookController;
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\LoginUserController;
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CheckoutController;
 use App\Http\Controllers\Api\V1\RegisterCustomerController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\V1\BookController;
 use Illuminate\Support\Facades\Route;
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-	return $request->user();
-});
 
 
 $v1ApiHelper = [
@@ -22,24 +17,26 @@ $v1ApiHelper = [
 // Only use when creating account for admin with tokens
 Route::post('/v1/admin', [AdminController::class, "store"]);
 
-// Handles registration for customers
-Route::controller(RegisterCustomerController::class)->group(function() {
-  Route::post("/v1/register", "store");
-});
-
-// Handles login for customers and admin
-Route::controller(LoginUserController::class)->group(function() {
-  Route::post("/v1/login", "store");
-});
-
 // Groups into using the version 1 of the api
 Route::group($v1ApiHelper, function() {
+  // Handles registration for customers
+  Route::controller(RegisterCustomerController::class)->group(function() {
+    Route::post("register", "store");
+  });
+
+  // Handles login for customers and admin
+  Route::controller(LoginUserController::class)->group(function() {
+    Route::post("login", "store");
+  });
+
   // Handles the admin 
   Route::middleware(["auth:sanctum", "admin"])->group(function() {
-    Route::put("admin/books/{book}", [AdminBookController::class, "update"]);
-    Route::delete("admin/books/bulk", [AdminBookController::class, "bulkDestroy"]);
-    Route::delete("admin/books/{book}", [AdminBookController::class, "destroy"]);
-    Route::apiResource("admin/books", AdminBookController::class);
+    Route::controller(BookController::class)->group(function(){
+      Route::put("books/{book}", "update");
+      Route::delete("books/delete/bulk", "deleteBulk");
+    });
+    Route::apiResource("admin", AdminController::class);
+    Route::apiResource("books", BookController::class);
   });
 
   // Handles the customer
@@ -51,5 +48,10 @@ Route::group($v1ApiHelper, function() {
   Route::middleware(["auth:sanctum", "customer"])->group(function() {
     Route::post("/checkout/cart", [CheckoutController::class, "cartCheckout"]);
     Route::apiResource("checkout", CheckoutController::class);
+  });
+
+  Route::controller(BookController::class)->group(function(){
+    Route::get("books", "index");
+    Route::get("books/{book}", "show");
   });
 });
