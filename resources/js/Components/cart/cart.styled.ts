@@ -5,15 +5,6 @@ import {
 import styled, { css } from "styled-components";
 
 
-export const EmptyCartImage = styled.img`
-  margin: 0 auto;
-  max-width: ${ fluid(120, 18, 180) };
-`
-
-export const EmptyCartContainer = styled.div`
-
-` 
-
 const FormOption = css`
   border-radius: ${ rem(32) };
   color: #FFFFFF;

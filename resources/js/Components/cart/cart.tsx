@@ -4,8 +4,6 @@ import {
   CartBottomRow,
   CartOptions,
   CheckoutOption,
-  EmptyCartContainer,
-  EmptyCartImage,
   InnerWrapper, 
   MainWrapper, 
   TotalCartPrice, 
@@ -19,6 +17,7 @@ import { ListBook } from "./list/book"
 import { TableBook } from "./table/book"
 import { BookQuantityOption } from "../book/options/quantity"
 import { ToastSuccess } from "../toast/success"
+import { EmptyCart } from "./empty"
 
 
 const Cart = () => {
@@ -38,14 +37,7 @@ const Cart = () => {
       { flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       { wasSuccessful && !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <h1 className="sr-only">Your cart</h1>
-      { !(!!cart.length) && (
-        <EmptyCartContainer>
-          <EmptyCartImage
-            src="/images/empty-cart.png"
-            alt=""
-            aria-hidden="true" />
-        </EmptyCartContainer>
-      ) }
+      { !(!!cart.length) && <EmptyCart /> }
       { !!cart.length && (
         <InnerWrapper>
           { isMobile && (
