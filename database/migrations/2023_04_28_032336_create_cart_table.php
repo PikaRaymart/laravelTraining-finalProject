@@ -14,6 +14,7 @@ return new class extends Migration{
 			$table->integer("customer_id");
 			$table->integer("book_id");
       $table->integer("quantity");
+			$table->boolean("outOfStocks")->default(false);
 			$table->timestamps();
 		});
 	}

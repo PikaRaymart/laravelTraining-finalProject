@@ -63,6 +63,7 @@ class PayPalController extends Controller{
 		$bookId = $foundOrder->orderItems[0]->book->id;
 
 		if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+
 			// deduct all quantity to the stocks
 			foreach ($foundOrder->orderItems as $orderItem) {
 				$book = $orderItem->book;
@@ -143,6 +144,28 @@ class PayPalController extends Controller{
 		if (!$foundOrder) return validationError(["failure", "Checkout unsuccessfully. Please try again."], "cart");
 
 		if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+
+			$bookIds = $foundOrder->orderItems->pluck('book_id')->toArray();
+    
+    // Retrieve other users' carts that have the same book IDs
+    	$otherCarts = Cart::where('customer_id', '!=', $customer->id)->whereHas('books', function ($query) use ($bookIds) {
+    	    $query->whereIn('book_id', $bookIds);
+    	})->get();
+
+    	foreach ($otherCarts as $cart) {
+    	  foreach ($cart->books as $book) {
+    	    $orderItem = $foundOrder->orderItems->where('book_id', $book->id)->first();
+				
+    	    if ($orderItem) {
+							$deduction = $book->stocks - $orderItem->quantity;
+							$cart->quantity = ($deduction < $cart->quantity)? $deduction : (!$deduction? 0: $cart->quantity);
+
+							if (!$deduction) $cart->outOfStocks = true;
+
+							$cart->save();
+    	    }
+    	  }
+    	}
 
 			// deduct all quantity to the stocks
 			foreach ($foundOrder->orderItems as $orderItem) {
