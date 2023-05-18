@@ -2,8 +2,17 @@ import styled from "styled-components"
 import { 
   Title as SharedTitle,
   Author as SharedAuthor } from "@/Components/shared/book/book.styled";
-import { rem } from "@/Styled/functions";
+import { 
+  fluid, 
+  rem } from "@/Styled/functions";
 
+
+export const OutOfStocks = styled.p`
+  color: ${ ({ theme }) => theme.colors.red };
+  font-size: ${ fluid(12, 1., 14) };
+  font-weight: 600;
+  margin-top: ${ rem(4) };
+`
 
 export const Author = styled(SharedAuthor)`
   color: ${ ({ theme }) => theme.colors.dark2 };

@@ -4,7 +4,8 @@ import {
 import { 
   Image,
   Title,
-  Author } from "@/Components/cart/book/book.styled"
+  Author, 
+  OutOfStocks} from "@/Components/cart/book/book.styled"
 import { Price } from "@/Components/book/book.styled"
 import { BookRemoveOption } from "@/Components/book/options/remove"
 import { Link } from "@inertiajs/react"
@@ -31,6 +32,7 @@ const Book = ({ children, book, handleRemoveCartBook }: BookProps) => {
               <Link href={ `/books/${ book.id }` }>{ book.title }</Link>
             </Title>
             <Author>{ book.author }</Author>
+            { !(!!book.stocks) && <OutOfStocks>Book out of stocks</OutOfStocks> }
           </div>
         </BookInfoContainer>
       </td>

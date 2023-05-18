@@ -1,4 +1,3 @@
-import { Book as BookType } from "@/Pages/Books/Book"
 import { 
   OptionsContainer, 
   Wrapper } from "./book.styled"
@@ -6,9 +5,11 @@ import { Price } from "@/Components/shared/book/book.styled"
 import {
   Image,
   Author,
-  Title } from "@/Components/cart/book/book.styled"
+  Title, 
+  OutOfStocks} from "@/Components/cart/book/book.styled"
 import { BookRemoveOption } from "@/Components/book/options/remove"
 import { Link } from "@inertiajs/react"
+import { Book as BookType } from "@/Pages/Books/books"
 
 
 type BookProps = {
@@ -36,6 +37,7 @@ const Book = ({ children, book, handleRemoveCartBook }: BookProps) => {
             id={ book.id }
             handleRemoveCartBook={ ( remove ) => handleRemoveCartBook(remove) }/>
         </OptionsContainer>
+        { !(!!book.stocks) && <OutOfStocks>Book out of stocks</OutOfStocks> }
       </div>
     </Wrapper>
   )
