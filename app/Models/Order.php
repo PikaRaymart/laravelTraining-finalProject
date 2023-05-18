@@ -12,7 +12,8 @@ class Order extends Model{
 		"paypal",
 		"customer_id",
 		"completed",
-		"address"
+		"address",
+		"buyer"
 	];
 
 	function customer(){

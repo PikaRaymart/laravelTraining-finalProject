@@ -30,7 +30,7 @@ class CartController extends Controller{
 
     if (!$foundBook) return response()->json(["message" => "No active book found with this id."], 404);
 
-    if ($foundBook->stocks < $request->quantity) return response()->json(["message" => "Maximum quantity reached."], 400);
+    if ($foundBook->stocks < $request->quantity) return redirect("/books/{$foundBook->id}")->withErrors("failure", "Maximum quantity reached.");
  
     // check if the book is already present in the cart,
     if (count(array_filter($customer->carts->toArray(), fn($item) => $item["book_id"]==$foundBook->id))) {
@@ -41,7 +41,7 @@ class CartController extends Controller{
       if (!($foundCart instanceof Cart)) return response()->json(["message" => "Server error"], 500);
         
       // make sure that both prev value and new value will not exceed the books max stocks
-      if (($foundCart["quantity"] + $request->quantity) > $foundBook->stocks) return response()->json(["message" => "Maximum quantity reached."], 400);
+      if (($foundCart["quantity"] + $request->quantity) > $foundBook->stocks) return redirect("/books/{$foundBook->id}")->withErrors("failure", "Maximum quantity reached.");
       
       // add both value
       $foundCart->quantity = $foundCart->quantity + $request->quantity;

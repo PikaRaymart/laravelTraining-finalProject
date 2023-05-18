@@ -18,13 +18,13 @@ const Options = () =>{
     wasSuccessful,
     handleBuyBook } = useBookOptions()
   const { flash } = usePageProps()
-
+    
   return (
     <>
       { wasSuccessful && !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
       <Wrapper >
         <BookQuantityOption
-          quantity={  limitReached? 0 : data.quantity }
+          quantity={  limitReached || !stocks? 0 : data.quantity }
           handleChangeQuantity={ quantity => handleChangeQuantity(quantity) }
           stocks={ limitReached? 0 : stocks }/>
         <form onSubmit={ handleSendAddToCart }>

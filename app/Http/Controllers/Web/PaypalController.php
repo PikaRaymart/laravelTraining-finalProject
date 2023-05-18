@@ -26,7 +26,7 @@ class PayPalController extends Controller{
 		if ($request->quantity > $book->stocks) return redirect("/books/{$book->id}")->withErrors([ "error" => "Quantity exceeds book's stock." ]);
 
 		$response = paypalCreateOrder([$order], "checkoutSuccessTransaction", "checkoutCancelTransaction");
-
+		
 		if (isset($response['id']) && $response['id'] != null) {
 
 			// Create the order
@@ -57,11 +57,10 @@ class PayPalController extends Controller{
 	public function checkoutSuccessTransaction(Request $request){
 		$response = paypalCapturePaymentOrder($request);
 		$foundOrder = Order::with('orderItems.book')->where('paypal', $request["token"])->first();
-
+	
 		if (!$foundOrder) return redirect("cart")->with("failure", "Checkout unsuccessfully. Please try again.");
 
 		if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-
 			// deduct all quantity to the stocks
 			foreach ($foundOrder->orderItems as $orderItem) {
 				$book = $orderItem->book;
@@ -69,9 +68,11 @@ class PayPalController extends Controller{
 				$book->save();
 			}
 
+			$payer = $response["payer"]["name"];
 			$address = (array) $response["purchase_units"][0]["shipping"]["address"];
 			$foundOrder->completed = true;
 			$foundOrder->address = join(", ", $address);
+			$foundOrder->buyer = $payer["given_name"] ." " .($payer["middle_name"]??"") ." " .$payer["surname"];
 			$foundOrder->save();
 
 			return redirect("/books/{$foundOrder->orderItems[0]->book->id}")->with("success", "Checkout successfully. Thank you!");
