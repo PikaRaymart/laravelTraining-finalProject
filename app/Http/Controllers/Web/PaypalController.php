@@ -119,7 +119,7 @@ class PayPalController extends Controller{
 	// checkout for the cart of the customer
 	function checkoutCart() {
 		$customer = authenticatedCustomer();
-    $cart = $customer->carts()->with("books")->get();
+    $cart = $customer->carts()->with("books")->where("outOfStocks", "!=", 1)->get();
 		$orders = array_map(fn ($cartItem) => [
 			"quantity" => $cartItem["quantity"],
 			"book" => $cartItem["books"][0]
@@ -197,7 +197,7 @@ class PayPalController extends Controller{
 				$book->save();
 			}
 
-			Cart::where("customer_id", $customer->id)->delete();
+			Cart::where("customer_id", $customer->id)->where("outOfStocks", "!=", 1)->delete();
 			$address = (array) $response["purchase_units"][0]["shipping"]["address"];
 			$foundOrder->completed = true;
 			$foundOrder->address = join(", ", $address);

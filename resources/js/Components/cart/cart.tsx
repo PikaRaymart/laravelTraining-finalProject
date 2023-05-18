@@ -26,7 +26,8 @@ const Cart = () => {
     handleChangeCartQuantity, 
     handleRemoveCartBook, 
     handleSubmitCartUpdates, 
-    wasSuccessful } = useCart()
+    wasSuccessful,
+    handleCheckout } = useCart()
   const { 
     cart, 
     flash } = usePageProps<CartPageProps>()
@@ -78,8 +79,9 @@ const Cart = () => {
             </TotalCartPrice>     
             <CartOptions>
               <UpdateOption type="submit">Update Cart</UpdateOption>
-              <CheckoutOption>
-                <Link href="/checkout/cart">Proceed Checkout</Link>
+              <CheckoutOption
+                type="button"
+                onClick={ handleCheckout }>Proceed Checkout
               </CheckoutOption>
             </CartOptions>
           </CartBottomRow>

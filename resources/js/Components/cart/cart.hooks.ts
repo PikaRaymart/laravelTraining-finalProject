@@ -22,6 +22,7 @@ export const useCart = () => {
   const { data, setData, put, wasSuccessful } = useForm<CartFormData>({
     updates: []
   })
+  const { get } = useForm()
 
   const handleChangeCartQuantity: HandleChangeCartQuantity = ( cartId, quantity ) => {
     const updateIndex = data.updates.findIndex(update => update.cartId===cartId)
@@ -59,6 +60,12 @@ export const useCart = () => {
     put("/cart")
   }
 
+  const handleCheckout = () =>{
+    if (cart.every(cartItem => cartItem.book.stocks===0)) return
+
+    get("/checkout/cart")
+  }
+
   useEffect(() => {
     if ( cart.length ) {
       const newUpdates = cart.reduce(( accu, curr ) => accu.concat([{
@@ -74,6 +81,7 @@ export const useCart = () => {
     handleChangeCartQuantity,
     handleRemoveCartBook,
     handleSubmitCartUpdates,
-    wasSuccessful
+    wasSuccessful,
+    handleCheckout
   }
 }
