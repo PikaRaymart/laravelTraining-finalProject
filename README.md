@@ -27,8 +27,8 @@ git clone https://github.com/PikaRaymart/plumebooks.git
 > Make sure you have Node.js, Composer, MySQL, and PHP installed beforehand.
 
 ```bash
-cd laravelTraining-finalProject
 composer install   # Install PHP dependencies
+
 npm install       # Install Node.js dependencies
 ```
 
@@ -62,6 +62,7 @@ Open multiple terminal tabs and run the following commands in separate tabs:
 
   ```bash
   php artisan serve   # Starts the application
+  
   npm run dev         # Runs the development mode of the application with Hot Module Replacement (HMR) for fast development experience
   ```
 
