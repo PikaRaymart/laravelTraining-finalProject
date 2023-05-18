@@ -18,7 +18,7 @@ import { ToastSuccess } from "../toast/success"
 
 const Book = () => {
   const { book, auth, flash } = usePageProps<BookPageProps>()
-
+  
   return (
     <MainWrapper>
       { flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }

@@ -6,12 +6,22 @@ import { FormEvent } from "react"
 
 type BookOptionsForm = {
   bookId: number,
-  quantity: number
+  quantity: number,
+  failure?: string
 }
 
 export const useBookOptions = () => {
-  const { book, availableStocks, limitReached } = usePageProps<BookPageProps>()
-  const { data, setData, post, wasSuccessful } = useForm<BookOptionsForm>({
+  const { 
+    book, 
+    availableStocks, 
+    limitReached } = usePageProps<BookPageProps>()
+  const { 
+    data, 
+    setData, 
+    post, 
+    wasSuccessful, 
+    hasErrors, 
+    errors } = useForm<BookOptionsForm>({
     quantity: 1,
     bookId: book.id
   })
@@ -26,7 +36,7 @@ export const useBookOptions = () => {
 
   const handleSendAddToCart = ( event: FormEvent ) =>{
     event.preventDefault()
-    limitReached? null : post('/cart', {
+    limitReached || !availableStocks? null : post('/cart', {
       onSuccess: () => {
         setData("quantity", 1)
       }
@@ -34,6 +44,8 @@ export const useBookOptions = () => {
   }
 
   const handleBuyBook = () =>{
+    if ( !availableStocks ) return;
+
     post("/checkout")
   }
 
@@ -44,6 +56,8 @@ export const useBookOptions = () => {
     stocks: availableStocks,
     limitReached,
     wasSuccessful,
-    handleBuyBook
+    handleBuyBook,
+    hasErrors,
+    errors
   }
 }

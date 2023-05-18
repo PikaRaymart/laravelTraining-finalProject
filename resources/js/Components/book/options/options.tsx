@@ -6,6 +6,7 @@ import {
   Wrapper } from "./options.styled"
 import { BookQuantityOption } from "./quantity"
 import { ToastSuccess } from "@/Components/toast/success"
+import { ToastFailure } from "@/Components/toast/failure"
 
 
 const Options = () =>{ 
@@ -16,12 +17,15 @@ const Options = () =>{
     handleSendAddToCart, 
     limitReached, 
     wasSuccessful,
-    handleBuyBook } = useBookOptions()
+    handleBuyBook,
+    hasErrors,
+    errors } = useBookOptions()
   const { flash } = usePageProps()
-    
+
   return (
     <>
       { wasSuccessful && !!flash.success && <ToastSuccess>{ flash.success }</ToastSuccess> }
+      { hasErrors && <ToastFailure>{ errors.failure }</ToastFailure> }
       <Wrapper >
         <BookQuantityOption
           quantity={  limitReached || !stocks? 0 : data.quantity }

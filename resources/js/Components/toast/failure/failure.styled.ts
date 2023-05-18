@@ -3,5 +3,5 @@ import { Wrapper as ToastWrapper } from "../toast.styled"
 
 
 export const Wrapper = styled(ToastWrapper)`
-  background-color: ${ ({ theme }) => theme.colors.dark1 };
+  background-color: ${ ({ theme }) => theme.colors.red };
 `

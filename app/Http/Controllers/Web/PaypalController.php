@@ -21,9 +21,9 @@ class PayPalController extends Controller{
 			"book" => $book
 		];
 
-		if (!$book) return redirect("/books/{$book->id}")->withErrors([ "error" => "No book found with this id." ]);
+		if (!$book) return validationError([ "failure" => "No book found with this id." ]);
 
-		if ($request->quantity > $book->stocks) return redirect("/books/{$book->id}")->withErrors([ "error" => "Quantity exceeds book's stock." ]);
+		if ($request->quantity > $book->stocks) return validationError([ "failure" => "Quantity exceeds book's stock." ]);
 
 		$response = paypalCreateOrder([$order], "checkoutSuccessTransaction", "checkoutCancelTransaction");
 		
@@ -50,7 +50,7 @@ class PayPalController extends Controller{
 			return redirect("/books/{$book->id}")->with("success", "Success checking out. Thank you!");
 		} 
 
-		return redirect("/books/{$book->id}")->with("failure", "Server error. Please try again later.");
+		return validationError(["failure", "Server error. Please try again later."]);
 	}
 
 	// redirect for a successfull transaction
@@ -58,7 +58,9 @@ class PayPalController extends Controller{
 		$response = paypalCapturePaymentOrder($request);
 		$foundOrder = Order::with('orderItems.book')->where('paypal', $request["token"])->first();
 	
-		if (!$foundOrder) return redirect("cart")->with("failure", "Checkout unsuccessfully. Please try again.");
+		if (!$foundOrder) return validationError(["failure", "Checkout unsuccessfully. Please try again."], "home");
+
+		$bookId = $foundOrder->orderItems[0]->book->id;
 
 		if (isset($response['status']) && $response['status'] == 'COMPLETED') {
 			// deduct all quantity to the stocks
@@ -75,10 +77,10 @@ class PayPalController extends Controller{
 			$foundOrder->buyer = $payer["given_name"] ." " .($payer["middle_name"]??"") ." " .$payer["surname"];
 			$foundOrder->save();
 
-			return redirect("/books/{$foundOrder->orderItems[0]->book->id}")->with("success", "Checkout successfully. Thank you!");
+			return redirect("/books/{$bookId}")->with("success", "Checkout successfully. Thank you!");
 		} 
 
-		return redirect("/books/{$foundOrder->orderItems[0]->book->id}")->with("failure", "Checkout unsuccessfully. Please try again.");
+		return validationError(["failure", "Checkout unsuccessfully. Please try again."], "/books/{$bookId}");
 	}
 
 	// redirect for cancellation of the paypal
@@ -100,7 +102,7 @@ class PayPalController extends Controller{
 		], $cart->toArray());
 
 		foreach ($cart as $cartItem) {
-			if ($cartItem->quantity > $cartItem->books[0]->stocks) return redirect("cart")->with("error", "Quantity exceeds book's stocks.");
+			if ($cartItem->quantity > $cartItem->books[0]->stocks) return validationError(["failure", "Quantity exceeds book's stocks."]);
 		}
 
 		$response = paypalCreateOrder($orders, "cartCheckoutSuccessTransaction", "cartCheckoutCancelTransaction");
@@ -129,7 +131,7 @@ class PayPalController extends Controller{
 			return redirect("cart")->with("success", "Success checking out. Thank you!");
 		} 
 
-		return redirect("cart")->with("failure", "Server error. Please try again later.");
+		return validationError(["failure", "Server error. Please try again later."]);
 	}
 
 	// redirect for cancellation of the paypal
@@ -138,7 +140,7 @@ class PayPalController extends Controller{
 		$customer = authenticatedCustomer();
 		$foundOrder = Order::with('orderItems.book')->where('paypal', $request["token"])->first();
 
-		if (!$foundOrder) return redirect("cart")->with("failure", "Checkout unsuccessfully. Please try again.");
+		if (!$foundOrder) return validationError(["failure", "Checkout unsuccessfully. Please try again."], "cart");
 
 		if (isset($response['status']) && $response['status'] == 'COMPLETED') {
 
@@ -158,7 +160,7 @@ class PayPalController extends Controller{
 			return redirect("cart")->with("success", "Checkout successfully. Thank you!");
 		} else {
 
-			return redirect("cart")->with("failure", "Checkout unsuccessfully. Please try again.");
+			return validationError(["failure", "Checkout unsuccessfully. Please try again."], "cart");
 		}
 	}
 
@@ -168,7 +170,7 @@ class PayPalController extends Controller{
 		
 		Order::where("paypal", $paypalToken)->delete();
 		
-		return redirect()->route("cart");
+		return redirect("cart");
 	}
 
 }

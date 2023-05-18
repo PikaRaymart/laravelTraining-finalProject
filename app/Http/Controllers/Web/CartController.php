@@ -28,20 +28,20 @@ class CartController extends Controller{
     $foundBook = Book::where("status", "=", "active")
       ->find($request->bookId);
 
-    if (!$foundBook) return response()->json(["message" => "No active book found with this id."], 404);
+    if (!$foundBook) return validationError(['failure' => "No active book found with this id."]);
 
-    if ($foundBook->stocks < $request->quantity) return redirect("/books/{$foundBook->id}")->withErrors("failure", "Maximum quantity reached.");
- 
+    if ($foundBook->stocks < $request->quantity) return validationError(['failure' => "Maximum quantity reached."]);
+
     // check if the book is already present in the cart,
     if (count(array_filter($customer->carts->toArray(), fn($item) => $item["book_id"]==$foundBook->id))) {
       $foundCart = Cart::where("customer_id", $customer->id)
         ->where("book_id", $foundBook->id)
         ->first();
    
-      if (!($foundCart instanceof Cart)) return response()->json(["message" => "Server error"], 500);
+      if (!($foundCart instanceof Cart)) return validationError(['failure' => "Server error. Please try again later."]);
         
       // make sure that both prev value and new value will not exceed the books max stocks
-      if (($foundCart["quantity"] + $request->quantity) > $foundBook->stocks) return redirect("/books/{$foundBook->id}")->withErrors("failure", "Maximum quantity reached.");
+      if (($foundCart["quantity"] + $request->quantity) > $foundBook->stocks) return validationError(["failure", "Maximum quantity reached."]);
       
       // add both value
       $foundCart->quantity = $foundCart->quantity + $request->quantity;

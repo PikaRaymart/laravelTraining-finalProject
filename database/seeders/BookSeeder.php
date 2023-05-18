@@ -35,7 +35,7 @@ class BookSeeder extends Seeder{
 			"description" => "In 'Tomorrow and Tomorrow and Tomorrow,' acclaimed author Gabrielle Zevin paints a haunting and thought-provoking portrait of a near-future world where death has been conquered. Set in a society where digital consciousness transfer allows individuals to live on indefinitely, the novel follows the enigmatic Nora, a woman who has lived for centuries and now finds herself grappling with the complexities of immortality.\n\nAs she navigates the intricate web of relationships, memories, and ethical dilemmas, Zevin masterfully explores the boundaries of humanity and the eternal quest for meaning in a world where time stretches endlessly.",
 			"category" => "Fiction",
 			"image" => "book-3.png",
-			"price" => 90,
+			"price" => 900,
 			"stocks" => 10,
 			"status" => "Active"
 		],
@@ -75,7 +75,7 @@ class BookSeeder extends Seeder{
 			"description" => "'The Last Tale of the Flower Bride: A Novel' by Roshani Chokshi weaves a mesmerizing tapestry of folklore and fantasy. Set in a magical realm where stories come alive, the novel follows Mayavati, a young woman tasked with telling the final tale of a dying princess.\n\nAs she embarks on her journey, she unravels secrets, confronts ancient curses, and discovers the true power of storytelling. Chokshi's lyrical prose and vivid world-building transport readers to a land where love, sacrifice, and the transformative nature of narratives intertwine in a breathtaking tale that celebrates the enduring magic of storytelling.",
 			"category" => "Mystery,Thriller",
 			"image" => "book-7.png",
-			"price" => 800,
+			"price" => 680,
 			"stocks" => 10,
 			"status" => "Active"
 		],
@@ -85,7 +85,7 @@ class BookSeeder extends Seeder{
 			"description" => "'Final Fantasy VII Remake: Material Ultimania Plus' is an indispensable companion for fans of the iconic video game. Published by Square Enix, this comprehensive guide delves deep into the creation of the highly anticipated remake, providing behind-the-scenes insights, concept art, developer interviews, and a wealth of information about the game's world, characters, and lore.\n\nFrom the breathtaking visuals to the reimagined gameplay, this book immerses readers in the rich universe of Final Fantasy VII and offers an unparalleled glimpse into the creative process that brought the beloved game to life once again.",
 			"category" => "Artbook",
 			"image" => "book-8.png",
-			"price" => 800,
+			"price" => 780,
 			"stocks" => 10,
 			"status" => "Active"
 		],
@@ -95,7 +95,7 @@ class BookSeeder extends Seeder{
 			"description" => "'Decade of the Brain' takes readers on an extraordinary journey through the complex landscapes of memory, consciousness, and the human mind. Written by acclaimed neuroscientist Janine Joseph, this captivating book offers a thought-provoking exploration of the remarkable advancements in brain research that have unfolded over the past ten years.\n\nJoseph skillfully weaves together scientific discoveries, personal anecdotes, and philosophical musings to create a compelling narrative that illuminates the mysteries of the brain. From the intricate workings of neural networks to the profound implications of brain-machine interfaces, she delves into the frontiers of neuroscience, shedding light on the astonishing progress made in understanding cognition, perception, and behavior.",
 			"category" => "Poetry",
 			"image" => "book-9.png",
-			"price" => 800,
+			"price" => 970,
 			"stocks" => 10,
 			"status" => "Active"
 		]
