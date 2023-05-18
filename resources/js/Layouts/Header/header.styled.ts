@@ -2,9 +2,7 @@ import {
   breakpoint,
   fluid, 
   rem } from "@/Styled/functions";
-import styled, { 
-  css, 
-  keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 
 
 export const CartLink = styled.div`
@@ -158,28 +156,6 @@ export const Hamburger = styled.button`
   `) }
 `
 
-const scrollIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
-
-const scrollOut = keyframes`
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-`
-
 export const Wrapper = styled.header`
   align-items: center;
   background-color: #FFFFFF;
@@ -190,17 +166,4 @@ export const Wrapper = styled.header`
   padding: 0 ${ fluid(16, 8, 80) } 0 ${ fluid(16, 8, 80) };
   position: relative;
   z-index: 10;
-
-  &.scroll-in {
-    animation: ${scrollIn} 1s ease forwards;
-    box-shadow: 0 0 ${rem(16)} 0 rgba(0, 0, 0, .2);
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-  }
-
-  &.scroll-out {
-    animation: ${scrollOut} .45s ease forwards;
-  }
 `
