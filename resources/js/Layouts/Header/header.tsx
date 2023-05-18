@@ -7,7 +7,7 @@ import {
   Navlist, 
   Wrapper } from "./header.styled"
 import ApplicationLogo from "@/Components/ApplicationLogo"
-import { useHeader } from "./header.hook"
+import { useHeader, useHeaderAnimation } from "./header.hook"
 import { useDetectResponsiveness } from "@/Hooks/useDetectResponsiveness"
 import { usePageProps } from "@/Hooks/usePageProps"
 import { PageProps } from "@/types"
@@ -21,9 +21,13 @@ const Header = ({ children }: HeaderProps) => {
   const { isExpanded, handleExpansion } = useHeader()
   const isMobile = useDetectResponsiveness()
   const { auth } = usePageProps<PageProps>()
+  const { 
+    showHeaderSticky,
+    hideHeaderSticky } = useHeaderAnimation()
 
   return (
-    <Wrapper>
+    <Wrapper className={`${hideHeaderSticky? "scroll-in scroll-out" : 
+                          showHeaderSticky? "scroll-in" : ""}`}>
       <Link href={ route("home") }>
         <ApplicationLogo />
       </Link>
