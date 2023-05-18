@@ -10,7 +10,8 @@ class DatabaseSeeder extends Seeder{
 	function run(): void{
     $this->call([
       UserSeeder::class,
-      BookSeeder::class
+      BookSeeder::class,
+      CustomerSeeder::class
     ]);
 	}
 }
