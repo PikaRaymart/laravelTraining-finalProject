@@ -17,17 +17,17 @@ class StartInertiaServer extends Command{
   protected function startConcurrentServers(){
     $this->info('Starting Inertia.js SSR server, Laravel server, and npm dev concurrently...');
 
-    $inertiaSsrProcess = new Process(['php', 'artisan', 'inertia:start-ssr']);
-    $inertiaSsrProcess->setTimeout(null); // Set no timeout for the process
-    $inertiaSsrProcess->start();
-
     $laravelServeProcess = new Process(['php', 'artisan', 'serve']);
     $laravelServeProcess->setTimeout(null); // Set no timeout for the process
     $laravelServeProcess->start();
 
     $npmDevProcess = new Process(['npm', 'run', 'dev']);
     $npmDevProcess->setTimeout(null); // Set no timeout for the process
-    $npmDevProcess->run();
+    $npmDevProcess->start();
+
+    $inertiaSsrProcess = new Process(['php', 'artisan', 'inertia:start-ssr']);
+    $inertiaSsrProcess->setTimeout(null); // Set no timeout for the process
+    $inertiaSsrProcess->start();
 
     $inertiaSsrProcess->wait();
   }
