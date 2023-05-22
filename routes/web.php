@@ -6,7 +6,6 @@ use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\BookController;
 use App\Http\Controllers\Web\CartController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
