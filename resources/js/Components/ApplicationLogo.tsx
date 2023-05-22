@@ -1,6 +1,7 @@
 import { fluid } from '@/Styled/functions';
 import styled from 'styled-components';
 
+
 const StyledSvg = styled.svg`
   width: ${ fluid(152, 19.2, 192) };
 `
