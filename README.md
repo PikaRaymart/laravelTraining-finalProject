@@ -58,12 +58,10 @@ npm install       # Install Node.js dependencies
 
 **Step 6:** Run the Application
 
-Open multiple terminal tabs and run the following commands in separate tabs:
+Open the terminal and run the command:
 
   ```bash
-  php artisan serve   # Starts the application
-  
-  npm run dev         # Runs the development mode of the application with Hot Module Replacement (HMR) for fast development experience
+  php artisan inertia:serve #Runs the dev mode with ssr serving and hmr
   ```
 
 **Step 7:** Open your web browser and go to [http://localhost:3000/](http://localhost:3000/) to start using the application.
