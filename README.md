@@ -67,6 +67,6 @@ Open the terminal and run the command:
 **Step 7:** Open your web browser and go to [http://localhost:3000/](http://localhost:3000/) to start using the application.
 
 
-**Step 8 (extra):** For ssr mode when in dev server. If you want to check if your app is hydrating the client properly, just run first `npm run build` before step 7. Though an issue is still ongoing with this cause by styled-components. But this build properly, just that it won't hydrate properly.
+**Step 8 (extra):** For ssr mode when in dev server. If you want to check if your app is hydrating the client properly, just run first `npm run build` before step 7. 
 
 Thank you for installing Plumebooks! Enjoy using the application.

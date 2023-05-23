@@ -13,5 +13,5 @@ export default defineConfig({
     ],
     ssr: {
         noExternal: ["styled-components", "@emotion/*"],
-      },
+    },
 });
