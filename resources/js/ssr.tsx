@@ -3,6 +3,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import createServer from '@inertiajs/react/server';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import route from '../../vendor/tightenco/ziggy/dist/index.m';
+import { GlobalStyle, Theme } from './Styled/base';
+import { ThemeProvider } from 'styled-components';
 
 const appName = 'PlumeBooks';
 
@@ -21,7 +23,12 @@ createServer((page) =>
 					location: new URL(page.props.ziggy.location),
 				});
 
-			return <App {...props} />;
+			return <>
+				<GlobalStyle />
+				<ThemeProvider theme={ Theme }>
+					<App {...props} />
+				</ThemeProvider>
+			</>
 		},
 	})
 );

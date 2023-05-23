@@ -8,6 +8,7 @@ export const useDetectResponsiveness = () =>{
 
 
   useEffect(() =>{
+    if ( typeof window === "undefined" ) return;
 
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768)  

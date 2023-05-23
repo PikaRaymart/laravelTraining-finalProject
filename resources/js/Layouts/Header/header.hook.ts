@@ -14,10 +14,10 @@ export const useHeader = () => {
     } else {
       isExpanded? handleExpansion() : null
     }
-
-  }, [window.location.href])
+  }, [])
 
   return {
-    isExpanded, handleExpansion
+    isExpanded, 
+    handleExpansion
   }
 }
