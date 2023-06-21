@@ -1,5 +1,7 @@
 import styled from "styled-components"
-import { rem } from "@/Styled/functions"
+import { 
+  breakpoint, 
+  rem } from "@/Styled/functions"
 
 
 export const Label = styled.label`
@@ -24,6 +26,13 @@ export const Label = styled.label`
   svg {
     transition: transform .3s ease;
   }
+
+  ${ breakpoint("desktop", `
+
+    &:hover {
+      cursor: pointer;
+    }
+  `) }
 `
 
 export const Wrapper = styled.fieldset`

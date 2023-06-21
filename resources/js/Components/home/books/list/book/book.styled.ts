@@ -1,4 +1,5 @@
 import { 
+  breakpoint,
   customBreakpoint,
   fluid, 
   rem } from "@/Styled/functions";
@@ -10,6 +11,10 @@ export const Image = styled.img`
   min-height: ${ fluid(160, 24, 240) };
   max-width: ${ fluid(120, 16, 164) };
   margin: 0 auto ${ rem(16) };
+
+  ${ breakpoint("desktop", `
+    transition: transform .3s ease;
+  `) }
 `
 
 export const Wrapper = styled.li`
@@ -19,5 +24,12 @@ export const Wrapper = styled.li`
 
   ${ customBreakpoint(376, `
     text-align: left;
+  `) }
+
+  ${ breakpoint("desktop", `
+
+    &:hover ${ Image } {
+      transform: scale(1.05);
+    }
   `) }
 `

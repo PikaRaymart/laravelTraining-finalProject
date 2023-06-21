@@ -19,10 +19,39 @@ export const CTAWrapper = styled.div`
   ${ breakpoint("tablet", `
     margin:0 0 0 ${ rem(80) };  
   `) }
+
+
+  ${ ({ theme }) => breakpoint("desktop", `
+    a {
+      transition: background-color .3s ease,
+        color .3s ease,
+        border-color .3s ease;
+
+      &:hover {
+        background-color: #FFFFFF;
+        border-color: ${ theme.colors.dark2 };
+        color: ${ theme.colors.dark2 };
+      }
+    }
+  `) }
 `
 
 export const SocialMediaItem = styled.li`
   margin-right: ${ rem(8) };
+
+  ${ breakpoint("desktop", `
+
+    &:hover {
+      
+      svg path {
+        fill: #03a9f4;
+      }
+    }
+
+    svg path {
+      transition: fill .3s ease;
+    }
+  `) }
 `
 
 export const SocialMedias = styled.ul`

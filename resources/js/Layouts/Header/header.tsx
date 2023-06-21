@@ -25,6 +25,7 @@ const Header = ({ children }: HeaderProps) => {
   return (
     <Wrapper>
       <Link href={ route("home") }>
+        <span className="sr-only">Homepage</span>
         <ApplicationLogo />
       </Link>
       { !!auth.user && auth.type==="customer" && isMobile && (

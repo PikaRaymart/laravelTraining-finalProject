@@ -10,7 +10,6 @@ import {
   UpdateOption } from "./cart.styled"
 import { CartList } from "./list"
 import { CartTable } from "./table"
-import { Link } from "@inertiajs/react"
 import { usePageProps } from "@/Hooks/usePageProps"
 import { CartPageProps } from "@/Pages/Cart"
 import { ListBook } from "./list/book"

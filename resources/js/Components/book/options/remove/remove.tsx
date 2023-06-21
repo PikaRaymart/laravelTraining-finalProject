@@ -37,7 +37,7 @@ const Remove = ({ id, handleRemoveCartBook }: RemoveProps) =>{
         defaultChecked
         onChange={ () => handleRemoveCartBook(false) }/>
       <Label htmlFor={ id + "-undo" }>
-        <svg xmlns="http://www.w3.org/2000/svg" width="12.171" height="13.508" viewBox="0 0 12.171 13.508">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12.171" height="13.508" viewBox="0 0 12.171 13.508">
           <g id="Edit_Undo" data-name="Edit / Undo" transform="translate(-4.168 -2.25)">
             <path id="Vector" d="M8.529,6.529H5V3m.205,9.429a5.647,5.647,0,1,0,.133-6.347" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"/>
           </g>
